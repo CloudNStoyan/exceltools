@@ -6,6 +6,12 @@
         mc:Ignorable="d"
         Title="Excel Tools" Height="450" Width="800">
     <Grid>
+        <StackPanel HorizontalAlignment="Left" Width="200">
+            <ComboBox>
+                <ComboBoxItem Content="Duplicates"></ComboBoxItem>
+            </ComboBox>
+            <Button Content="Action"></Button>
+        </StackPanel>
         <GroupBox Header="File" Width="200" HorizontalAlignment="Right" Margin="5">
             <StackPanel>
                 <TextBox IsReadOnly="True" Margin="0,5,0,0"></TextBox>
