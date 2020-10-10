@@ -6,11 +6,20 @@
         mc:Ignorable="d"
         Title="Excel Tools" Height="450" Width="800">
     <Grid>
-        <StackPanel HorizontalAlignment="Left" Width="200">
-            <ComboBox>
-                <ComboBoxItem Content="Duplicates"></ComboBoxItem>
+        <GroupBox Header="Result Log" Width="200" HorizontalAlignment="Left" Margin="5">
+            <Grid>
+                <ScrollViewer Height="355" VerticalAlignment="Top">
+                    <StackPanel Name="LogStackPanel"></StackPanel>
+                </ScrollViewer>
+                <Button Content="Clear" VerticalAlignment="Bottom" Click="ClearLogStackPanelHandler"/>
+            </Grid>
+        </GroupBox>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+            <Label Content="Run analysis:"/>
+            <ComboBox Name="RunAnalysisComboBox">
+                <ComboBoxItem Content="Find Duplicates"></ComboBoxItem>
             </ComboBox>
-            <Button Content="Action"></Button>
+            <Button Content="Run" Margin="0,5,0,0" Click="RunAnalysisHandler"/>
         </StackPanel>
         <GroupBox Header="File" Width="200" HorizontalAlignment="Right" Margin="5">
             <StackPanel>

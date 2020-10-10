@@ -1,28 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace ExcelTools
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private Logger Logger { get; }
+        private ExcelAnalysis ExcelAnalysis { get; }
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+
+            this.Logger = new Logger(this.LogStackPanel, true);
+            this.ExcelAnalysis = new ExcelAnalysis(this.Logger);
+        }
+
+        private void RunAnalysisHandler(object sender, RoutedEventArgs e)
+        {
+            int index = this.RunAnalysisComboBox.SelectedIndex;
+
+            if (index == 0)
+            {
+                this.ExcelAnalysis.FindDuplicates();
+            }
+        }
+
+        private void ClearLogStackPanelHandler(object sender, RoutedEventArgs e)
+        {
+            this.LogStackPanel.Children.Clear();
         }
     }
 }
