@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
+using Microsoft.Win32;
 
 namespace ExcelTools
 {
@@ -6,6 +8,7 @@ namespace ExcelTools
     {
         private Logger Logger { get; }
         private ExcelAnalysis ExcelAnalysis { get; }
+        private ExcelWrapper ExcelWrapper { get; set; }
         public MainWindow()
         {
             this.InitializeComponent();
@@ -16,17 +19,33 @@ namespace ExcelTools
 
         private void RunAnalysisHandler(object sender, RoutedEventArgs e)
         {
+            if (this.ExcelWrapper == null)
+            {
+                return;
+            }
+
             int index = this.RunAnalysisComboBox.SelectedIndex;
 
             if (index == 0)
             {
-                this.ExcelAnalysis.FindDuplicates();
+                this.ExcelAnalysis.FindDuplicates(this.ExcelWrapper);
             }
         }
 
         private void ClearLogStackPanelHandler(object sender, RoutedEventArgs e)
         {
             this.LogStackPanel.Children.Clear();
+        }
+
+        private void LoadFileHandler(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog {Filter = "Excel Files|*.xls;*.xlsx|CSV files (*.csv)|*.csv" };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                this.ExcelWrapper = new ExcelWrapper(openFileDialog.FileName);
+                this.LoadedFileNameTextbox.Text = Path.GetFileName(openFileDialog.FileName);
+            }
         }
     }
 }
