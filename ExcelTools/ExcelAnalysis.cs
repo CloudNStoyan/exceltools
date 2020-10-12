@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -10,6 +11,21 @@ namespace ExcelTools
         public ExcelAnalysis(Logger logger)
         {
             this.Logger = logger;
+        }
+
+        public void MultipleFilesCountCells(string folderPath)
+        {
+            string[] excelFiles = Directory.GetFiles(folderPath);
+
+            int count = 0;
+
+            foreach (string excelFile in excelFiles)
+            {
+                var excelWrapper = new ExcelWrapper(excelFile);
+                count += excelWrapper.GetStringRows(0).Where(x => x != null).ToArray().Length;
+            }
+
+            this.Logger.Log("Count: " + count);
         }
 
         public void FindDuplicates(ExcelWrapper excelWrapper)
