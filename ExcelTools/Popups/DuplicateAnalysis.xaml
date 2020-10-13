@@ -1,0 +1,15 @@
+﻿<Window x:Class="ExcelTools.Popups.DuplicateAnalysis"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="DuplicateAnalysis" Height="250" Width="400">
+    <Grid>
+        <StackPanel Orientation="Horizontal" Margin="5" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Label Content="Column:"/>
+            <TextBox Width="50" Name="ColumnInput"/>
+        </StackPanel>
+        <Button Content="Setup" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="200" Margin="0,0,0,10" Click="ButtonBase_OnClick"/>
+    </Grid>
+</Window>

@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Windows;
+using ExcelTools.Popups;
 using Microsoft.Win32;
 
 namespace ExcelTools
@@ -28,7 +29,10 @@ namespace ExcelTools
 
             if (index == 0)
             {
-                this.ExcelAnalysis.FindDuplicates(this.ExcelWrapper);
+                var settings = new DuplicateAnalysis();
+                settings.ShowDialog();
+
+                this.ExcelAnalysis.FindDuplicates(this.ExcelWrapper, settings.ColumnInput.Text);
             }
         }
 

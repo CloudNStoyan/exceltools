@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,9 +29,18 @@ namespace ExcelTools
             this.Logger.Log("Count: " + count);
         }
 
-        public void FindDuplicates(ExcelWrapper excelWrapper)
+        private int ConvertStringColumnToNumber(string column)
         {
-            string[] firstColumn = excelWrapper.GetStringRows(0).Where(x => x != null).ToArray();
+            const string alphabet = "ABCDEFGHIJKLMNPPQRSTUVWX";
+
+            return alphabet.IndexOf(column, StringComparison.Ordinal);
+        }
+
+        public void FindDuplicates(ExcelWrapper excelWrapper, string column)
+        {
+            int columnNumber = this.ConvertStringColumnToNumber(column);
+
+            string[] firstColumn = excelWrapper.GetStringRows(columnNumber).Where(x => x != null).ToArray();
 
             var dictionary = new Dictionary<string, int>();
 
