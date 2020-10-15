@@ -10,6 +10,12 @@
             <Label Content="Column:"/>
             <TextBox Width="50" Name="ColumnInput"/>
         </StackPanel>
-        <Button Content="Setup" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="200" Margin="0,0,0,10" Click="ButtonBase_OnClick"/>
+        <GroupBox Header="File" Width="200" HorizontalAlignment="Right" Margin="5" Height="100" VerticalAlignment="Top">
+            <StackPanel>
+                <TextBox IsReadOnly="True" Margin="0,5,0,0" Name="LoadedFileNameTextbox"/>
+                <Button Margin="0,5,0,0" Content="Load" Click="LoadFileHandler"/>
+            </StackPanel>
+        </GroupBox>
+        <Button Content="Setup" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="200"  Margin="0,0,0,10" Click="ButtonBase_OnClick"/>
     </Grid>
 </Window>
