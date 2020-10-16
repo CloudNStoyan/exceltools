@@ -20,19 +20,14 @@ namespace ExcelTools
 
         private void RunAnalysisHandler(object sender, RoutedEventArgs e)
         {
-            if (this.ExcelWrapper == null)
-            {
-                return;
-            }
-
             int index = this.RunAnalysisComboBox.SelectedIndex;
 
             if (index == 0)
             {
-                var settings = new DuplicateAnalysis();
-                settings.ShowDialog();
+                var duplicateAnalysis = new DuplicateAnalysis();
+                duplicateAnalysis.ShowDialog();
 
-                this.ExcelAnalysis.FindDuplicates(this.ExcelWrapper, settings.ColumnInput.Text);
+                this.ExcelAnalysis.FindDuplicates(this.ExcelWrapper, duplicateAnalysis.ColumnInput.Text);
             }
         }
 
