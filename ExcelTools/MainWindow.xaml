@@ -6,20 +6,22 @@
         mc:Ignorable="d"
         Title="Excel Tools" Height="450" Width="800">
     <Grid>
-        <GroupBox Header="Result Log" Width="200" HorizontalAlignment="Left" Margin="5">
-            <Grid>
-                <ScrollViewer Height="355" VerticalAlignment="Top">
-                    <StackPanel Name="LogStackPanel"></StackPanel>
-                </ScrollViewer>
-                <Button Content="Clear" VerticalAlignment="Bottom" Click="ClearLogStackPanelHandler"/>
-            </Grid>
-        </GroupBox>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
-            <Label Content="Run analysis:"/>
-            <ComboBox Name="RunAnalysisComboBox">
-                <ComboBoxItem Content="Find Duplicates" />
-            </ComboBox>
-            <Button Content="Run" Margin="0,5,0,0" Click="RunAnalysisHandler"/>
-        </StackPanel>
+        <DockPanel>
+            <ListBox DockPanel.Dock="Left" Width="150" BorderThickness="0">
+                <StackPanel>
+                    <Button Content="Duplicate Finder" Padding="5" Margin="5"/>
+                    <Button Content="Multi Counter" Padding="5" Margin="5"/>
+                </StackPanel>
+            </ListBox>
+            <Grid Width="400" Name="SettingsBox"></Grid>
+            <GroupBox Header="Result Log" DockPanel.Dock="Right">
+                <Grid>
+                    <ScrollViewer>
+                        <StackPanel Name="LogStackPanel"></StackPanel>
+                    </ScrollViewer>
+                    <Button Content="Clear" VerticalAlignment="Bottom" Click="ClearLogStackPanelHandler"/>
+                </Grid>
+            </GroupBox>
+        </DockPanel>
     </Grid>
 </Window>
