@@ -11,9 +11,10 @@
                 <StackPanel>
                     <Button Content="Duplicate Finder" Padding="5" Margin="5"/>
                     <Button Content="Multi Counter" Padding="5" Margin="5"/>
+                    <Button Content="Find Tool" Padding="5" Margin="5"/>
                 </StackPanel>
             </ListBox>
-            <Grid Width="400" Name="SettingsBox"></Grid>
+            <Frame Name="Settings" Width="400"/>
             <GroupBox Header="Result Log" DockPanel.Dock="Right">
                 <Grid>
                     <ScrollViewer>

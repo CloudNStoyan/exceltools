@@ -18,19 +18,6 @@ namespace ExcelTools
             this.ExcelAnalysis = new ExcelAnalysis(this.Logger);
         }
 
-        private void RunAnalysisHandler(object sender, RoutedEventArgs e)
-        {
-            int index = this.RunAnalysisComboBox.SelectedIndex;
-
-            if (index == 0)
-            {
-                var duplicateAnalysis = new DuplicateAnalysis();
-                duplicateAnalysis.ShowDialog();
-
-                this.ExcelAnalysis.FindDuplicates(this.ExcelWrapper, duplicateAnalysis.ColumnInput.Text);
-            }
-        }
-
         private void ClearLogStackPanelHandler(object sender, RoutedEventArgs e)
         {
             this.LogStackPanel.Children.Clear();
