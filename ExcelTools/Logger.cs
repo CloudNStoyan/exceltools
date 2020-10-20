@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ExcelTools
 {
@@ -8,11 +9,6 @@ namespace ExcelTools
     {
         private StackPanel StackPanel { get; }
         private bool UseTimestamp { get; }
-
-        public Logger(StackPanel stackPanel)
-        {
-            this.StackPanel = stackPanel;
-        }
 
         public Logger(StackPanel stackPanel, bool useTimestamp)
         {
@@ -22,18 +18,28 @@ namespace ExcelTools
 
         public void Log(string text)
         {
+            var logWrapper = new StackPanel();
+
             var textBlock = new TextBlock {Text = text, TextWrapping = TextWrapping.Wrap};
 
             if (this.UseTimestamp)
             {
                 var date = DateTime.Now;
 
-                string timestamp = $"[{date.Hour}:{date.Minute}:{date.Second}]";
+                string timestamp = $"[{date.Hour.ToString().PadLeft(2, '0')}:{date.Minute.ToString().PadLeft(2, '0')}:{date.Second.ToString().PadLeft(2,'0')}]";
 
-                textBlock.Text = $"{timestamp} {text}";
+                var timeStampTextBlock = new TextBlock
+                {
+                    Text = timestamp,
+                    Foreground = Brushes.PaleVioletRed
+                };
+
+                logWrapper.Children.Add(timeStampTextBlock);
             }
 
-            this.StackPanel.Children.Add(textBlock);
+            logWrapper.Children.Add(textBlock);
+
+            this.StackPanel.Children.Add(logWrapper);
         }
     }
 }

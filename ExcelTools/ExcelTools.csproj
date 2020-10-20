@@ -74,14 +74,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Popups\DuplicateAnalysis.xaml">
+    <Page Include="Pages\FindDuplicates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Popups\DuplicateAnalysis.xaml.cs">
-      <DependentUpon>DuplicateAnalysis.xaml</DependentUpon>
+    <Compile Include="Pages\FindDuplicates.xaml.cs">
+      <DependentUpon>FindDuplicates.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

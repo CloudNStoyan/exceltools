@@ -7,13 +7,11 @@
         Title="Excel Tools" Height="450" Width="800">
     <Grid>
         <DockPanel>
-            <ListBox DockPanel.Dock="Left" Width="150" BorderThickness="0">
-                <StackPanel>
-                    <Button Content="Duplicate Finder" Padding="5" Margin="5"/>
-                    <Button Content="Multi Counter" Padding="5" Margin="5"/>
-                    <Button Content="Find Tool" Padding="5" Margin="5"/>
-                </StackPanel>
-            </ListBox>
+            <StackPanel DockPanel.Dock="Left" Width="150">
+                <Button Content="Duplicate Finder" Padding="5" Margin="5" Click="DuplicateFinderHandler"/>
+                <Button Content="Multi Counter" Padding="5" Margin="5"/>
+                <Button Content="Find Tool" Padding="5" Margin="5"/>
+            </StackPanel>
             <Frame Name="Settings" Width="400"/>
             <GroupBox Header="Result Log" DockPanel.Dock="Right">
                 <Grid>
