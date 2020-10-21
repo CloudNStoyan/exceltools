@@ -23,5 +23,11 @@ namespace ExcelTools
             var page = new FindDuplicates(this.Logger);
             this.Settings.Navigate(page);
         }
+
+        private void MultiCounterHandler(object sender, RoutedEventArgs e)
+        {
+            var page = new MultiCounter(this.Logger);
+            this.Settings.Navigate(page);
+        }
     }
 }
