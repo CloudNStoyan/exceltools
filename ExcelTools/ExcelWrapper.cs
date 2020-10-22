@@ -12,6 +12,17 @@ namespace ExcelTools
             this.FilePath = filePath;
         }
 
+        public int GetCount()
+        {
+            using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    return reader.RowCount;
+                }
+            }
+        }
+
         public string[] GetStringRows(int col)
         {
             using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))

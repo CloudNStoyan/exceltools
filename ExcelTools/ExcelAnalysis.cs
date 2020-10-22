@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -14,19 +13,17 @@ namespace ExcelTools
             this.Logger = logger;
         }
 
-        public void MultipleFilesCountCells(string folderPath)
+        public void MultipleFilesCountCells(string[] excelFiles)
         {
-            string[] excelFiles = Directory.GetFiles(folderPath);
-
             int count = 0;
 
             foreach (string excelFile in excelFiles)
             {
                 var excelWrapper = new ExcelWrapper(excelFile);
-                count += excelWrapper.GetStringRows(0).Where(x => x != null).ToArray().Length;
+                count += excelWrapper.GetCount();
             }
 
-            this.Logger.Log("Count: " + count);
+            this.Logger.Log(count + " entries!");
         }
 
         private int ConvertStringColumnToNumber(string column)

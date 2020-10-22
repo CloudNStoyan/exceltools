@@ -13,7 +13,7 @@
             <Label>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="File"/>
-                    <TextBlock Text="*The excel file you wan't to analyse*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
+                    <TextBlock Text="*The excel file you want to analyse*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
                 </StackPanel>
             </Label>
             <Grid>
