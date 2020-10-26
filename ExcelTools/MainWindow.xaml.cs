@@ -29,5 +29,11 @@ namespace ExcelTools
             var page = new MultiCounter(this.Logger);
             this.Settings.Navigate(page);
         }
+
+        private void ColorCounterHandler(object sender, RoutedEventArgs e)
+        {
+            var page = new CountByColor(this.Logger);
+            this.Settings.Navigate(page);
+        }
     }
 }

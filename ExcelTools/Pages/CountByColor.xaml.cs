@@ -37,10 +37,16 @@ namespace ExcelTools.Pages
             this.FilePathViewWrapper.Visibility = Visibility.Hidden;
             this.SelectFileButton.Visibility = Visibility.Visible;
         }
-
+        
         private void RunAnalysis(object sender, RoutedEventArgs e)
         {
             var excelWrapper = new ExcelWrapper(this.FilePathTextBox.Text);
+            var a = excelWrapper.GetCountByColor("");
+
+            foreach (string s in a)
+            {
+                this.Logger.Log(s);
+            }
         }
     }
 }

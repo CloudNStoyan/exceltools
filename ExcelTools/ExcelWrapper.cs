@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using ExcelDataReader;
 
@@ -10,6 +11,25 @@ namespace ExcelTools
         public ExcelWrapper(string filePath)
         {
             this.FilePath = filePath;
+        }
+
+        public string[] GetCountByColor(string color)
+        {
+            using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))
+            {
+                var a = new List<string>();
+
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    var data = reader.GetData(0);
+                    foreach (var extendedProperty in data.GetSchemaTable().Columns[0].ExtendedProperties)
+                    {
+                        a.Add(extendedProperty.ToString());
+                    }
+                }
+
+                return a.ToArray();
+            }
         }
 
         public int GetCount()
