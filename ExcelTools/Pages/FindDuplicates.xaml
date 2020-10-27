@@ -10,6 +10,13 @@
 
     <Grid Background="White">
         <StackPanel Margin="10">
+	<Label>
+		<StackPanel>
+			<CheckBox />
+			<TextBlock Text="Multiple Files" />
+                    <TextBlock Text="*If checked it will perform the analysis on multiple files*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
+		</StackPanel>
+	</Label>
             <Label>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="File"/>
