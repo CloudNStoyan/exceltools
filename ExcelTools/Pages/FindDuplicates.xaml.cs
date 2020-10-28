@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 
@@ -21,9 +23,17 @@ namespace ExcelTools.Pages
         {
             var openFileDialog = new OpenFileDialog { Filter = "Excel Files|*.xls;*.xlsx|CSV files (*.csv)|*.csv" };
 
+            if (this.MultipleFiles.IsChecked == true)
+            {
+                openFileDialog.Multiselect = true;
+            }
+
             if (openFileDialog.ShowDialog() == true)
             {
-                this.FilePathTextBox.Text = openFileDialog.FileName;
+                this.FilePathTextBox.Text = this.MultipleFiles.IsChecked == true
+                    ? string.Join(",", openFileDialog.FileNames.Select(Path.GetFileName))
+                    : openFileDialog.FileName;
+
                 this.SelectFileButton.Visibility = Visibility.Hidden;
 
                 this.FilePathViewWrapper.Visibility = Visibility.Visible;
