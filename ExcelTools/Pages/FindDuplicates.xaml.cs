@@ -28,16 +28,18 @@ namespace ExcelTools.Pages
                 openFileDialog.Multiselect = true;
             }
 
-            if (openFileDialog.ShowDialog() == true)
+            if (openFileDialog.ShowDialog() != true)
             {
-                this.FilePathTextBox.Text = this.MultipleFiles.IsChecked == true
-                    ? string.Join(",", openFileDialog.FileNames.Select(Path.GetFileName))
-                    : openFileDialog.FileName;
-
-                this.SelectFileButton.Visibility = Visibility.Hidden;
-
-                this.FilePathViewWrapper.Visibility = Visibility.Visible;
+                return;
             }
+
+            this.FilePathTextBox.Text = this.MultipleFiles.IsChecked == true
+                ? string.Join(",", openFileDialog.FileNames.Select(Path.GetFileName))
+                : openFileDialog.FileName;
+
+            this.SelectFileButton.Visibility = Visibility.Hidden;
+
+            this.FilePathViewWrapper.Visibility = Visibility.Visible;
         }
 
         private void ChangeFileHandler(object sender, RoutedEventArgs e)
@@ -50,9 +52,12 @@ namespace ExcelTools.Pages
 
         private void RunAnalysis(object sender, RoutedEventArgs e)
         {
-            var excelWrapper = new ExcelWrapper(this.FilePathTextBox.Text);
+            if (this.MultipleFiles.IsChecked == false)
+            {
 
-            this.ExcelAnalysis.FindDuplicates(excelWrapper, this.ColumnTextBox.Text);
+                var excelWrapper = new ExcelWrapper(this.FilePathTextBox.Text);
+                this.ExcelAnalysis.FindDuplicates(excelWrapper, this.ColumnTextBox.Text);
+            }
         }
     }
 }
