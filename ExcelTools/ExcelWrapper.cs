@@ -8,9 +8,11 @@ namespace ExcelTools
     public class ExcelWrapper
     {
         private string FilePath { get; }
+        public string FileName { get; }
         public ExcelWrapper(string filePath)
         {
             this.FilePath = filePath;
+            this.FileName = Path.GetFileName(filePath);
         }
 
         public string[] GetCountByColor(string color)

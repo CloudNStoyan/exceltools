@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,6 +11,8 @@ namespace ExcelTools.Pages
     {
         private Logger Logger { get; }
         private ExcelAnalysis ExcelAnalysis { get; }
+        private string SelectedFile { get; set; }
+        private string[] SelectedFiles { get; set; }
         public FindTool(Logger logger)
         {
             this.InitializeComponent();
@@ -37,6 +40,15 @@ namespace ExcelTools.Pages
                 ? string.Join(",", openFileDialog.FileNames.Select(Path.GetFileName))
                 : openFileDialog.FileName;
 
+            if (this.MultipleFiles.IsChecked == true)
+            {
+                this.SelectedFiles = openFileDialog.FileNames;
+            }
+            else
+            {
+                this.SelectedFile = openFileDialog.FileName;
+            }
+
             this.SelectFileButton.Visibility = Visibility.Hidden;
 
             this.FilePathViewWrapper.Visibility = Visibility.Visible;
@@ -54,10 +66,33 @@ namespace ExcelTools.Pages
         {
             if (this.MultipleFiles.IsChecked == false)
             {
-
                 var excelWrapper = new ExcelWrapper(this.FilePathTextBox.Text);
-                //this.ExcelAnalysis.FindDuplicates(excelWrapper, this.ColumnTextBox.Text);
+                this.ExcelAnalysis.FindTool(excelWrapper, this.ColumnTextBox.Text, this.FindValueInput.Text);
             }
+            else
+            {
+                var excelWrappers = this.SelectedFiles.Select(filePath => new ExcelWrapper(filePath)).ToList();
+
+                this.ExcelAnalysis.FindTool(excelWrappers.ToArray(), this.ColumnTextBox.Text, this.FindValueInput.Text);
+            }
+        }
+
+        private void MultipleFiles_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (this.MultipleFiles.IsChecked == true)
+            {
+                this.SelectFileButton.Content = "Select Files";
+                this.FileTextBlock.Text = "Files";
+                this.FileSubTextBlock.Text = "*The excel files you want to analyse*";
+            }
+            else
+            {
+                this.SelectFileButton.Content = "Select File";
+                this.FileTextBlock.Text = "File";
+                this.FileSubTextBlock.Text = "*The excel file you want to analyse*";
+            }
+
+            this.ChangeFileHandler(sender, e);
         }
     }
 }

@@ -82,6 +82,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\FindTool.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\MultiCounter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -93,6 +97,9 @@
     </Compile>
     <Compile Include="Pages\FindDuplicates.xaml.cs">
       <DependentUpon>FindDuplicates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FindTool.xaml.cs">
+      <DependentUpon>FindTool.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MultiCounter.xaml.cs">
       <DependentUpon>MultiCounter.xaml</DependentUpon>

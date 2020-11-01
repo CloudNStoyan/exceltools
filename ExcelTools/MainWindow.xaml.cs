@@ -35,5 +35,11 @@ namespace ExcelTools
             var page = new CountByColor(this.Logger);
             this.Settings.Navigate(page);
         }
+
+        private void FindHandler(object sender, RoutedEventArgs e)
+        {
+            var page = new FindTool(this.Logger);
+            this.Settings.Navigate(page);
+        }
     }
 }

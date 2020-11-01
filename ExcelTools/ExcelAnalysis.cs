@@ -33,6 +33,60 @@ namespace ExcelTools
             return alphabet.IndexOf(column, StringComparison.Ordinal);
         }
 
+        public void FindTool(ExcelWrapper excelWrapper, string column, string value)
+        {
+            int columnNumber = this.ConvertStringColumnToNumber(column);
+
+            string[] rows = excelWrapper.GetStringRows(columnNumber).ToArray();
+
+            int index = 0;
+
+            bool cellFound = false;
+
+            for (int i = 0; i < rows.Length; i++)
+            {
+                if (rows[i] == value)
+                {
+                    index = i;
+                    cellFound = true;
+                }
+            }
+
+            this.Logger.Log(cellFound
+                ? $"\"{value}\" was found at {column}{index + 1}"
+                : $"\"{value}\" was not found!");
+        }
+
+        public void FindTool(ExcelWrapper[] excelWrappers, string column, string value)
+        {
+            int columnNumber = this.ConvertStringColumnToNumber(column);
+
+            var logs = new List<string>();
+            foreach (var wrapper in excelWrappers)
+            {
+                string[] rows = wrapper.GetStringRows(columnNumber).ToArray();
+
+                int index = 0;
+
+                bool cellFound = false;
+
+                for (int i = 0; i < rows.Length; i++)
+                {
+                    if (rows[i] == value)
+                    {
+                        index = i;
+                        cellFound = true;
+                    }
+                }
+
+                logs.Add(cellFound
+                    ? $"\"{value}\" was found at {column}{index + 1} in \"{wrapper.FileName}\""
+                    : $"\"{value}\" was not found!");
+            }
+
+            this.Logger.Log(string.Join("\r\n", logs));
+        }
+
         public void FindDuplicates(ExcelWrapper excelWrapper, string column)
         {
             int columnNumber = this.ConvertStringColumnToNumber(column);
