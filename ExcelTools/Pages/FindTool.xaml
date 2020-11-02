@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:ExcelTools.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="400"
-      Title="FindToolTool">
+      Title="Find Tool">
 
     <Grid Background="White">
         <StackPanel Margin="10">
