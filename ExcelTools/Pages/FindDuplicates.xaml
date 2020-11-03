@@ -12,15 +12,15 @@
         <StackPanel Margin="10">
             <Label>
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox Name="MultipleFiles"/>
-                    <TextBlock Text="Multiple Files" Margin="5,0,0,0" />
+                    <CheckBox Name="MultipleFiles" Click="MultipleFiles_OnClick"/>
+                    <TextBlock Text="Multiple Files" Margin="5,0,0,0"/>
                     <TextBlock Text="*If checked it will perform the analysis on multiple files*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
                 </StackPanel>
             </Label>
             <Label>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="File"/>
-                    <TextBlock Text="*The excel file you want to analyse*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
+                    <TextBlock Text="File" Name="FileTextBlock"/>
+                    <TextBlock Text="*The excel file you want to analyse*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray" Name="FileSubTextBlock"/>
                 </StackPanel>
             </Label>
             <Grid>

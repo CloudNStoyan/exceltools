@@ -8,7 +8,7 @@
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Left" Width="150">
-                <Button Content="Duplicate FindTooler" Padding="5" Margin="5" Click="DuplicateFinderHandler"/>
+                <Button Content="Duplicate Finder" Padding="5" Margin="5" Click="DuplicateFinderHandler"/>
                 <Button Content="Multi Counter" Padding="5" Margin="5" Click="MultiCounterHandler"/>
                 <Button Content="Color Counter" Padding="5" Margin="5" Click="ColorCounterHandler"/>
                 <Button Content="Find Tool" Padding="5" Margin="5" Click="FindHandler"/>

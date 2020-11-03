@@ -59,5 +59,23 @@ namespace ExcelTools.Pages
                 this.ExcelAnalysis.FindDuplicates(excelWrapper, this.ColumnTextBox.Text);
             }
         }
+
+        private void MultipleFiles_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (this.MultipleFiles.IsChecked == true)
+            {
+                this.SelectFileButton.Content = "Select Files";
+                this.FileTextBlock.Text = "Files";
+                this.FileSubTextBlock.Text = "*The excel files you want to analyse*";
+            }
+            else
+            {
+                this.SelectFileButton.Content = "Select File";
+                this.FileTextBlock.Text = "File";
+                this.FileSubTextBlock.Text = "*The excel file you want to analyse*";
+            }
+
+            this.ChangeFileHandler(sender, e);
+        }
     }
 }
