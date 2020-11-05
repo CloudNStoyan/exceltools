@@ -11,6 +11,9 @@ namespace ExcelTools
             this.InitializeComponent();
 
             this.Logger = new Logger(this.LogStackPanel, true);
+
+            var page = new FindDuplicates(this.Logger);
+            this.Settings.Navigate(page);
         }
 
         private void ClearLogStackPanelHandler(object sender, RoutedEventArgs e)
