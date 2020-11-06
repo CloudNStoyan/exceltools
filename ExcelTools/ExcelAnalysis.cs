@@ -33,7 +33,7 @@ namespace ExcelTools
             return alphabet.IndexOf(column, StringComparison.Ordinal);
         }
 
-        public void FindTool(ExcelWrapper excelWrapper, string column, string value)
+        public void FindTool(ExcelWrapper excelWrapper, string column, string value, bool caseSensitive)
         {
             int columnNumber = this.ConvertStringColumnToNumber(column);
 
@@ -45,7 +45,13 @@ namespace ExcelTools
 
             for (int i = 0; i < rows.Length; i++)
             {
-                if (rows[i] == value)
+                string rowValue = rows[i];
+
+                if (rowValue.Equals(value))
+                {
+                    index = i;
+                    cellFound = true;
+                } else if (!caseSensitive && rowValue.ToLower().Equals(value))
                 {
                     index = i;
                     cellFound = true;
@@ -57,7 +63,7 @@ namespace ExcelTools
                 : $"\"{value}\" was not found!");
         }
 
-        public void FindTool(ExcelWrapper[] excelWrappers, string column, string value)
+        public void FindTool(ExcelWrapper[] excelWrappers, string column, string value, bool caseSensitive)
         {
             int columnNumber = this.ConvertStringColumnToNumber(column);
 
@@ -72,7 +78,14 @@ namespace ExcelTools
 
                 for (int i = 0; i < rows.Length; i++)
                 {
-                    if (rows[i] == value)
+                    string rowValue = rows[i];
+
+                    if (rowValue.Equals(value))
+                    {
+                        index = i;
+                        cellFound = true;
+                    }
+                    else if (!caseSensitive && rowValue.ToLower().Equals(value))
                     {
                         index = i;
                         cellFound = true;

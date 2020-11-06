@@ -66,13 +66,13 @@ namespace ExcelTools.Pages
             if (this.MultipleFiles.IsChecked == false)
             {
                 var excelWrapper = new ExcelWrapper(this.FilePathTextBox.Text);
-                this.ExcelAnalysis.FindTool(excelWrapper, this.ColumnTextBox.Text, this.FindValueInput.Text);
+                this.ExcelAnalysis.FindTool(excelWrapper, this.ColumnTextBox.Text, this.FindValueInput.Text, this.CaseSensitiveCheck.IsChecked == true);
             }
             else
             {
                 var excelWrappers = this.SelectedFiles.Select(filePath => new ExcelWrapper(filePath)).ToList();
 
-                this.ExcelAnalysis.FindTool(excelWrappers.ToArray(), this.ColumnTextBox.Text, this.FindValueInput.Text);
+                this.ExcelAnalysis.FindTool(excelWrappers.ToArray(), this.ColumnTextBox.Text, this.FindValueInput.Text, this.CaseSensitiveCheck.IsChecked == true);
             }
         }
 
