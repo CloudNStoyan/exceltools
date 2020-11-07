@@ -21,15 +21,15 @@
                      Width="350" Name="FindValueInput"/>
                 <Label>
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox Name="MultipleFiles" Click="MultipleFiles_OnClick"/>
-                        <TextBlock Text="Multiple Files" Margin="5,0,0,0" />
-                        <TextBlock Text="*If checked it will perform the analysis on multiple files*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
+                        <CheckBox Name="CaseSensitiveCheck" IsChecked="True"/>
+                        <TextBlock Text="Case-Sensitive" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Label>
                 <Label>
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox Name="CaseSensitiveCheck" IsChecked="True"/>
-                        <TextBlock Text="Use Case-Sensitive" Margin="5,0,0,0"/>
+                        <CheckBox Name="MultipleFiles" Click="MultipleFiles_OnClick"/>
+                        <TextBlock Text="Multiple Files" Margin="5,0,0,0" />
+                        <TextBlock Text="*If checked it will perform the analysis on multiple files*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
                     </StackPanel>
                 </Label>
                 <Label>
