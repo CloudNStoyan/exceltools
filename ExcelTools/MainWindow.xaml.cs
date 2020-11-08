@@ -44,5 +44,10 @@ namespace ExcelTools
             var page = new FindTool(this.Logger);
             this.Settings.Navigate(page);
         }
+
+	private void ExportHandler(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

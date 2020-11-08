@@ -13,6 +13,7 @@
                     <Button Content="Multi Counter" Padding="5" Margin="5" Click="MultiCounterHandler"/>
                     <Button Content="Color Counter" Padding="5" Margin="5" Click="ColorCounterHandler"/>
                     <Button Content="Find Tool" Padding="5" Margin="5" Click="FindHandler"/>
+                    <Button Content="Export" Padding="5" Margin="5" Click="ExportHandler"/>
                 </StackPanel>
             </GroupBox>
             <Frame Name="Settings" Width="400" NavigationUIVisibility="Hidden"/>
