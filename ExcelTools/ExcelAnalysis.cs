@@ -100,6 +100,15 @@ namespace ExcelTools
             this.Logger.Log(string.Join("\r\n", logs));
         }
 
+        public string[] ExportTool(ExcelWrapper excelWrapper, string column, bool skipEmpty = false)
+        {
+            int columnNumber = this.ConvertStringColumnToNumber(column);
+
+            string[] columnData = !skipEmpty ? excelWrapper.GetStringRows(columnNumber) : excelWrapper.GetStringRows(columnNumber).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
+            return columnData;
+        }
+
         public void FindDuplicates(ExcelWrapper excelWrapper, string column)
         {
             int columnNumber = this.ConvertStringColumnToNumber(column);

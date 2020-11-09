@@ -6,6 +6,7 @@ namespace ExcelTools
     public partial class MainWindow : Window
     {
         private Logger Logger { get; }
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -45,9 +46,10 @@ namespace ExcelTools
             this.Settings.Navigate(page);
         }
 
-	private void ExportHandler(object sender, RoutedEventArgs e)
+        private void ExportHandler(object sender, RoutedEventArgs e)
         {
-            
+            var page = new ExportTool(this.Logger);
+            this.Settings.Navigate(page);
         }
     }
 }
