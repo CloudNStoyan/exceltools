@@ -34,15 +34,28 @@
             <TextBox Width="25" Height="25" 
                      HorizontalAlignment="Left" Margin="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                      Text="A" Name="ColumnTextBox"/>
-            <Label>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Seperator"/>
-                    <TextBlock Text="*The symbol that will be used to split the data rows*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
-                </StackPanel>
-            </Label>
-            <TextBox HorizontalAlignment="Left" Margin="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                     Width="360" Height="25" Name="SeperatorInput"/>
-            <Button Content="Run" Margin="5" Click="RunAnalysis"/>
+                <GroupBox Header="Settings">
+                    <StackPanel>
+                        <Label>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Seperator"/>
+                                <TextBlock Text="*The symbol that will be used to split the data rows*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
+                            </StackPanel>
+                        </Label>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Content="New line "/>
+                            <CheckBox Content="&quot; , &quot;"/>
+                            <CheckBox Content="&quot; . &quot;"/>
+                            <CheckBox Content="&quot; : &quot;"/>
+                            <CheckBox Content="&quot; | &quot;"/>
+                            <CheckBox Content="Space"/>
+                        </StackPanel>
+                        <Label Content="Custom" />
+                        <TextBox HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                                 Width="360" Height="25" Name="SeperatorInput"/>
+                    </StackPanel>
+                </GroupBox>
+                <Button Content="Run" Margin="5" Click="RunAnalysis"/>
             <TextBox HorizontalAlignment="Left" Margin="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                      Width="360" Height="200" Name="OutputTextbox"/>
         </StackPanel>
