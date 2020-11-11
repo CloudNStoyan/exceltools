@@ -42,13 +42,13 @@
                                 <TextBlock Text="*The symbol that will be used to split the data rows*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
                             </StackPanel>
                         </Label>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox Content="New line "/>
-                            <CheckBox Content="&quot; , &quot;"/>
-                            <CheckBox Content="&quot; . &quot;"/>
-                            <CheckBox Content="&quot; : &quot;"/>
-                            <CheckBox Content="&quot; | &quot;"/>
-                            <CheckBox Content="Space"/>
+                        <StackPanel Orientation="Horizontal" Name="SeparatorContainer">
+                            <RadioButton GroupName="Separator" Content="New line " DataContext="\r\n"/>
+                            <RadioButton GroupName="Separator" Content="&quot; , &quot;" DataContext=","/>
+                            <RadioButton GroupName="Separator" Content="&quot; . &quot;" DataContext="."/>
+                            <RadioButton GroupName="Separator" Content="&quot; : &quot;" DataContext=":"/>
+                            <RadioButton GroupName="Separator" Content="&quot; | &quot;" DataContext="|"/>
+                            <RadioButton GroupName="Separator" Content="Space" DataContext=" "/>
                         </StackPanel>
                         <Label Content="Custom" />
                         <TextBox HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 

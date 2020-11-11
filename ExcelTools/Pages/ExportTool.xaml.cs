@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 
@@ -44,9 +45,12 @@ namespace ExcelTools.Pages
         {
             var excelWrapper = new ExcelWrapper(this.FilePathTextBox.Text);
 
+            var checkedButton = this.SeparatorContainer.Children.OfType<RadioButton>()
+                .FirstOrDefault(r => r.IsChecked == true);
+
             var data = this.ExcelAnalysis.ExportTool(excelWrapper, this.ColumnTextBox.Text);
 
-            this.OutputTextbox.Text = string.Join(this.SeperatorInput.Text, data);
+            this.OutputTextbox.Text = string.Join(checkedButton?.DataContext.ToString(), data);
         }
     }
 }
