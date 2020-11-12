@@ -12,6 +12,7 @@ namespace ExcelTools.Pages
         private ExcelAnalysis ExcelAnalysis { get; }
         private string SelectedFile { get; set; }
         private string[] SelectedFiles { get; set; }
+        public static string Header = "Find Tool";
         public FindTool(Logger logger)
         {
             this.InitializeComponent();

@@ -8,6 +8,7 @@ namespace ExcelTools.Pages
     {
         private Logger Logger { get; }
         private ExcelAnalysis ExcelAnalysis { get; }
+        public static string Header = "Count By Color";
         public CountByColor(Logger logger)
         {
             this.InitializeComponent();

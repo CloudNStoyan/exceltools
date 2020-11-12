@@ -10,6 +10,7 @@ namespace ExcelTools.Pages
     {
         private Logger Logger { get; }
         private ExcelAnalysis ExcelAnalysis { get; }
+        public static string Header = "Duplicate Finder";
         public FindDuplicates(Logger logger)
         {
             this.InitializeComponent();

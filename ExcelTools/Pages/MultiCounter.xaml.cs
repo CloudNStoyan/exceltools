@@ -11,6 +11,7 @@ namespace ExcelTools.Pages
         private Logger Logger { get; }
         private ExcelAnalysis ExcelAnalysis { get; }
         private string[] FilePaths { get; set; }
+        public static string Header = "Multi Counter";
 
         public MultiCounter(Logger logger)
         {
