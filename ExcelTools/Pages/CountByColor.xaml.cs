@@ -1,14 +1,15 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using ExcelTools.Attributes;
 using Microsoft.Win32;
 
 namespace ExcelTools.Pages
 {
+    [PageInfo("Count by Color")]
     public partial class CountByColor : Page
     {
         private Logger Logger { get; }
         private ExcelAnalysis ExcelAnalysis { get; }
-        public static string Header = "Count By Color";
         public CountByColor(Logger logger)
         {
             this.InitializeComponent();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using ExcelTools.Attributes;
 
 namespace ExcelTools
 {
@@ -24,8 +25,8 @@ namespace ExcelTools
             var pageClasses = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.Namespace == "ExcelTools.Pages" && x.BaseType?.Name == "Page").ToArray();
 
             var pagePairs = (from typeInfo in pageClasses
-                let instance = (Page)Activator.CreateInstance(typeInfo, this.Logger)
-                let header = (string)typeInfo.GetDeclaredField("Header").GetValue(instance)
+                let instance = (Page) Activator.CreateInstance(typeInfo, this.Logger)
+                let header = typeInfo.GetCustomAttribute<PageInfo>().Header
                 select new KeyValuePair<string, Page>(header, instance)).ToArray();
 
             foreach (var pair in pagePairs)

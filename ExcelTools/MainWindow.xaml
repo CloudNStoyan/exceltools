@@ -8,15 +8,13 @@
     <Grid>
         <DockPanel>
             <GroupBox Header="Navigation" DockPanel.Dock="Left" Width="150">
-                <StackPanel Name="NavigationContainer">
-                    
-                </StackPanel>
+                <StackPanel Name="NavigationContainer"/>
             </GroupBox>
             <Frame Name="Settings" Width="400" NavigationUIVisibility="Hidden"/>
             <GroupBox Header="Result Log" DockPanel.Dock="Right">
                 <Grid>
                     <ScrollViewer>
-                        <StackPanel Name="LogStackPanel"></StackPanel>
+                        <StackPanel Name="LogStackPanel" />
                     </ScrollViewer>
                     <Button Content="Clear" VerticalAlignment="Bottom" Click="ClearLogStackPanelHandler"/>
                 </Grid>

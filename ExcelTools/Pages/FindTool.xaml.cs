@@ -2,17 +2,18 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using ExcelTools.Attributes;
 using Microsoft.Win32;
 
 namespace ExcelTools.Pages
 {
+    [PageInfo("Find Tool")]
     public partial class FindTool : Page
     {
         private Logger Logger { get; }
         private ExcelAnalysis ExcelAnalysis { get; }
         private string SelectedFile { get; set; }
         private string[] SelectedFiles { get; set; }
-        public static string Header = "Find Tool";
         public FindTool(Logger logger)
         {
             this.InitializeComponent();

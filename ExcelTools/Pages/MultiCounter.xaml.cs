@@ -2,16 +2,17 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using ExcelTools.Attributes;
 using Microsoft.Win32;
 
 namespace ExcelTools.Pages
 {
+    [PageInfo("Multi Counter")]
     public partial class MultiCounter : Page
     {
         private Logger Logger { get; }
         private ExcelAnalysis ExcelAnalysis { get; }
         private string[] FilePaths { get; set; }
-        public static string Header = "Multi Counter";
 
         public MultiCounter(Logger logger)
         {

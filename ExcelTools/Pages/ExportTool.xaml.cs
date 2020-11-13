@@ -2,16 +2,17 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using ExcelTools.Attributes;
 using Microsoft.Win32;
 
 namespace ExcelTools.Pages
 {
+    [PageInfo("Export Tool")]
     public partial class ExportTool : Page
     {
         private Logger Logger { get; }
         private ExcelAnalysis ExcelAnalysis { get; }
         private ExportSettings Settings { get; }
-        public static string Header = "Export Tool";
 
         public ExportTool(Logger logger)
         {

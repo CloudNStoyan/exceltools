@@ -2,15 +2,16 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using ExcelTools.Attributes;
 using Microsoft.Win32;
 
 namespace ExcelTools.Pages
 {
+    [PageInfo("Duplicate Finder")]
     public partial class FindDuplicates : Page
     {
         private Logger Logger { get; }
         private ExcelAnalysis ExcelAnalysis { get; }
-        public static string Header = "Duplicate Finder";
         public FindDuplicates(Logger logger)
         {
             this.InitializeComponent();
