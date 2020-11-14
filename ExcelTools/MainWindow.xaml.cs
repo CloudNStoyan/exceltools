@@ -24,21 +24,19 @@ namespace ExcelTools
         {
             var pageClasses = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.Namespace == "ExcelTools.Pages" && x.BaseType?.Name == "Page").ToArray();
 
-            var pagePairs = (from typeInfo in pageClasses
-                let instance = (Page) Activator.CreateInstance(typeInfo, this.Logger)
-                let header = typeInfo.GetCustomAttribute<PageInfo>().Header
-                select new KeyValuePair<string, Page>(header, instance)).ToArray();
-
-            foreach (var pair in pagePairs)
+            foreach (var pageClass in pageClasses)
             {
+                var instance = (Page) Activator.CreateInstance(pageClass, this.Logger);
+                string header = pageClass.GetCustomAttribute<PageInfo>().Header;
+
                 var button = new Button
                 {
-                    Content = pair.Key,
+                    Content = header,
                     Padding = new Thickness(5),
                     Margin = new Thickness(5)
                 };
 
-                button.Click += (sender, args) => { this.Settings.Navigate(pair.Value); };
+                button.Click += (sender, args) => { this.Settings.Navigate(instance); };
 
                 this.NavigationContainer.Children.Add(button);
             }
