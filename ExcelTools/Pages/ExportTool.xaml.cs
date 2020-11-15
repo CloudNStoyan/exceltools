@@ -7,7 +7,7 @@ using Microsoft.Win32;
 
 namespace ExcelTools.Pages
 {
-    [PageInfo("Export Tool")]
+    [PageInfo(Header = "Export Tool")]
     public partial class ExportTool : Page
     {
         private Logger Logger { get; }

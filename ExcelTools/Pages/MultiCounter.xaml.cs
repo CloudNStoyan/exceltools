@@ -7,7 +7,7 @@ using Microsoft.Win32;
 
 namespace ExcelTools.Pages
 {
-    [PageInfo("Multi Counter")]
+    [PageInfo(Header = "Multi Counter")]
     public partial class MultiCounter : Page
     {
         private Logger Logger { get; }

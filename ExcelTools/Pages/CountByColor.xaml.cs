@@ -5,7 +5,7 @@ using Microsoft.Win32;
 
 namespace ExcelTools.Pages
 {
-    [PageInfo("Count by Color")]
+    [PageInfo(Header = "Count by Color")]
     public partial class CountByColor : Page
     {
         private Logger Logger { get; }

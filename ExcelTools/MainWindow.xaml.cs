@@ -24,10 +24,13 @@ namespace ExcelTools
         {
             var pageClasses = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.Namespace == "ExcelTools.Pages" && x.BaseType?.Name == "Page").ToArray();
 
+            var buttons = new List<Button>();
+
             foreach (var pageClass in pageClasses)
             {
                 var instance = (Page) Activator.CreateInstance(pageClass, this.Logger);
                 string header = pageClass.GetCustomAttribute<PageInfo>().Header;
+                int order = pageClass.GetCustomAttribute<PageInfo>().Order;
 
                 var button = new Button
                 {
@@ -36,10 +39,19 @@ namespace ExcelTools
                     Margin = new Thickness(5)
                 };
 
-                button.Click += (sender, args) => { this.Settings.Navigate(instance); };
+                button.Click += (sender, args) => this.Settings.Navigate(instance);
+                button.DataContext = order;
 
+                buttons.Add(button);
+            }
+
+            buttons = buttons.OrderBy(x => int.Parse(x.DataContext.ToString())).ToList();
+
+            foreach (var button in buttons)
+            {
                 this.NavigationContainer.Children.Add(button);
             }
+
         }
 
         private void ClearLogStackPanelHandler(object sender, RoutedEventArgs e)

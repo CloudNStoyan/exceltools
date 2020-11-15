@@ -6,9 +6,6 @@ namespace ExcelTools.Attributes
     public class PageInfo : Attribute
     {
         public string Header { get; set; }
-        public PageInfo(string header)
-        {
-            this.Header = header;
-        }
+        public int Order = 10;
     }
 }

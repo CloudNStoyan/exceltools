@@ -7,7 +7,7 @@ using Microsoft.Win32;
 
 namespace ExcelTools.Pages
 {
-    [PageInfo("Find Tool")]
+    [PageInfo(Header = "Find Tool")]
     public partial class FindTool : Page
     {
         private Logger Logger { get; }
