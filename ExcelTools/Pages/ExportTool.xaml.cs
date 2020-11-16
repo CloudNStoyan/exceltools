@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -49,6 +51,14 @@ namespace ExcelTools.Pages
 
         private void RunAnalysis(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(this.FilePathTextBox.Text) ||
+                !Uri.IsWellFormedUriString(this.FilePathTextBox.Text, UriKind.Absolute) ||
+                !File.Exists(this.FilePathTextBox.Text))
+            {
+                MessageBox.Show("No file selected!");
+                return;
+            }
+
             var excelWrapper = new ExcelWrapper(this.FilePathTextBox.Text);
 
             var data = this.ExcelAnalysis.ExportTool(excelWrapper, this.ColumnTextBox.Text, this.Settings.SkipEmpty);

@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using ExcelTools.Attributes;
 using Microsoft.Win32;
@@ -42,6 +44,14 @@ namespace ExcelTools.Pages
         
         private void RunAnalysis(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(this.FilePathTextBox.Text) ||
+                !Uri.IsWellFormedUriString(this.FilePathTextBox.Text, UriKind.Absolute) ||
+                !File.Exists(this.FilePathTextBox.Text))
+            {
+                MessageBox.Show("No file selected!");
+                return;
+            }
+
             var excelWrapper = new ExcelWrapper(this.FilePathTextBox.Text);
             var a = excelWrapper.GetCountByColor("");
 

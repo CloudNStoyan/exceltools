@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -65,6 +66,14 @@ namespace ExcelTools.Pages
 
         private void RunAnalysis(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(this.FilePathTextBox.Text) ||
+                !Uri.IsWellFormedUriString(this.FilePathTextBox.Text, UriKind.Absolute) ||
+                !File.Exists(this.FilePathTextBox.Text))
+            {
+                MessageBox.Show("No file selected!");
+                return;
+            }
+
             if (this.MultipleFiles.IsChecked == false)
             {
                 var excelWrapper = new ExcelWrapper(this.FilePathTextBox.Text);
