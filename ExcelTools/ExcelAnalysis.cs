@@ -104,7 +104,7 @@ namespace ExcelTools
         {
             int columnNumber = this.ConvertStringColumnToNumber(column);
 
-            string[] columnData = !skipEmpty ? excelWrapper.GetStringRows(columnNumber) : excelWrapper.GetStringRows(columnNumber).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            string[] columnData = !skipEmpty ? excelWrapper.GetStringRows(columnNumber) : excelWrapper.GetStringRows(columnNumber)?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
             return columnData;
         }

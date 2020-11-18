@@ -56,6 +56,11 @@ namespace ExcelTools
                     {
                         while (reader.Read())
                         {
+                            if (col >= reader.FieldCount)
+                            {
+                                return null;
+                            };
+
                             var fieldType = reader.GetFieldType(col);
 
                             rowsData.Add(fieldType == typeof(string) ? reader.GetString(col) : null);

@@ -61,6 +61,12 @@ namespace ExcelTools.Pages
 
             var data = this.ExcelAnalysis.ExportTool(excelWrapper, this.ColumnTextBox.Text, this.Settings.SkipEmpty);
 
+            if (data == null)
+            {
+                MessageBox.Show($"There is no column {this.ColumnTextBox.Text} in {excelWrapper.FileName}");
+                return;
+            }
+
             this.OutputTextbox.Text = string.Join(this.Settings.SelectedSeparator, data);
         }
     }
