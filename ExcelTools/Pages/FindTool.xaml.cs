@@ -66,19 +66,41 @@ namespace ExcelTools.Pages
 
         private void RunAnalysis(object sender, RoutedEventArgs e)
         {
-            if (!File.Exists(this.FilePathTextBox.Text))
+            if (string.IsNullOrWhiteSpace(this.FindValueInput.Text))
             {
-                MessageBox.Show("No file selected!");
+                MessageBox.Show("Value cannot be empty or white space only!");
                 return;
             }
 
+
             if (this.MultipleFiles.IsChecked == false)
             {
+                if (!File.Exists(this.SelectedFile))
+                {
+                    MessageBox.Show("No file selected!");
+                    return;
+                }
+
                 var excelWrapper = new ExcelWrapper(this.FilePathTextBox.Text);
                 this.ExcelAnalysis.FindTool(excelWrapper, this.ColumnTextBox.Text, this.FindValueInput.Text, this.CaseSensitiveCheck.IsChecked == true);
             }
             else
             {
+                if (this.SelectedFiles == null || this.SelectedFiles.Length == 0)
+                {
+                    MessageBox.Show("No file selected!");
+                    return;
+                }
+
+                foreach (string selectedFile in this.SelectedFiles)
+                {
+                    if (!File.Exists(selectedFile))
+                    {
+                        MessageBox.Show($"Cannot find {selectedFile}!");
+                        return;
+                    }
+                }
+
                 var excelWrappers = this.SelectedFiles.Select(filePath => new ExcelWrapper(filePath)).ToList();
 
                 this.ExcelAnalysis.FindTool(excelWrappers.ToArray(), this.ColumnTextBox.Text, this.FindValueInput.Text, this.CaseSensitiveCheck.IsChecked == true);

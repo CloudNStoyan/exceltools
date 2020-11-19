@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace ExcelTools
 {
@@ -37,7 +38,13 @@ namespace ExcelTools
         {
             int columnNumber = this.ConvertStringColumnToNumber(column);
 
-            string[] rows = excelWrapper.GetStringRows(columnNumber).ToArray();
+            string[] rows = excelWrapper.GetStringRows(columnNumber)?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
+            if (rows == null)
+            {
+                MessageBox.Show($"There isn't {column} column in {excelWrapper.FileName}");
+                return;
+            }
 
             int index = 0;
 
@@ -70,7 +77,7 @@ namespace ExcelTools
             var logs = new List<string>();
             foreach (var wrapper in excelWrappers)
             {
-                string[] rows = wrapper.GetStringRows(columnNumber).ToArray();
+                string[] rows = wrapper.GetStringRows(columnNumber)?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
                 int index = 0;
 
