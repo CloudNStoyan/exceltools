@@ -38,6 +38,12 @@ namespace ExcelTools
         {
             int columnNumber = this.ConvertStringColumnToNumber(column);
 
+            if (columnNumber == -1)
+            {
+                MessageBox.Show($"Column '{column}' is not a valid column!");
+                return;
+            }
+
             string[] rows = excelWrapper.GetStringRows(columnNumber)?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
             if (rows == null)
@@ -74,10 +80,22 @@ namespace ExcelTools
         {
             int columnNumber = this.ConvertStringColumnToNumber(column);
 
+            if (columnNumber == -1)
+            {
+                MessageBox.Show($"Column '{column}' is not a valid column!");
+                return;
+            }
+
             var logs = new List<string>();
             foreach (var wrapper in excelWrappers)
             {
                 string[] rows = wrapper.GetStringRows(columnNumber)?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
+                if (rows == null)
+                {
+                    MessageBox.Show($"There isn't {column} column in {wrapper.FileName}");
+                    return;
+                }
 
                 int index = 0;
 
@@ -111,6 +129,12 @@ namespace ExcelTools
         {
             int columnNumber = this.ConvertStringColumnToNumber(column);
 
+            if (columnNumber == -1)
+            {
+                MessageBox.Show($"Column '{column}' is not a valid column!");
+                return null;
+            }
+
             string[] columnData = !skipEmpty ? excelWrapper.GetStringRows(columnNumber) : excelWrapper.GetStringRows(columnNumber)?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
             return columnData;
@@ -119,6 +143,12 @@ namespace ExcelTools
         public void FindDuplicates(ExcelWrapper excelWrapper, string column)
         {
             int columnNumber = this.ConvertStringColumnToNumber(column);
+
+            if (columnNumber == -1)
+            {
+                MessageBox.Show($"Column '{column}' is not a valid column!");
+                return;
+            }
 
             string[] firstColumn = excelWrapper.GetStringRows(columnNumber).Where(x => x != null).ToArray();
 
