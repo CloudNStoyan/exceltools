@@ -70,6 +70,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Attributes\PageInfo.cs" />
+    <Compile Include="CustomResources.cs" />
     <Compile Include="ExcelAnalysis.cs" />
     <Compile Include="ExcelWrapper.cs" />
     <Compile Include="Logger.cs" />

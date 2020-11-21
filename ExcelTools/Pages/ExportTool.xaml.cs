@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,7 +29,7 @@ namespace ExcelTools.Pages
 
         private void SelectFileHandler(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog { Filter = "Excel Files|*.xls;*.xlsx|CSV files (*.csv)|*.csv" };
+            var openFileDialog = new OpenFileDialog { Filter = CustomResources.ExcelFileFilter };
 
             if (openFileDialog.ShowDialog() == true)
             {
