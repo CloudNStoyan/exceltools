@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ExcelTools.Pages"
+      xmlns:controls="clr-namespace:ExcelTools.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="400"
       Title="Find Tool">
@@ -25,28 +26,7 @@
                         <TextBlock Text="Case-Sensitive" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Label>
-                <Label>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox Name="MultipleFiles" Click="MultipleFiles_OnClick"/>
-                        <TextBlock Text="Multiple Files" Margin="5,0,0,0" />
-                        <TextBlock Text="*If checked it will perform the analysis on multiple files*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
-                    </StackPanel>
-                </Label>
-                <Label>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="File" Name="FileTextBlock"/>
-                        <TextBlock Text="*The excel file you want to analyse*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray" Name="FileSubTextBlock"/>
-                    </StackPanel>
-                </Label>
-                <Grid>
-                    <Button Content="Select File" Margin="5" Click="SelectFileHandler" Name="SelectFileButton" />
-                    <StackPanel Orientation="Horizontal" Name="FilePathViewWrapper" Visibility="Hidden">
-                        <TextBox Width="300" Height="25" Margin="5,0,0,0"
-                             HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                             Name="FilePathTextBox" IsReadOnly="True" />
-                        <Button Content="Change" Margin="10,0,0,0" Height="25" Padding="3" Click="ChangeFileHandler"/>
-                    </StackPanel>
-                </Grid>
+                <controls:MultipleFileSelection x:Name="FileSelection"/>
                 <Label>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Column name"/>

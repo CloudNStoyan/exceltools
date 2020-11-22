@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ExcelTools.Attributes;
-using Microsoft.Win32;
 
 namespace ExcelTools.Pages
 {
@@ -25,38 +24,16 @@ namespace ExcelTools.Pages
 
             this.Settings = new ExportSettings(this.SettingsContainer);
         }
-        
-
-        private void SelectFileHandler(object sender, RoutedEventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog { Filter = CustomResources.ExcelFileFilter };
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                this.FilePathTextBox.Text = openFileDialog.FileName;
-                this.SelectFileButton.Visibility = Visibility.Hidden;
-
-                this.FilePathViewWrapper.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void ChangeFileHandler(object sender, RoutedEventArgs e)
-        {
-            this.FilePathTextBox.Clear();
-
-            this.FilePathViewWrapper.Visibility = Visibility.Hidden;
-            this.SelectFileButton.Visibility = Visibility.Visible;
-        }
 
         private void RunAnalysis(object sender, RoutedEventArgs e)
         {
-            if (!File.Exists(this.FilePathTextBox.Text))
+            if (!File.Exists(this.FileSelection.SelectedFile))
             {
                 MessageBox.Show("No file selected!");
                 return;
             }
 
-            var excelWrapper = new ExcelWrapper(this.FilePathTextBox.Text);
+            var excelWrapper = new ExcelWrapper(this.FileSelection.SelectedFile);
 
             var data = this.ExcelAnalysis.ExportTool(excelWrapper, this.ColumnTextBox.Text, this.Settings.SkipEmpty);
 

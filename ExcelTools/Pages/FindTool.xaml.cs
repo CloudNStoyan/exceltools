@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ExcelTools.Attributes;
-using Microsoft.Win32;
 
 namespace ExcelTools.Pages
 {
@@ -12,8 +11,7 @@ namespace ExcelTools.Pages
     {
         private Logger Logger { get; }
         private ExcelAnalysis ExcelAnalysis { get; }
-        private string SelectedFile { get; set; }
-        private string[] SelectedFiles { get; set; }
+
         public FindTool(Logger logger)
         {
             this.InitializeComponent();
@@ -21,46 +19,6 @@ namespace ExcelTools.Pages
             this.Logger = logger;
 
             this.ExcelAnalysis = new ExcelAnalysis(this.Logger);
-        }
-
-        private void SelectFileHandler(object sender, RoutedEventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog { Filter = CustomResources.ExcelFileFilter };
-
-            if (this.MultipleFiles.IsChecked == true)
-            {
-                openFileDialog.Multiselect = true;
-            }
-
-            if (openFileDialog.ShowDialog() != true)
-            {
-                return;
-            }
-
-            this.FilePathTextBox.Text = this.MultipleFiles.IsChecked == true
-                ? string.Join(",", openFileDialog.FileNames.Select(Path.GetFileName))
-                : openFileDialog.FileName;
-
-            if (this.MultipleFiles.IsChecked == true)
-            {
-                this.SelectedFiles = openFileDialog.FileNames;
-            }
-            else
-            {
-                this.SelectedFile = openFileDialog.FileName;
-            }
-
-            this.SelectFileButton.Visibility = Visibility.Hidden;
-
-            this.FilePathViewWrapper.Visibility = Visibility.Visible;
-        }
-
-        private void ChangeFileHandler(object sender, RoutedEventArgs e)
-        {
-            this.FilePathTextBox.Clear();
-
-            this.FilePathViewWrapper.Visibility = Visibility.Hidden;
-            this.SelectFileButton.Visibility = Visibility.Visible;
         }
 
         private void RunAnalysis(object sender, RoutedEventArgs e)
@@ -71,27 +29,30 @@ namespace ExcelTools.Pages
                 return;
             }
 
-
-            if (this.MultipleFiles.IsChecked == false)
+            if (this.FileSelection.MultipleFilesChecked == false)
             {
-                if (!File.Exists(this.SelectedFile))
+                string filePath = this.FileSelection.SelectedFile;
+
+                if (!File.Exists(filePath))
                 {
                     MessageBox.Show("No file selected!");
                     return;
                 }
 
-                var excelWrapper = new ExcelWrapper(this.FilePathTextBox.Text);
+                var excelWrapper = new ExcelWrapper(filePath);
                 this.ExcelAnalysis.FindTool(excelWrapper, this.ColumnTextBox.Text, this.FindValueInput.Text, this.CaseSensitiveCheck.IsChecked == true);
             }
             else
             {
-                if (this.SelectedFiles == null || this.SelectedFiles.Length == 0)
+                string[] filePaths = this.FileSelection.SelectedFiles;
+
+                if (filePaths == null || filePaths.Length == 0)
                 {
                     MessageBox.Show("No file selected!");
                     return;
                 }
 
-                foreach (string selectedFile in this.SelectedFiles)
+                foreach (string selectedFile in filePaths)
                 {
                     if (!File.Exists(selectedFile))
                     {
@@ -100,28 +61,10 @@ namespace ExcelTools.Pages
                     }
                 }
 
-                var excelWrappers = this.SelectedFiles.Select(filePath => new ExcelWrapper(filePath)).ToList();
+                var excelWrappers = filePaths.Select(filePath => new ExcelWrapper(filePath)).ToList();
 
                 this.ExcelAnalysis.FindTool(excelWrappers.ToArray(), this.ColumnTextBox.Text, this.FindValueInput.Text, this.CaseSensitiveCheck.IsChecked == true);
             }
-        }
-
-        private void MultipleFiles_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (this.MultipleFiles.IsChecked == true)
-            {
-                this.SelectFileButton.Content = "Select Files";
-                this.FileTextBlock.Text = "Files";
-                this.FileSubTextBlock.Text = "*The excel files you want to analyse*";
-            }
-            else
-            {
-                this.SelectFileButton.Content = "Select File";
-                this.FileTextBlock.Text = "File";
-                this.FileSubTextBlock.Text = "*The excel file you want to analyse*";
-            }
-
-            this.ChangeFileHandler(sender, e);
         }
     }
 }

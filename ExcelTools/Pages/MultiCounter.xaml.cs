@@ -1,9 +1,7 @@
 ﻿using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ExcelTools.Attributes;
-using Microsoft.Win32;
 
 namespace ExcelTools.Pages
 {
@@ -12,7 +10,6 @@ namespace ExcelTools.Pages
     {
         private Logger Logger { get; }
         private ExcelAnalysis ExcelAnalysis { get; }
-        private string[] FilePaths { get; set; }
 
         public MultiCounter(Logger logger)
         {
@@ -23,38 +20,41 @@ namespace ExcelTools.Pages
             this.ExcelAnalysis = new ExcelAnalysis(this.Logger);
         }
 
-        private void SelectFileHandler(object sender, RoutedEventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog { Filter = CustomResources.ExcelFileFilter, Multiselect = true};
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                this.FilePathTextBox.Text = string.Join(", ", openFileDialog.FileNames.Select(Path.GetFileName));
-                this.FilePaths = openFileDialog.FileNames;
-
-                this.SelectFileButton.Visibility = Visibility.Hidden;
-
-                this.FilePathViewWrapper.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void ChangeFileHandler(object sender, RoutedEventArgs e)
-        {
-            this.FilePathTextBox.Clear();
-
-            this.FilePathViewWrapper.Visibility = Visibility.Hidden;
-            this.SelectFileButton.Visibility = Visibility.Visible;
-        }
-
         private void RunAnalysis(object sender, RoutedEventArgs e)
         {
-            if (!File.Exists(this.FilePathTextBox.Text))
+            if (this.FileSelection.MultipleFilesChecked)
             {
-                MessageBox.Show("No file selected!");
-                return;
-            }
+                var filePaths = this.FileSelection.SelectedFiles;
 
-            this.ExcelAnalysis.MultipleFilesCountCells(this.FilePaths);
+                if (filePaths == null || filePaths.Length == 0)
+                {
+                    MessageBox.Show("No files selected!");
+                    return;
+                }
+
+                foreach (string filePath in filePaths)
+                {
+                    if (!File.Exists(filePath))
+                    {
+                        MessageBox.Show($"Can't find '{filePath}'");
+                        return;
+                    }
+                }
+
+                this.ExcelAnalysis.MultipleFilesCountCells(filePaths);
+            }
+            else
+            {
+                string filePath = this.FileSelection.SelectedFile;
+
+                if (!File.Exists(filePath))
+                {
+                    MessageBox.Show("No file selected!");
+                    return;
+                }
+
+                this.ExcelAnalysis.MultipleFilesCountCells(new[] { filePath });
+            }
         }
     }
 }
