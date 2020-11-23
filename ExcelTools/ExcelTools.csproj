@@ -92,10 +92,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\CountByColor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\ExportTool.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -114,9 +110,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pages\CountByColor.xaml.cs">
-      <DependentUpon>CountByColor.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\ExportTool.xaml.cs">
       <DependentUpon>ExportTool.xaml</DependentUpon>
     </Compile>
