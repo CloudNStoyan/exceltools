@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -27,23 +28,61 @@ namespace ExcelTools.Pages
 
         private void RunAnalysis(object sender, RoutedEventArgs e)
         {
-            if (!File.Exists(this.FileSelection.SelectedFile))
+            if (this.FileSelection.MultipleFilesChecked == false)
             {
-                MessageBox.Show("No file selected!");
-                return;
+                string filePath = this.FileSelection.SelectedFile;
+
+                if (!File.Exists(filePath))
+                {
+                    MessageBox.Show("No file selected!");
+                    return;
+                }
+
+                var excelWrapper = new ExcelWrapper(filePath);
+
+                var data = this.ExcelAnalysis.ExportTool(excelWrapper, this.ColumnTextBox.Text, this.Settings.SkipEmpty);
+                
+                if (data == null)
+                {
+                    MessageBox.Show($"There is no column {this.ColumnTextBox.Text} in {excelWrapper.FileName}");
+                    return;
+                }
+
+                data = data.Select(x => x?.Replace("\n", " ")).ToArray();
+                this.OutputTextbox.Text = string.Join(this.Settings.SelectedSeparator, data);
             }
-
-            var excelWrapper = new ExcelWrapper(this.FileSelection.SelectedFile);
-
-            var data = this.ExcelAnalysis.ExportTool(excelWrapper, this.ColumnTextBox.Text, this.Settings.SkipEmpty);
-
-            if (data == null)
+            else
             {
-                MessageBox.Show($"There is no column {this.ColumnTextBox.Text} in {excelWrapper.FileName}");
-                return;
-            }
+                string[] filePaths = this.FileSelection.SelectedFiles;
 
-            this.OutputTextbox.Text = string.Join(this.Settings.SelectedSeparator, data);
+                if (filePaths == null || filePaths.Length == 0)
+                {
+                    MessageBox.Show("No file selected!");
+                    return;
+                }
+
+                foreach (string selectedFile in filePaths)
+                {
+                    if (!File.Exists(selectedFile))
+                    {
+                        MessageBox.Show($"Cannot find {selectedFile}!");
+                        return;
+                    }
+                }
+
+                var excelWrappers = filePaths.Select(filePath => new ExcelWrapper(filePath)).ToArray();
+
+                var data = this.ExcelAnalysis.ExportTool(excelWrappers, this.ColumnTextBox.Text, this.Settings.SkipEmpty);
+                
+                if (data == null)
+                {
+                    MessageBox.Show($"No data can be exported");
+                    return;
+                }
+                
+                data = data.Select(x => x?.Replace("\n", " ")).ToArray();
+                this.OutputTextbox.Text = string.Join(this.Settings.SelectedSeparator, data);
+            }
         }
     }
 

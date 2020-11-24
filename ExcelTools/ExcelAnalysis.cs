@@ -140,6 +140,34 @@ namespace ExcelTools
             return columnData;
         }
 
+        public string[] ExportTool(ExcelWrapper[] excelWrappers, string column, bool skipEmpty = false)
+        {
+            int columnNumber = this.ConvertStringColumnToNumber(column);
+
+            if (columnNumber == -1)
+            {
+                MessageBox.Show($"Column '{column}' is not a valid column!");
+                return null;
+            }
+
+            var list = new List<string>();
+
+            foreach (var excelWrapper in excelWrappers)
+            {
+                string[] columnData = !skipEmpty ? excelWrapper.GetStringRows(columnNumber) : excelWrapper.GetStringRows(columnNumber)?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
+                if (columnData == null)
+                {
+                    MessageBox.Show($"{excelWrapper.FileName} doesn't have '{column}' column!");
+                    return null;
+                }
+
+                list.AddRange(columnData);
+            }
+
+            return list.ToArray();
+        }
+
         public void FindDuplicates(ExcelWrapper excelWrapper, string column)
         {
             int columnNumber = this.ConvertStringColumnToNumber(column);
