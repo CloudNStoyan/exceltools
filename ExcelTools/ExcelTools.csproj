@@ -61,6 +61,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\MultipleFileSelectionOnly.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\MultipleFileSelection.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -78,6 +82,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Attributes\PageInfo.cs" />
+    <Compile Include="Controls\MultipleFileSelectionOnly.xaml.cs">
+      <DependentUpon>MultipleFileSelectionOnly.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MultipleFileSelection.xaml.cs">
       <DependentUpon>MultipleFileSelection.xaml</DependentUpon>
     </Compile>
@@ -92,6 +99,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\CompareTool.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ExportTool.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,6 +121,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\CompareTool.xaml.cs">
+      <DependentUpon>CompareTool.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ExportTool.xaml.cs">
       <DependentUpon>ExportTool.xaml</DependentUpon>
     </Compile>
