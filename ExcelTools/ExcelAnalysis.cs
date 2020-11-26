@@ -27,7 +27,7 @@ namespace ExcelTools
             this.Logger.Log(count + " entries!");
         }
 
-        private int ConvertStringColumnToNumber(string column)
+        public static int ConvertStringColumnToNumber(string column)
         {
             const string alphabet = "ABCDEFGHIJKLMNPPQRSTUVWX";
 
@@ -36,7 +36,7 @@ namespace ExcelTools
 
         public void FindTool(ExcelWrapper excelWrapper, string column, string value, bool caseSensitive)
         {
-            int columnNumber = this.ConvertStringColumnToNumber(column);
+            int columnNumber = ConvertStringColumnToNumber(column);
 
             if (columnNumber == -1)
             {
@@ -78,7 +78,7 @@ namespace ExcelTools
 
         public void FindTool(ExcelWrapper[] excelWrappers, string column, string value, bool caseSensitive)
         {
-            int columnNumber = this.ConvertStringColumnToNumber(column);
+            int columnNumber = ConvertStringColumnToNumber(column);
 
             if (columnNumber == -1)
             {
@@ -127,7 +127,7 @@ namespace ExcelTools
 
         public string[] ExportTool(ExcelWrapper excelWrapper, string column, bool skipEmpty = false)
         {
-            int columnNumber = this.ConvertStringColumnToNumber(column);
+            int columnNumber = ConvertStringColumnToNumber(column);
 
             if (columnNumber == -1)
             {
@@ -142,7 +142,7 @@ namespace ExcelTools
 
         public string[] ExportTool(ExcelWrapper[] excelWrappers, string column, bool skipEmpty = false)
         {
-            int columnNumber = this.ConvertStringColumnToNumber(column);
+            int columnNumber = ConvertStringColumnToNumber(column);
 
             if (columnNumber == -1)
             {
@@ -170,7 +170,7 @@ namespace ExcelTools
 
         public void FindDuplicates(ExcelWrapper excelWrapper, string column)
         {
-            int columnNumber = this.ConvertStringColumnToNumber(column);
+            int columnNumber = ConvertStringColumnToNumber(column);
 
             if (columnNumber == -1)
             {

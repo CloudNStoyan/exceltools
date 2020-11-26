@@ -11,6 +11,15 @@
     <Grid Background="White">
         <StackPanel>
             <controls:MultipleFileSelectionOnly FileSelected="OnFileSelected" FileChanged="OnFileChanged" x:Name="FileSelection"/>
+            <Label>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Column name"/>
+                    <TextBlock Text="*The letter representing the column*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
+                </StackPanel>
+            </Label>
+            <TextBox Width="25" Height="25" 
+                     HorizontalAlignment="Left" Margin="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                     Text="A" Name="ColumnTextBox"/>
             <Button Content="Compare" Margin="5" Padding="5" IsEnabled="False" x:Name="CompareButton" Click="RunAnalysis"/>
         </StackPanel>
     </Grid>
