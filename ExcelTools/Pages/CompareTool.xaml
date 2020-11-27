@@ -10,7 +10,8 @@
       Title="CompareTool">
     <Grid Background="White">
         <StackPanel>
-            <controls:MultipleFileSelectionOnly FileSelected="OnFileSelected" FileChanged="OnFileChanged" x:Name="FileSelection"/>
+            <controls:FileSelection x:Name="FirstFileSelection" HeaderText="First File" SubHeaderText="*The first file*"/>
+            <controls:FileSelection x:Name="SecondFileSelection" HeaderText="Second File" SubHeaderText="*The second file*"/>
             <Label>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Column name"/>

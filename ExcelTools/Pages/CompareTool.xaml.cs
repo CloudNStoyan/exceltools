@@ -29,7 +29,7 @@ namespace ExcelTools.Pages
 
         private void RunAnalysis(object sender, RoutedEventArgs e)
         {
-            string[] filePaths = this.FileSelection.SelectedFiles;
+            string[] filePaths = {""};
 
             if (filePaths.Length < 2)
             {

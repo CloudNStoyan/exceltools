@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:ExcelTools.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel>
+    <StackPanel Loaded="FileSelection_OnLoaded">
         <Label>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="File" Name="FileTextBlock"/>
-                <TextBlock Text="*The excel file you want to analyse*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray" Name="FileSubTextBlock"/>
+                <TextBlock Text="{Binding HeaderText}" Name="FileTextBlock"/>
+                <TextBlock Text="{Binding SubHeaderText}" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray" Name="FileSubTextBlock"/>
             </StackPanel>
         </Label>
         <Grid>
