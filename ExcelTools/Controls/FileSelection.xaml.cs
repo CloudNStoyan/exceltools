@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 
@@ -33,6 +34,10 @@ namespace ExcelTools.Controls
                 typeof(FileSelection),
                 new PropertyMetadata("*The excel file you want to analyse*")
             );
+
+        public event Action FileSelected;
+        public event Action FileChanged;
+
         public string SelectedFile { get; set; }
 
         public FileSelection()
@@ -58,6 +63,8 @@ namespace ExcelTools.Controls
             this.SelectFileButton.Visibility = Visibility.Hidden;
 
             this.FilePathViewWrapper.Visibility = Visibility.Visible;
+
+            this.FileSelected?.Invoke();
         }
 
         private void ChangeFileHandler(object sender, RoutedEventArgs e)
@@ -66,6 +73,8 @@ namespace ExcelTools.Controls
 
             this.FilePathViewWrapper.Visibility = Visibility.Hidden;
             this.SelectFileButton.Visibility = Visibility.Visible;
+
+            this.FileChanged?.Invoke();
         }
 
         private void FileSelection_OnLoaded(object sender, RoutedEventArgs e)

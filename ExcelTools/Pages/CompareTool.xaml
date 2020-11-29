@@ -8,10 +8,12 @@
       mc:Ignorable="d" 
       d:DesignHeight="350" d:DesignWidth="400"
       Title="CompareTool">
-    <Grid Background="White">
+    <Grid Background="White" Loaded="OnLoaded">
         <StackPanel>
-            <controls:FileSelection x:Name="FirstFileSelection" HeaderText="First File" SubHeaderText="*The first file*"/>
-            <controls:FileSelection x:Name="SecondFileSelection" HeaderText="Second File" SubHeaderText="*The second file*"/>
+            <controls:FileSelection x:Name="FirstFileSelection" HeaderText="First File" SubHeaderText="*The first file*"
+                                    FileChanged="FirstFileSelection_OnFileChanged" FileSelected="FirstFileSelection_OnFileSelected"/>
+            <controls:FileSelection x:Name="SecondFileSelection" HeaderText="Second File" SubHeaderText="*The second file*" 
+                                    FileChanged="SecondFileSelection_OnFileChanged" FileSelected="SecondFileSelection_OnFileSelected"/>
             <Label>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Column name"/>
@@ -21,7 +23,7 @@
             <TextBox Width="25" Height="25" 
                      HorizontalAlignment="Left" Margin="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                      Text="A" Name="ColumnTextBox"/>
-            <Button Content="Compare" Margin="5" Padding="5" x:Name="CompareButton" Click="RunAnalysis"/>
+            <Button Content="Compare" Margin="5" Padding="5" x:Name="CompareButton" IsEnabled="False" Click="RunAnalysis"/>
         </StackPanel>
     </Grid>
 </Page>
