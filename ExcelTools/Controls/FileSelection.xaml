@@ -7,6 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel Loaded="FileSelection_OnLoaded">
+        <Label x:Name="MultipleFilesLabel" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Name="MultipleFiles" Click="MultipleFiles_OnClick"/>
+                <TextBlock Text="Multiple Files" Margin="5,0,0,0" />
+                <TextBlock Text="*If checked it will perform the analysis on multiple files*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
+            </StackPanel>
+        </Label>
         <Label>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding HeaderText}" Name="FileTextBlock"/>
