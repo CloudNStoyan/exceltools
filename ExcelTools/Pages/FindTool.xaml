@@ -26,7 +26,7 @@
                         <TextBlock Text="Case-Sensitive" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Label>
-                <controls:MultipleFileSelection x:Name="FileSelection"/>
+                <controls:FileSelection Selection="Both" x:Name="FileSelection"/>
                 <Label>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Column name"/>

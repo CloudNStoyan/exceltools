@@ -11,7 +11,7 @@
     <Grid Background="White">
         <GroupBox Header="Export Tool">
             <StackPanel Margin="10">
-                <controls:MultipleFileSelection x:Name="FileSelection"/>
+                <controls:FileSelection x:Name="FileSelection" Selection="Both"/>
                 <Label>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Column name" />
