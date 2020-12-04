@@ -19,10 +19,7 @@
                                    Margin="5,0,0,0" Foreground="gray" />
                     </StackPanel>
                 </Label>
-                <TextBox Width="25" Height="25"
-                         HorizontalAlignment="Left" Margin="5,0,0,0" VerticalContentAlignment="Center"
-                         HorizontalContentAlignment="Center"
-                         Text="A" Name="ColumnTextBox" />
+                <controls:Input Width="25" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Text="A" x:Name="ColumnTextBox"/>
                 <GroupBox Header="Settings">
                     <StackPanel Name="SettingsContainer" />
                 </GroupBox>

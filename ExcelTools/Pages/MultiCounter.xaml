@@ -11,7 +11,7 @@
     <Grid Background="White">
         <GroupBox Header="Multi Counter">
             <StackPanel Margin="10">
-                <controls:MultipleFileSelection x:Name="FileSelection"/>
+                <controls:FileSelection Selection="Single" x:Name="FileSelection"/>
                 <Button Content="Run" Margin="5" Click="RunAnalysis"/>
             </StackPanel>
         </GroupBox>

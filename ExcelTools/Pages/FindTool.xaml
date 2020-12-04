@@ -33,9 +33,7 @@
                         <TextBlock Text="*The letter representing the column*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
                     </StackPanel>
                 </Label>
-                <TextBox Width="25" Height="25" 
-                     HorizontalAlignment="Left" Margin="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                     Text="A" Name="ColumnTextBox"/>
+                <controls:Input Width="25" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Text="A" x:Name="ColumnTextBox"/>
                 <Button Content="Run" Margin="5" Click="RunAnalysis"/>
             </StackPanel>
         </GroupBox>

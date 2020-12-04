@@ -5,6 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExcelTools.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="25" d:DesignWidth="120">
-    <TextBox Name="MainTextBox" TextChanged="MainTextBox_OnTextChanged"/>
+             d:DesignHeight="25" d:DesignWidth="120" Loaded="Input_OnLoaded">
+    <TextBox Name="MainTextBox" TextChanged="MainTextBox_OnTextChanged" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="{Binding Text}"/>
 </UserControl>

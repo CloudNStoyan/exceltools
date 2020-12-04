@@ -5,15 +5,38 @@ namespace ExcelTools.Controls
 {
     public partial class Input : UserControl
     {
+        public string Text
+        {
+            get => (string)this.GetValue(TextProperty);
+            set => this.SetValue(TextProperty, value);
+        }
+
+        public static readonly DependencyProperty TextProperty
+            = DependencyProperty.Register(
+                "Text",
+                typeof(string),
+                typeof(Input),
+                new PropertyMetadata(string.Empty)
+            );
+
         public Input() => this.InitializeComponent();
 
         private void MainTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             string text = this.MainTextBox.Text;
 
-            this.MainTextBox.Text = text.Length > 1 ? text[text.Length - 1].ToString().ToUpper() : text.ToUpper();
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return;
+            }
+
+            char lastChar = text[text.Length - 1];
+
+            this.MainTextBox.Text = char.IsLetter(lastChar) ? lastChar.ToString().ToUpper() : text.Replace(lastChar.ToString(), "").ToUpper();
 
             this.MainTextBox.CaretIndex = 1;
         }
+
+        private void Input_OnLoaded(object sender, RoutedEventArgs e) => this.DataContext = this;
     }
 }
