@@ -21,7 +21,21 @@
                 </Label>
                 <controls:Input Width="25" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Text="A" x:Name="ColumnTextBox"/>
                 <GroupBox Header="Settings">
-                    <StackPanel Name="SettingsContainer" />
+                    <StackPanel>
+                        <Label>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Separator" />
+                                <TextBlock Text="*The symbol that will be used to split the data rows*" FontSize="10" VerticalAlignment="Bottom"
+                                           Margin="5,0,0,0" Foreground="gray" />
+                            </StackPanel>
+                        </Label>
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="20,0,20,0" Name="SeparatorsPanel">
+                            <RadioButton GroupName="Separator" Content="Space" HorizontalAlignment="Left" DataContext="0"/>
+                            <RadioButton GroupName="Separator" Content="New Line" HorizontalAlignment="Center" DataContext="1" IsChecked="True"/>
+                            <RadioButton GroupName="Separator" Content="Comma" HorizontalAlignment="Right" DataContext="2"/>
+                        </Grid>
+                        <CheckBox Content="Skip empty cells" Margin="5,15,0,0" x:Name="SkipEmpty"/>
+                    </StackPanel>
                 </GroupBox>
                 <Button Content="Run" Margin="5" Click="RunAnalysis" />
                 <TextBox HorizontalAlignment="Left" Margin="5,0,0,0" Width="360" Height="100" Name="OutputTextbox" />
