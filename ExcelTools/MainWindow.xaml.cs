@@ -43,6 +43,11 @@ namespace ExcelTools
                 button.DataContext = order;
 
                 buttons.Add(button);
+
+                if (header == "Export Tool")
+                {
+                    this.Settings.Navigate(instance);
+                }
             }
 
             buttons = buttons.OrderBy(x => int.Parse(x.DataContext.ToString())).ToList();
