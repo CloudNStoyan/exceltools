@@ -8,8 +8,9 @@
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="400"
       Title="ExportTool">
-    <Grid Background="White">
-        <GroupBox Header="Export Tool">
+    <Grid Background="#F1F1F1">
+        <StackPanel>
+            <TextBlock Text="Export Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
             <StackPanel Margin="10">
                 <controls:FileSelection x:Name="FileSelection" Selection="Both"/>
                 <Label>
@@ -59,6 +60,6 @@
                 <TextBox HorizontalAlignment="Left" Margin="5,0,0,0" Width="360" Height="100" Name="OutputTextbox"
                          VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
             </StackPanel>
-        </GroupBox>
+        </StackPanel>
     </Grid>
 </Page>

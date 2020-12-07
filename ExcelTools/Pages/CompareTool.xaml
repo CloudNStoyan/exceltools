@@ -8,20 +8,23 @@
       mc:Ignorable="d" 
       d:DesignHeight="350" d:DesignWidth="400"
       Title="CompareTool">
-    <Grid Background="White" Loaded="OnLoaded">
+    <Grid Background="#F1F1F1" Loaded="OnLoaded">
         <StackPanel>
-            <controls:FileSelection x:Name="FirstFileSelection" HeaderText="First File" SubHeaderText="*The first file*"
+            <TextBlock Text="Compare Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
+            <StackPanel>
+                <controls:FileSelection x:Name="FirstFileSelection" HeaderText="First File" SubHeaderText="*The first file*"
                                     FileChanged="FirstFileSelection_OnFileChanged" FileSelected="FirstFileSelection_OnFileSelected"/>
-            <controls:FileSelection x:Name="SecondFileSelection" HeaderText="Second File" SubHeaderText="*The second file*" 
+                <controls:FileSelection x:Name="SecondFileSelection" HeaderText="Second File" SubHeaderText="*The second file*" 
                                     FileChanged="SecondFileSelection_OnFileChanged" FileSelected="SecondFileSelection_OnFileSelected"/>
-            <Label>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Column name"/>
-                    <TextBlock Text="*The letter representing the column*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
-                </StackPanel>
-            </Label>
-            <controls:Input Width="25" Height="25" HorizontalAlignment="Left" Margin="5,0,0,5" Text="A" x:Name="ColumnTextBox"/>
-            <Button Content="Compare" Margin="5" Padding="5" x:Name="CompareButton" IsEnabled="False" Click="RunAnalysis"/>
+                <Label>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Column name"/>
+                        <TextBlock Text="*The letter representing the column*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
+                    </StackPanel>
+                </Label>
+                <controls:Input Width="25" Height="25" HorizontalAlignment="Left" Margin="5,0,0,5" Text="A" x:Name="ColumnTextBox"/>
+                <Button Content="Compare" Margin="5" Padding="5" x:Name="CompareButton" IsEnabled="False" Click="RunAnalysis"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

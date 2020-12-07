@@ -20,7 +20,7 @@ namespace ExcelTools
         {
             var logWrapper = new StackPanel();
 
-            var textBlock = new TextBlock {Text = text, TextWrapping = TextWrapping.Wrap};
+            var textBlock = new TextBlock {Text = text, TextWrapping = TextWrapping.Wrap, Foreground = Brushes.White};
 
             if (this.UseTimestamp)
             {
@@ -31,7 +31,7 @@ namespace ExcelTools
                 var timeStampTextBlock = new TextBlock
                 {
                     Text = timestamp,
-                    Foreground = Brushes.PaleVioletRed
+                    Foreground = Brushes.White
                 };
 
                 logWrapper.Children.Add(timeStampTextBlock);

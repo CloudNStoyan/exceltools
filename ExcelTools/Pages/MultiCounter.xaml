@@ -8,12 +8,13 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="400"
       Title="MultiCounter">
-    <Grid Background="White">
-        <GroupBox Header="Multi Counter">
+    <Grid Background="#F1F1F1">
+        <StackPanel>
+            <TextBlock Text="Multi Counter" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
             <StackPanel Margin="10">
                 <controls:FileSelection Selection="Single" x:Name="FileSelection"/>
                 <Button Content="Run" Margin="5" Click="RunAnalysis"/>
             </StackPanel>
-        </GroupBox>
+        </StackPanel>
     </Grid>
 </Page>

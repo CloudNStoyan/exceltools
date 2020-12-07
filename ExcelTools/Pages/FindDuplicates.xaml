@@ -9,8 +9,9 @@
       d:DesignHeight="450" d:DesignWidth="400"
       Title="FindDuplicates">
 
-    <Grid Background="White">
-       <GroupBox Header="Find Duplicates">
+    <Grid Background="#F1F1F1">
+       <StackPanel>
+            <TextBlock Text="Find Duplicates" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
             <StackPanel Margin="10">
                 <controls:FileSelection x:Name="FileSelection"/>
                 <Label>
@@ -22,6 +23,6 @@
                 <controls:Input Width="25" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Text="A" x:Name="ColumnTextBox"/>
                 <Button Content="Run" Margin="5" Click="RunAnalysis"/>
             </StackPanel>
-        </GroupBox>
+        </StackPanel>
     </Grid>
 </Page>

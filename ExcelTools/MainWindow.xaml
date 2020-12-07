@@ -6,19 +6,29 @@
         mc:Ignorable="d"
         Title="Excel Tools" Height="530" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
-        <DockPanel>
-            <GroupBox Header="Navigation" DockPanel.Dock="Left" Width="150">
-                <StackPanel Name="NavigationContainer"/>
-            </GroupBox>
+        <DockPanel Background="#F1F1F1">
+            <Border Background="#217346">
+                <GroupBox DockPanel.Dock="Left" Width="150" BorderThickness="0">
+                    <GroupBox.Header>
+                        <TextBlock Text="Navigation" Foreground="White" FontSize="28"/>
+                    </GroupBox.Header>
+                    <StackPanel Name="NavigationContainer"/>
+                </GroupBox>
+            </Border>
             <Frame Name="Settings" Width="400" NavigationUIVisibility="Hidden"/>
-            <GroupBox Header="Result Log" DockPanel.Dock="Right">
-                <Grid>
-                    <ScrollViewer>
-                        <StackPanel Name="LogStackPanel" />
-                    </ScrollViewer>
-                    <Button Content="Clear" VerticalAlignment="Bottom" Click="ClearLogStackPanelHandler"/>
-                </Grid>
-            </GroupBox>
+            <Border Background="#217346">
+                <GroupBox DockPanel.Dock="Right" BorderThickness="0">
+                    <GroupBox.Header>
+                        <TextBlock Text="Result Log" Foreground="White" FontSize="28" Margin="50,0,0,0"/>
+                    </GroupBox.Header>
+                    <StackPanel>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="420">
+                            <StackPanel Name="LogStackPanel" />
+                        </ScrollViewer>
+                        <Button Content="Clear" VerticalAlignment="Bottom" Click="ClearLogStackPanelHandler" Height="25"/>
+                    </StackPanel>
+                </GroupBox>
+            </Border>
         </DockPanel>
     </Grid>
 </Window>
