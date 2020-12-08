@@ -11,7 +11,7 @@
     <Grid Background="#F1F1F1" Loaded="OnLoaded">
         <StackPanel>
             <TextBlock Text="Compare Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
-            <StackPanel>
+            <StackPanel Margin="10">
                 <controls:FileSelection x:Name="FirstFileSelection" HeaderText="First File" SubHeaderText="*The first file*"
                                     FileChanged="FirstFileSelection_OnFileChanged" FileSelected="FirstFileSelection_OnFileSelected"/>
                 <controls:FileSelection x:Name="SecondFileSelection" HeaderText="Second File" SubHeaderText="*The second file*" 
