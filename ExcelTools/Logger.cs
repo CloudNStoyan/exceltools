@@ -16,6 +16,14 @@ namespace ExcelTools
             this.UseTimestamp = useTimestamp;
         }
 
+        public void Log(string[] logs)
+        {
+            foreach (string log in logs)
+            {
+                this.Log(log);
+            }
+        }
+
         public void Log(string text)
         {
             var logWrapper = new StackPanel();

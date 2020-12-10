@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ExcelTools.Attributes;
@@ -32,16 +34,13 @@ namespace ExcelTools.Pages
                 return;
             }
 
-            string[] firstExcelRows = firstExcelWrapper.GetStringRows(column);
-            string[] secondExcelRows = secondExcelWrapper.GetStringRows(column);
+            string[] firstExcelRows = firstExcelWrapper.GetStringRows(column).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            string[] secondExcelRows = secondExcelWrapper.GetStringRows(column).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
-            foreach (string rowValue in firstExcelRows)
-            {
-                if (secondExcelRows.Contains(rowValue))
-                {
-                    this.Logger.Log($"'{rowValue}' was found in the two excels");
-                }
-            }
+            var logs = firstExcelRows.Where(x => secondExcelRows.Contains(x))
+                .Select(x => $"'{x}' was found in the two excels").ToArray();
+
+           this.Logger.Log(string.Join(Environment.NewLine, logs));
 
         }
 
