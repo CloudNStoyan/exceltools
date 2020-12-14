@@ -13,15 +13,12 @@ namespace ExcelTools.Pages
     public partial class ExportTool : Page
     {
         private Logger Logger { get; }
-        private ExcelAnalysis ExcelAnalysis { get; }
 
         public ExportTool(Logger logger)
         {
             this.InitializeComponent();
 
             this.Logger = logger;
-
-            this.ExcelAnalysis = new ExcelAnalysis(this.Logger);
         }
 
         private string[] separators = {" ", Environment.NewLine, ","};
@@ -40,7 +37,7 @@ namespace ExcelTools.Pages
 
                 var excelWrapper = new ExcelWrapper(filePath);
 
-                var data = this.ExcelAnalysis.ExportTool(excelWrapper, this.ColumnTextBox.Text, this.SkipEmpty.IsChecked == true);
+                var data = this.Export(excelWrapper, this.ColumnTextBox.Text, this.SkipEmpty.IsChecked == true);
                 
                 if (data == null)
                 {
@@ -79,7 +76,7 @@ namespace ExcelTools.Pages
 
                 var excelWrappers = filePaths.Select(filePath => new ExcelWrapper(filePath)).ToArray();
 
-                var data = this.ExcelAnalysis.ExportTool(excelWrappers, this.ColumnTextBox.Text, this.SkipEmpty.IsChecked == true);
+                var data = this.Export(excelWrappers, this.ColumnTextBox.Text, this.SkipEmpty.IsChecked == true);
                 
                 if (data == null)
                 {
@@ -97,6 +94,49 @@ namespace ExcelTools.Pages
 
                 this.OutputTextbox.Text = string.Join(separator, data);
             }
+        }
+
+        private string[] Export(ExcelWrapper excelWrapper, string column, bool skipEmpty = false)
+        {
+            int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
+
+            if (columnNumber == -1)
+            {
+                MessageBox.Show($"Column '{column}' is not a valid column!");
+                return null;
+            }
+
+            string[] columnData = !skipEmpty ? excelWrapper.GetStringRows(columnNumber) : excelWrapper.GetStringRows(columnNumber)?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
+            return columnData;
+        }
+
+        private string[] Export(ExcelWrapper[] excelWrappers, string column, bool skipEmpty = false)
+        {
+            int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
+
+            if (columnNumber == -1)
+            {
+                MessageBox.Show($"Column '{column}' is not a valid column!");
+                return null;
+            }
+
+            var list = new List<string>();
+
+            foreach (var excelWrapper in excelWrappers)
+            {
+                string[] columnData = !skipEmpty ? excelWrapper.GetStringRows(columnNumber) : excelWrapper.GetStringRows(columnNumber)?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
+                if (columnData == null)
+                {
+                    MessageBox.Show($"{excelWrapper.FileName} doesn't have '{column}' column!");
+                    return null;
+                }
+
+                list.AddRange(columnData);
+            }
+
+            return list.ToArray();
         }
     }
 }

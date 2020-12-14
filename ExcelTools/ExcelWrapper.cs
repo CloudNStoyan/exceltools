@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using ExcelDataReader;
 
@@ -12,6 +13,13 @@ namespace ExcelTools
         {
             this.FilePath = filePath;
             this.FileName = Path.GetFileName(filePath);
+        }
+
+        public static int ConvertStringColumnToNumber(string column)
+        {
+            const string alphabet = "ABCDEFGHIJKLMNPPQRSTUVWX";
+
+            return alphabet.IndexOf(column, StringComparison.Ordinal);
         }
 
         public int GetCount()

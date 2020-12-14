@@ -117,7 +117,6 @@
       <DependentUpon>FileSelection.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomResources.cs" />
-    <Compile Include="ExcelAnalysis.cs" />
     <Compile Include="ExcelWrapper.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MainWindow.xaml.cs">

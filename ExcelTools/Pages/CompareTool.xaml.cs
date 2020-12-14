@@ -37,7 +37,7 @@ namespace ExcelTools.Pages
             }
 
             string columnText = this.ColumnTextBox.Text;
-            int column = ExcelAnalysis.ConvertStringColumnToNumber(columnText);
+            int column = ExcelWrapper.ConvertStringColumnToNumber(columnText);
 
             if (column == -1)
             {
