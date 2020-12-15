@@ -12,7 +12,7 @@
         <StackPanel>
             <TextBlock Text="Multi Counter" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
             <StackPanel Margin="10">
-                <controls:FileSelection Selection="Single" x:Name="FileSelection"/>
+                <controls:FileSelection Selection="Both" x:Name="FileSelection"/>
                 <Button Content="Run" Margin="5" Click="RunAnalysis"/>
             </StackPanel>
         </StackPanel>
