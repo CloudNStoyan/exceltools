@@ -131,6 +131,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Features.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\FindDuplicates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -150,6 +154,9 @@
     </Compile>
     <Compile Include="Pages\ExportTool.xaml.cs">
       <DependentUpon>ExportTool.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Features.xaml.cs">
+      <DependentUpon>Features.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\FindDuplicates.xaml.cs">
       <DependentUpon>FindDuplicates.xaml</DependentUpon>

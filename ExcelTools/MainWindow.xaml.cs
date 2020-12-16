@@ -28,7 +28,22 @@ namespace ExcelTools
 
             foreach (var pageClass in pageClasses)
             {
-                var instance = (Page) Activator.CreateInstance(pageClass, this.Logger);
+                bool hasLoggerParameter = false;
+
+                var constructorParameters = pageClass.GetConstructors().Select(x => x.GetParameters());
+
+                foreach (var parameters in constructorParameters)
+                {
+                    foreach (var parameterInfo in parameters)
+                    {
+                        if (parameterInfo.Name == "logger")
+                        {
+                            hasLoggerParameter = true;
+                        }
+                    }
+                }
+
+                var instance = hasLoggerParameter ? (Page) Activator.CreateInstance(pageClass, this.Logger) : (Page) Activator.CreateInstance(pageClass);
                 string header = pageClass.GetCustomAttribute<PageInfo>().Header;
                 int order = pageClass.GetCustomAttribute<PageInfo>().Order;
 
@@ -44,7 +59,7 @@ namespace ExcelTools
 
                 buttons.Add(button);
 
-                if (header == "Export Tool")
+                if (order == 0)
                 {
                     this.Settings.Navigate(instance);
                 }

@@ -1,0 +1,31 @@
+﻿<Page x:Class="ExcelTools.Pages.Features"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ExcelTools.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="400"
+      Title="Features">
+    <Grid Background="#F1F1F1">
+        <StackPanel>
+            <TextBlock Text="Features" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
+            <StackPanel Margin="10">
+                <TextBlock Text="Compare Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White" Width="140"/>
+                <TextBlock Text="The Compare Tool lets you compare excels to see if they have any differences or similarities" TextAlignment="Justify" TextWrapping="Wrap"/>
+
+                <TextBlock Text="Export Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White" Width="140" Margin="0,10,0,0"/>
+                <TextBlock Text="The Export Tool lets you export excel files to data rows with many options including different separators and multiple columns" TextAlignment="Justify" TextWrapping="Wrap"/>
+
+                <TextBlock Text="Find Duplicates" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White" Width="140" Margin="0,10,0,0"/>
+                <TextBlock Text="The Find Duplicates feature lets you know if there are duplicates (same cells) in two different excels and whats there position" TextAlignment="Justify" TextWrapping="Wrap"/>
+
+                <TextBlock Text="Find Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White" Width="140" Margin="0,10,0,0"/>
+                <TextBlock Text="The Find Tool lets you search through one or more excels to find specific value" TextAlignment="Justify" TextWrapping="Wrap"/>
+
+                <TextBlock Text="Multi Counter" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White" Width="140" Margin="0,10,0,0"/>
+                <TextBlock Text="The Multi Counter feature lets you count how many cells are in a excel file/s" TextAlignment="Justify" TextWrapping="Wrap"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

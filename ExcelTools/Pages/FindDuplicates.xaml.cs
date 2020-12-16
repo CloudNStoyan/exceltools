@@ -8,7 +8,7 @@ using ExcelTools.Attributes;
 
 namespace ExcelTools.Pages
 {
-    [PageInfo(Header = "Duplicate Finder", Order = 0)]
+    [PageInfo(Header = "Duplicate Finder")]
     public partial class FindDuplicates : Page
     {
         private Logger Logger { get; }
