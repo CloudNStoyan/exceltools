@@ -20,7 +20,7 @@
                                    Margin="5,0,0,0" Foreground="gray" />
                     </StackPanel>
                 </Label>
-                <controls:Input Width="25" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Text="A" x:Name="ColumnTextBox"/>
+                <controls:MultiInput Margin="5,0,0,0" x:Name="Columns" />
                 <GroupBox Header="Options">
                     <StackPanel>
                         <Label>

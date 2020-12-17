@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="ExcelTools.Controls.MultiInput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ExcelTools.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="100">
+    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+            <Button Content="-" Height="25" Width="25" Background="White" Click="RemoveInput" x:Name="RemoveBtn"/>
+            <StackPanel Orientation="Horizontal" x:Name="InputPanel" Margin="5,0,0,0">
+                <local:Input Height="25" Width="25" Text="A"/>
+            </StackPanel>
+            <Button Content="+" Height="25" Width="25" Background="White" Margin="5,0,0,0" Click="AddInput" x:Name="AddBtn"/>
+    </StackPanel>
+</UserControl>

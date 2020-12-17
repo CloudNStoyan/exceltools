@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using ExcelTools.Attributes;
 
 namespace ExcelTools.Pages
@@ -37,11 +36,13 @@ namespace ExcelTools.Pages
 
                 var excelWrapper = new ExcelWrapper(filePath);
 
-                var data = this.Export(excelWrapper, this.ColumnTextBox.Text, this.SkipEmpty.IsChecked == true);
+                string column = this.Columns.GetColumns()[0];
+
+                var data = this.Export(excelWrapper, column, this.SkipEmpty.IsChecked == true);
                 
                 if (data == null)
                 {
-                    MessageBox.Show($"There is no column {this.ColumnTextBox.Text} in {excelWrapper.FileName}");
+                    MessageBox.Show($"There is no column {column} in {excelWrapper.FileName}");
                     return;
                 }
 
@@ -76,7 +77,9 @@ namespace ExcelTools.Pages
 
                 var excelWrappers = filePaths.Select(filePath => new ExcelWrapper(filePath)).ToArray();
 
-                var data = this.Export(excelWrappers, this.ColumnTextBox.Text, this.SkipEmpty.IsChecked == true);
+                string column = this.Columns.GetColumns()[0];
+
+                var data = this.Export(excelWrappers, column, this.SkipEmpty.IsChecked == true);
                 
                 if (data == null)
                 {
