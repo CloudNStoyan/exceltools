@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -36,7 +35,7 @@ namespace ExcelTools.Pages
 
                 var excelWrapper = new ExcelWrapper(filePath);
 
-                string column = this.Columns.GetColumns()[0];
+                string[] column = this.Columns.GetColumns();
 
                 var data = this.Export(excelWrapper, column, this.SkipEmpty.IsChecked == true);
                 
@@ -46,15 +45,14 @@ namespace ExcelTools.Pages
                     return;
                 }
 
-                data = data.Select(x => x?.Replace("\n", " ")).ToArray();
+                data = data.Select(x => x.Select(y => y.Replace("\n", " ")).ToArray()).ToArray();
 
                 int separatorIndex = int.Parse(this.SeparatorsPanel.Children.OfType<RadioButton>()
-                    .FirstOrDefault(r => r.IsChecked == true)
-                    ?.DataContext.ToString());
+                    .First(r => r.IsChecked == true).DataContext.ToString());
 
                 string separator = this.separators[separatorIndex];
 
-                this.OutputTextbox.Text = string.Join(separator, data);
+                this.OutputTextbox.Text = string.Join(separator, data.Select(x => string.Join("\t",x)));
             }
             else
             {
@@ -77,7 +75,7 @@ namespace ExcelTools.Pages
 
                 var excelWrappers = filePaths.Select(filePath => new ExcelWrapper(filePath)).ToArray();
 
-                string column = this.Columns.GetColumns()[0];
+                string[] column = this.Columns.GetColumns();
 
                 var data = this.Export(excelWrappers, column, this.SkipEmpty.IsChecked == true);
                 
@@ -86,60 +84,75 @@ namespace ExcelTools.Pages
                     MessageBox.Show($"No data can be exported");
                     return;
                 }
-                
-                data = data.Select(x => x?.Replace("\n", " ")).ToArray();
+
+                data = data.Select(x => x.Select(y => y.Select(z => z.Replace("\n", " ")).ToArray()).ToArray()).ToArray();
 
                 int separatorIndex = int.Parse(this.SeparatorsPanel.Children.OfType<RadioButton>()
-                    .FirstOrDefault(r => r.IsChecked == true)
-                    ?.DataContext.ToString());
+                    .First(r => r.IsChecked == true).DataContext.ToString());
 
                 string separator = this.separators[separatorIndex];
 
-                this.OutputTextbox.Text = string.Join(separator, data);
+                this.OutputTextbox.Text = string.Join(separator, data.Select(x => x));
             }
         }
 
-        private string[] Export(ExcelWrapper excelWrapper, string column, bool skipEmpty = false)
+        private string[][] Export(ExcelWrapper excelWrapper, string[] column, bool skipEmpty = false)
         {
-            int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
+            int[] columnNumbers = column.Select(ExcelWrapper.ConvertStringColumnToNumber).ToArray();
 
-            if (columnNumber == -1)
+            for (var i = 0; i < columnNumbers.Length; i++)
             {
-                MessageBox.Show($"Column '{column}' is not a valid column!");
+                int columnNumber = columnNumbers[i];
+                if (columnNumber == -1)
+                {
+                    MessageBox.Show($"Column '{column[i]}' is not a valid column, and it will be skipped!");
+                }
+            }
+
+            columnNumbers = columnNumbers.Where(x => x != -1).ToArray();
+
+            if (columnNumbers.Length < 1)
+            {
+                MessageBox.Show("There are no valid columns!");
                 return null;
             }
 
-            string[] columnData = !skipEmpty ? excelWrapper.GetStringRows(columnNumber) : excelWrapper.GetStringRows(columnNumber)?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
+            string[][] columnData = !skipEmpty
+                ? columnNumbers.Select(excelWrapper.GetStringRows).ToArray()
+                : columnNumbers.Select(excelWrapper.GetStringRows)
+                    .Select(data => data.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray()).ToArray();
 
             return columnData;
         }
 
-        private string[] Export(ExcelWrapper[] excelWrappers, string column, bool skipEmpty = false)
+        private string[][][] Export(ExcelWrapper[] excelWrappers, string[] column, bool skipEmpty = false)
         {
-            int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
+            int[] columnNumbers = column.Select(ExcelWrapper.ConvertStringColumnToNumber).ToArray();
 
-            if (columnNumber == -1)
+            for (var i = 0; i < columnNumbers.Length; i++)
             {
-                MessageBox.Show($"Column '{column}' is not a valid column!");
+                int columnNumber = columnNumbers[i];
+                if (columnNumber == -1)
+                {
+                    MessageBox.Show($"Column '{column[i]}' is not a valid column, and it will be skipped!");
+                }
+            }
+
+            columnNumbers = columnNumbers.Where(x => x != -1).ToArray();
+
+            if (columnNumbers.Length < 1)
+            {
+                MessageBox.Show("There are no valid columns!");
                 return null;
             }
 
-            var list = new List<string>();
-
-            foreach (var excelWrapper in excelWrappers)
-            {
-                string[] columnData = !skipEmpty ? excelWrapper.GetStringRows(columnNumber) : excelWrapper.GetStringRows(columnNumber)?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-
-                if (columnData == null)
-                {
-                    MessageBox.Show($"{excelWrapper.FileName} doesn't have '{column}' column!");
-                    return null;
-                }
-
-                list.AddRange(columnData);
-            }
-
-            return list.ToArray();
+            return (from excelWrapper in excelWrappers
+                select !skipEmpty
+                    ? columnNumbers.Select(excelWrapper.GetStringRows).ToArray()
+                    : columnNumbers.Select(excelWrapper.GetStringRows)
+                        .Select(data => data.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray())
+                        .ToArray()).ToArray();
         }
     }
 }
