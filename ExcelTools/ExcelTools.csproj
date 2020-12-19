@@ -83,14 +83,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\MultipleFileSelectionOnly.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\MultipleFileSelection.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\FileSelection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,12 +102,6 @@
     <Compile Include="Attributes\PageInfo.cs" />
     <Compile Include="Controls\Input.xaml.cs">
       <DependentUpon>Input.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\MultipleFileSelectionOnly.xaml.cs">
-      <DependentUpon>MultipleFileSelectionOnly.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\MultipleFileSelection.xaml.cs">
-      <DependentUpon>MultipleFileSelection.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\FileSelection.xaml.cs">
       <DependentUpon>FileSelection.xaml</DependentUpon>

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using ExcelTools.Attributes;
 
 namespace ExcelTools.Pages
@@ -52,34 +53,9 @@ namespace ExcelTools.Pages
                     .First(r => r.IsChecked == true).DataContext.ToString());
 
                 string separator = this.separators[separatorIndex];
-
                 
 
-                int maxLength = 0;
-
-                foreach (var column in data)
-                {
-                    if (column.Length > maxLength)
-                    {
-                        maxLength = column.Length;
-                    }
-                }
-
-                var dataList = new string[maxLength];
-
-                for (int i = 0; i < data.Length; i++)
-                {
-                    var rows = data[i];
-
-                    foreach (string row in rows)
-                    {
-                        dataList[i] += "\t" + rows[i];
-                    }
-
-                    
-                }
-
-                this.OutputTextbox.Text = string.Join(separator, dataList);
+                this.OutputTextbox.Text = string.Join(separator, this.ConvertDataToTable(data));
             }
             else
             {
@@ -119,8 +95,67 @@ namespace ExcelTools.Pages
 
                 string separator = this.separators[separatorIndex];
 
-                this.OutputTextbox.Text = string.Join(separator, data.Select(x => x));
+                var output = new List<string>();
+
+                for (int i = 0; i < data.Length; i++)
+                {
+                    if (this.AddFileName.IsChecked == true)
+                    {
+                        output.Add("====");
+                        output.Add(Path.GetFileName(filePaths[i]));
+                    }
+                    
+                    output.Add(string.Join(separator, this.ConvertDataToTable(data[i])));
+                }
+
+                this.OutputTextbox.Text = string.Join("\r\n", output);
             }
+        }
+
+        private string[] ConvertDataToTable(string[][] data)
+        {
+            int maxLength = 0;
+
+            foreach (var column in data)
+            {
+                if (column.Length > maxLength)
+                {
+                    maxLength = column.Length;
+                }
+            }
+
+            string[,] dataMatrix = new string[maxLength, data.Length];
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                string[] row = data[i];
+
+                for (int j = 0; j < row.Length; j++)
+                {
+                    dataMatrix[j, i] = row[j];
+                }
+            }
+
+            var output = new List<string>();
+
+            for (int i = 0; i < dataMatrix.GetLength(0); i++)
+            {
+                string line = "";
+                for (int j = 0; j < dataMatrix.GetLength(1); j++)
+                {
+                    if (j != 0)
+                    {
+                        line += "\t" + dataMatrix[i, j];
+                    }
+                    else
+                    {
+                        line = dataMatrix[i, j];
+                    }
+                }
+                output.Add(line);
+            }
+
+            return output.ToArray();
         }
 
         private string[][] Export(ExcelWrapper excelWrapper, string[] column, bool skipEmpty = false)

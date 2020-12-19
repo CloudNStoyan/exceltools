@@ -58,12 +58,25 @@ namespace ExcelTools.Controls
                 new PropertyMetadata("*The excel file you want to analyse*")
             );
 
+        public bool MultipleFilesChecked
+        {
+            get => (bool)this.GetValue(MultipleFilesCheckedProperty);
+            set => this.SetValue(MultipleFilesCheckedProperty, value);
+        }
+
+        public static readonly DependencyProperty MultipleFilesCheckedProperty
+            = DependencyProperty.Register(
+                "MultipleFilesChecked",
+                typeof(bool),
+                typeof(FileSelection),
+                new PropertyMetadata(false)
+            );
+
         public event Action FileSelected;
         public event Action FileChanged;
 
         public string SelectedFile { get; set; }
         public string[] SelectedFiles { get; set; }
-        public bool MultipleFilesChecked { get; set; }
 
         public FileSelection()
         {
