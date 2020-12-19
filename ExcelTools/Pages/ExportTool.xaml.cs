@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -35,13 +36,13 @@ namespace ExcelTools.Pages
 
                 var excelWrapper = new ExcelWrapper(filePath);
 
-                string[] column = this.Columns.GetColumns();
+                string[] columns = this.Columns.GetColumns();
 
-                var data = this.Export(excelWrapper, column, this.SkipEmpty.IsChecked == true);
+                var data = this.Export(excelWrapper, columns, this.SkipEmpty.IsChecked == true);
                 
                 if (data == null)
                 {
-                    MessageBox.Show($"There is no column {column} in {excelWrapper.FileName}");
+                    MessageBox.Show($"There is no column {columns} in {excelWrapper.FileName}");
                     return;
                 }
 
@@ -52,7 +53,33 @@ namespace ExcelTools.Pages
 
                 string separator = this.separators[separatorIndex];
 
-                this.OutputTextbox.Text = string.Join(separator, data.Select(x => string.Join("\t",x)));
+                
+
+                int maxLength = 0;
+
+                foreach (var column in data)
+                {
+                    if (column.Length > maxLength)
+                    {
+                        maxLength = column.Length;
+                    }
+                }
+
+                var dataList = new string[maxLength];
+
+                for (int i = 0; i < data.Length; i++)
+                {
+                    var rows = data[i];
+
+                    foreach (string row in rows)
+                    {
+                        dataList[i] += "\t" + rows[i];
+                    }
+
+                    
+                }
+
+                this.OutputTextbox.Text = string.Join(separator, dataList);
             }
             else
             {
