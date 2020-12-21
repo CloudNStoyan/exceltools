@@ -8,6 +8,9 @@
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="400"
       Title="ExportTool">
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Page.Resources>
     <Grid Background="#F1F1F1">
         <StackPanel>
             <TextBlock Text="Export Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
@@ -47,7 +50,8 @@
                             <RadioButton GroupName="Sort" Content="Descending" HorizontalAlignment="Right" DataContext="2"/>
                         </Grid>
                         <CheckBox Content="Skip empty cells" Margin="5,15,0,0" x:Name="SkipEmpty" IsChecked="True"/>
-                        <CheckBox Content="Add file name to rows" Margin="5,15,0,0" x:Name="AddFileName" IsChecked="True" IsEnabled="{Binding ElementName=FileSelection, Path=MultipleFilesChecked}"/>
+                        <CheckBox Content="Add file name to rows" Margin="5,15,0,0" x:Name="AddFileName" IsChecked="True" IsEnabled="{Binding ElementName=FileSelection, Path=MultipleFilesChecked}"
+                                  Visibility="{Binding ElementName=FileSelection, Path=MultipleFilesChecked, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     </StackPanel>
                 </GroupBox>
                 <Button Content="Run" Margin="5" Click="RunAnalysis" />
