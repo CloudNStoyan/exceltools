@@ -20,6 +20,8 @@ namespace ExcelTools
             this.SetupPages();
         }
 
+	private Button ActiveButton { get; set; }
+
         private void SetupPages()
         {
             var pageClasses = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.Namespace == "ExcelTools.Pages" && x.BaseType?.Name == "Page").ToArray();
@@ -54,7 +56,13 @@ namespace ExcelTools
                     Margin = new Thickness(5)
                 };
 
-                button.Click += (sender, args) => this.Settings.Navigate(instance);
+                button.Click += (sender, args) => 
+		{
+			this.Settings.Navigate(instance);
+			this.ActiveButton.Background = Brushes.Lime;
+			this.ActiveButton = button;
+			button.Background = Brushes.DarkGreen;
+		};
                 button.DataContext = order;
 
                 buttons.Add(button);
