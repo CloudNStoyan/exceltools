@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using ExcelTools.Attributes;
 
 namespace ExcelTools
@@ -20,7 +21,7 @@ namespace ExcelTools
             this.SetupPages();
         }
 
-	private Button ActiveButton { get; set; }
+        private Button ActiveButton { get; set; }
 
         private void SetupPages()
         {
@@ -57,19 +58,20 @@ namespace ExcelTools
                 };
 
                 button.Click += (sender, args) => 
-		{
-			this.Settings.Navigate(instance);
-			this.ActiveButton.Background = Brushes.Lime;
-			this.ActiveButton = button;
-			button.Background = Brushes.DarkGreen;
-		};
+		        {
+                    this.Settings.Navigate(instance);
+                    this.ActiveButton.Background = SystemColors.ControlBrush;
+                    this.ActiveButton = button;
+                    button.Background = SystemColors.ControlDarkBrush;
+                };
                 button.DataContext = order;
-
+                
                 buttons.Add(button);
-
+                
                 if (order == 0)
                 {
                     this.Settings.Navigate(instance);
+                    this.ActiveButton = button;
                 }
             }
 

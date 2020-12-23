@@ -40,16 +40,17 @@
                         </Grid>
                         <Label>
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox Content="Sort" x:Name="SortDataCheckBox"></CheckBox>
+                                <CheckBox Content="Sort" x:Name="SortDataCheckBox" />
                                 <TextBlock Text="*The type of sorting to be applied to the data rows*" FontSize="10" VerticalAlignment="Bottom"
                                            Margin="5,0,0,0" Foreground="gray" />
                             </StackPanel>
                         </Label>
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="70,0,70,0" Name="SortPanel" IsEnabled="{Binding ElementName=SortDataCheckBox, Path=IsChecked, TargetNullValue=false}">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="70,0,70,0" Name="SortPanel" IsEnabled="{Binding ElementName=SortDataCheckBox, Path=IsChecked, TargetNullValue=false}"
+                              Visibility="{Binding ElementName=SortDataCheckBox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <RadioButton GroupName="Sort" Content="Ascending" HorizontalAlignment="Left" DataContext="0" IsChecked="True"/>
                             <RadioButton GroupName="Sort" Content="Descending" HorizontalAlignment="Right" DataContext="2"/>
                         </Grid>
-                        <CheckBox Content="Skip empty cells" Margin="5,15,0,0" x:Name="SkipEmpty" IsChecked="True"/>
+                        <CheckBox Content="Skip empty cells" Margin="5,0,0,0" x:Name="SkipEmpty" IsChecked="True"/>
                         <CheckBox Content="Add file name to rows" Margin="5,15,0,0" x:Name="AddFileName" IsChecked="True" IsEnabled="{Binding ElementName=FileSelection, Path=MultipleFilesChecked}"
                                   Visibility="{Binding ElementName=FileSelection, Path=MultipleFilesChecked, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     </StackPanel>
