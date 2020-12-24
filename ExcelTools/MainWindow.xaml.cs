@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using ExcelTools.Attributes;
 
 namespace ExcelTools
@@ -57,21 +56,15 @@ namespace ExcelTools
                     Margin = new Thickness(5)
                 };
 
-                button.Click += (sender, args) => 
-		        {
-                    this.Settings.Navigate(instance);
-                    this.ActiveButton.Background = SystemColors.ControlBrush;
-                    this.ActiveButton = button;
-                    button.Background = SystemColors.ControlDarkBrush;
-                };
+                button.Click += (sender, args) => this.NavigateToPage(instance, button);
+
                 button.DataContext = order;
                 
                 buttons.Add(button);
                 
                 if (order == 0)
                 {
-                    this.Settings.Navigate(instance);
-                    this.ActiveButton = button;
+                    this.NavigateToPage(instance, button);
                 }
             }
 
@@ -82,6 +75,19 @@ namespace ExcelTools
                 this.NavigationContainer.Children.Add(button);
             }
 
+        }
+
+        private void NavigateToPage(Page page, Button button)
+        {
+            if (this.ActiveButton != null)
+            {
+                this.ActiveButton.Background = SystemColors.ControlBrush;
+            }
+
+            this.ActiveButton = button;
+            this.ActiveButton.Background = SystemColors.ControlDarkBrush;
+
+            this.Settings.Navigate(page);
         }
 
         private void ClearLogStackPanelHandler(object sender, RoutedEventArgs e)
