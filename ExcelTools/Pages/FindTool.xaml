@@ -2,21 +2,23 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ExcelTools.Pages"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:controls="clr-namespace:ExcelTools.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="400"
       Title="Find Tool">
-
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Page.Resources>
     <Grid Background="#F1F1F1">
         <StackPanel>
             <TextBlock Text="Find Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
             <StackPanel Margin="10">
+                <controls:FileSelection Selection="Both" x:Name="FileSelection"/>
                 <Label>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Value" Margin="5,0,0,0" />
-                        <TextBlock Text="*The value you wan't to find. Must be text*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
+                        <TextBlock Text="*The value you want to find. Must be text*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
                     </StackPanel>
                 </Label>
                 <TextBox HorizontalAlignment="Left" Margin="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
@@ -27,14 +29,16 @@
                         <TextBlock Text="Case-Sensitive" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Label>
-                <controls:FileSelection Selection="Both" x:Name="FileSelection"/>
-                <Label>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Column name"/>
-                        <TextBlock Text="*The letter representing the column*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
-                    </StackPanel>
-                </Label>
-                <controls:Input Width="25" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Text="A" x:Name="ColumnTextBox"/>
+                <CheckBox Margin="5,0,0,0" Content="Specific Column" x:Name="SpecificColumnCheckBox" IsChecked="True"/>
+                <StackPanel Visibility="{Binding ElementName=SpecificColumnCheckBox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Label>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Column name"/>
+                            <TextBlock Text="*The letter representing the column*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
+                        </StackPanel>
+                    </Label>
+                    <controls:Input Width="25" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Text="A" x:Name="ColumnTextBox"/>
+                </StackPanel>
                 <Button Content="Run" Margin="5" Click="RunAnalysis"/>
             </StackPanel>
         </StackPanel>

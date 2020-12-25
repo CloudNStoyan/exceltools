@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using ExcelTools.Attributes;
 
 namespace ExcelTools.Pages
@@ -155,6 +157,29 @@ namespace ExcelTools.Pages
             }
 
             this.Logger.Log(string.Join("\r\n", logs));
+        }
+
+        public class BooleanToVisibilityConverter : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+            {
+                if (value is Visibility visibility)
+                {
+                    return visibility == Visibility.Visible;
+                }
+
+                return Visibility.Collapsed;
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+            {
+                if (value is bool isVisible)
+                {
+                    return isVisible ? Visibility.Visible : Visibility.Collapsed;
+                }
+
+                return Visibility.Visible;
+            }
         }
     }
 }
