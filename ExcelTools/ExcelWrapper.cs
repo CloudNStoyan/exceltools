@@ -22,6 +22,13 @@ namespace ExcelTools
             return alphabet.IndexOf(column, StringComparison.Ordinal);
         }
 
+        public static string ConvertStringColumnToNumber(int column)
+        {
+            const string alphabet = "ABCDEFGHIJKLMNPPQRSTUVWX";
+
+            return alphabet.Length > column ? alphabet[column].ToString() : null;
+        }
+
         public int GetCount()
         {
             using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))
@@ -29,6 +36,17 @@ namespace ExcelTools
                 using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
                     return reader.RowCount;
+                }
+            }
+        }
+
+        public int GetColumnCount()
+        {
+            using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    return reader.FieldCount;
                 }
             }
         }
