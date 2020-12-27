@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using ExcelTools.Attributes;
 
 namespace ExcelTools.Pages
@@ -29,6 +27,10 @@ namespace ExcelTools.Pages
                 return;
             }
 
+            string value = this.FindValueInput.Text;
+            bool caseSensitive = this.CaseSensitiveCheck.IsChecked == true;
+            string[] columns = this.ColumnTextBox.GetColumns();
+
             if (this.FileSelection.MultipleFilesChecked == false)
             {
                 string filePath = this.FileSelection.SelectedFile;
@@ -40,7 +42,15 @@ namespace ExcelTools.Pages
                 }
 
                 var excelWrapper = new ExcelWrapper(filePath);
-                this.FindAnalysis(excelWrapper, this.ColumnTextBox.Text, this.FindValueInput.Text, this.CaseSensitiveCheck.IsChecked == true);
+
+                if (this.SpecificColumnCheckBox.IsChecked == true)
+                {
+                    this.FindAnalysis(excelWrapper, value, caseSensitive, columns);
+                }
+                else
+                {
+                    this.FindAnalysis(excelWrapper, value, caseSensitive);
+                }
             }
             else
             {
@@ -61,9 +71,16 @@ namespace ExcelTools.Pages
                     }
                 }
 
-                var excelWrappers = filePaths.Select(filePath => new ExcelWrapper(filePath)).ToList();
+                var excelWrappers = filePaths.Select(filePath => new ExcelWrapper(filePath)).ToArray();
 
-                this.FindAnalysis(excelWrappers.ToArray(), this.ColumnTextBox.Text, this.FindValueInput.Text, this.CaseSensitiveCheck.IsChecked == true);
+                if (this.SpecificColumnCheckBox.IsChecked == true)
+                {
+                    this.FindAnalysis(excelWrappers, value, caseSensitive, columns);
+                }
+                else
+                {
+                    this.FindAnalysis(excelWrappers, value, caseSensitive);
+                }
             }
         }
 
@@ -73,7 +90,9 @@ namespace ExcelTools.Pages
 
             for (int i = 0; i < columns.Length; i++)
             {
-                string[] rows = excelWrapper.GetStringRows(i);
+                int column = ExcelWrapper.ConvertStringColumnToNumber(columns[i]);
+
+                string[] rows = excelWrapper.GetStringRows(column);
 
                 if (rows != null)
                 {
@@ -83,11 +102,11 @@ namespace ExcelTools.Pages
 
                         if (rowValue != null && rowValue.Equals(value))
                         {
-                            output.Add($"\"{value}\" was found at {ExcelWrapper.ConvertStringColumnToNumber(i)}{j}");
+                            output.Add($"\"{value}\" was found at {columns[i]}{j}");
                         }
                         else if (rowValue != null && !caseSensitive && rowValue.ToLower().Equals(value))
                         {
-                            output.Add($"\"{value}\" was found at {ExcelWrapper.ConvertStringColumnToNumber(i)}{j}");
+                            output.Add($"\"{value}\" was found at {columns[i]}{j}");
                         }
                     }
                 }
@@ -100,181 +119,46 @@ namespace ExcelTools.Pages
             return output.ToArray();
         }
 
-        private void FindAnalysis(ExcelWrapper excelWrapper, string column, string value, bool caseSensitive)
+        private void FindAnalysis(ExcelWrapper excelWrapper, string value, bool caseSensitive)
         {
-            var output = new List<string>();
+            string[] columns = excelWrapper.GetColumns();
 
-            if (this.SpecificColumnCheckBox.IsChecked == false)
-            {
-                int columnCount = excelWrapper.GetColumnCount();
+            string[] logs = this.CheckColumns(columns, excelWrapper, value, caseSensitive);
 
-                for (int i = 0; i < columnCount; i++)
-                {
-                    string[] rows = excelWrapper.GetStringRows(i);
-
-                    if (rows == null)
-                    {
-                        MessageBox.Show($"There isn't {column} column in {excelWrapper.FileName}");
-                        return;
-                    }
-
-                    for (int j = 0; j < rows.Length; j++)
-                    {
-                        string rowValue = rows[j];
-
-                        if (rowValue != null && rowValue.Equals(value))
-                        {
-                            output.Add($"\"{value}\" was found at {ExcelWrapper.ConvertStringColumnToNumber(i)}{j}");
-                        }
-                        else if (rowValue != null && !caseSensitive && rowValue.ToLower().Equals(value))
-                        {
-                            output.Add($"\"{value}\" was found at {ExcelWrapper.ConvertStringColumnToNumber(i)}{j}");
-                        }
-                    }
-                }
-            }
-            else
-            {
-                int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
-
-                if (columnNumber == -1)
-                {
-                    MessageBox.Show($"Column '{column}' is not a valid column!");
-                    return;
-                }
-
-                string[] rows = excelWrapper.GetStringRows(columnNumber);
-
-                if (rows == null)
-                {
-                    MessageBox.Show($"There isn't {column} column in {excelWrapper.FileName}");
-                    return;
-                }
-
-                for (int j = 0; j < rows.Length; j++)
-                {
-                    string rowValue = rows[j];
-
-                    if (rowValue.Equals(value))
-                    {
-                        output.Add($"\"{value}\" was found at {column}{j}");
-                    }
-                    else if (!caseSensitive && rowValue.ToLower().Equals(value))
-                    {
-                        output.Add($"\"{value}\" was found at {column}{j}");
-                    }
-                }
-            }
-
-            this.Logger.Log(output.Count > 0 ? string.Join("\r\n", output) : "No matches were found!");
+            this.Logger.Log(logs.Length > 0 ? string.Join("\r\n", logs) : "No matches were found!");
         }
 
-        private void FindAnalysis(ExcelWrapper[] excelWrappers, string column, string value, bool caseSensitive)
+        private void FindAnalysis(ExcelWrapper[] excelWrappers, string value, bool caseSensitive)
         {
             var logs = new List<string>();
+
             foreach (var excelWrapper in excelWrappers)
             {
-                if (this.SpecificColumnCheckBox.IsChecked == false)
-                {
-                    int columnCount = excelWrapper.GetColumnCount();
+                string[] columns = excelWrapper.GetColumns();
 
-                    for (int i = 0; i < columnCount; i++)
-                    {
-                        string[] rows = excelWrapper.GetStringRows(i);
-
-                        if (rows == null)
-                        {
-                            MessageBox.Show($"There isn't {column} column in {excelWrapper.FileName}");
-                            return;
-                        }
-
-                        var output = new List<string>();
-
-                        for (int j = 0; j < rows.Length; j++)
-                        {
-                            string rowValue = rows[j];
-
-                            if (rowValue.Equals(value))
-                            {
-                                output.Add($"\"{value}\" was found at {ExcelWrapper.ConvertStringColumnToNumber(i)}{j}");
-                            }
-                            else if (!caseSensitive && rowValue.ToLower().Equals(value))
-                            {
-                                output.Add($"\"{value}\" was found at {ExcelWrapper.ConvertStringColumnToNumber(i)}{j}");
-                            }
-                        }
-
-                        if (output.Count > 0)
-                        {
-                            logs.AddRange(output);
-                        }
-                    }
-                }
-                else
-                {
-                    int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
-
-                    if (columnNumber == -1)
-                    {
-                        MessageBox.Show($"Column '{column}' is not a valid column!");
-                        return;
-                    }
-
-                    string[] rows = excelWrapper.GetStringRows(columnNumber);
-
-                    if (rows == null)
-                    {
-                        MessageBox.Show($"There isn't {column} column in {excelWrapper.FileName}");
-                        return;
-                    }
-
-                    var output = new List<string>();
-
-                    for (int j = 0; j < rows.Length; j++)
-                    {
-                        string rowValue = rows[j];
-
-                        if (rowValue.Equals(value))
-                        {
-                            output.Add($"\"{value}\" was found at {column}{j}");
-                        }
-                        else if (!caseSensitive && rowValue.ToLower().Equals(value))
-                        {
-                            output.Add($"\"{value}\" was found at {column}{j}");
-                        }
-                    }
-
-                    if (output.Count > 0)
-                    {
-                        logs.AddRange(output);
-                    }
-                }
+                logs.AddRange(this.CheckColumns(columns, excelWrapper, value, caseSensitive));
             }
 
-            this.Logger.Log(string.Join("\r\n", logs));
+            this.Logger.Log(logs.Count > 0 ? string.Join("\r\n", logs) : "No matches were found!");
         }
 
-        public class BooleanToVisibilityConverter : IValueConverter
+        private void FindAnalysis(ExcelWrapper excelWrapper, string value, bool caseSensitive, string[] columns)
         {
-            public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-            {
-                if (value is Visibility visibility)
-                {
-                    return visibility == Visibility.Visible;
-                }
+            string[] logs = this.CheckColumns(columns, excelWrapper, value, caseSensitive);
 
-                return Visibility.Collapsed;
+            this.Logger.Log(logs.Length > 0 ? string.Join("\r\n", logs) : "No matches were found!");
+        }
+
+        private void FindAnalysis(ExcelWrapper[] excelWrappers, string value, bool caseSensitive, string[] columns)
+        {
+            var logs = new List<string>();
+
+            foreach (var excelWrapper in excelWrappers)
+            {
+                logs.AddRange(this.CheckColumns(columns, excelWrapper, value, caseSensitive));
             }
 
-            public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-            {
-                if (value is bool isVisible)
-                {
-                    return isVisible ? Visibility.Visible : Visibility.Collapsed;
-                }
-
-                return Visibility.Visible;
-            }
+            this.Logger.Log(logs.Count > 0 ? string.Join("\r\n", logs) : "No matches were found!");
         }
     }
 }

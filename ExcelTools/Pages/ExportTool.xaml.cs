@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using ExcelTools.Attributes;
 
 namespace ExcelTools.Pages
@@ -215,29 +214,6 @@ namespace ExcelTools.Pages
                     : columnNumbers.Select(excelWrapper.GetStringRows)
                         .Select(data => data.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray())
                         .ToArray()).ToArray();
-        }
-
-        public class BooleanToVisibilityConverter : IValueConverter
-        {
-            public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-            {
-                if (value is Visibility visibility)
-                {
-                    return visibility == Visibility.Visible;
-                }
-
-                return Visibility.Collapsed;
-            }
-
-            public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-            {
-                if (value is bool isVisible)
-                {
-                    return isVisible ? Visibility.Visible : Visibility.Collapsed;
-                }
-
-                return Visibility.Visible;
-            }
         }
     }
 }

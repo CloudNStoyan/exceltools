@@ -29,15 +29,15 @@
                         <TextBlock Text="Case-Sensitive" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Label>
-                <CheckBox Margin="5,0,0,0" Content="Specific Column" x:Name="SpecificColumnCheckBox" IsChecked="True"/>
+                <CheckBox Margin="5,0,0,0" Content="Specific Columns" x:Name="SpecificColumnCheckBox" IsChecked="True"/>
                 <StackPanel Visibility="{Binding ElementName=SpecificColumnCheckBox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <Label>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Column name"/>
+                            <TextBlock Text="Column names"/>
                             <TextBlock Text="*The letter representing the column*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
                         </StackPanel>
                     </Label>
-                    <controls:Input Width="25" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Text="A" x:Name="ColumnTextBox"/>
+                    <controls:MultiInput HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="ColumnTextBox"/>
                 </StackPanel>
                 <Button Content="Run" Margin="5" Click="RunAnalysis"/>
             </StackPanel>
