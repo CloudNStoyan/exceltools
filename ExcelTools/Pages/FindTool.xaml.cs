@@ -67,8 +67,43 @@ namespace ExcelTools.Pages
             }
         }
 
+        private string[] CheckColumns(string[] columns, ExcelWrapper excelWrapper, string value, bool caseSensitive)
+        {
+            var output = new List<string>();
+
+            for (int i = 0; i < columns.Length; i++)
+            {
+                string[] rows = excelWrapper.GetStringRows(i);
+
+                if (rows != null)
+                {
+                    for (int j = 0; j < rows.Length; j++)
+                    {
+                        string rowValue = rows[j];
+
+                        if (rowValue != null && rowValue.Equals(value))
+                        {
+                            output.Add($"\"{value}\" was found at {ExcelWrapper.ConvertStringColumnToNumber(i)}{j}");
+                        }
+                        else if (rowValue != null && !caseSensitive && rowValue.ToLower().Equals(value))
+                        {
+                            output.Add($"\"{value}\" was found at {ExcelWrapper.ConvertStringColumnToNumber(i)}{j}");
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"There isn't {columns[i]} column in {excelWrapper.FileName}");
+                }
+            }
+
+            return output.ToArray();
+        }
+
         private void FindAnalysis(ExcelWrapper excelWrapper, string column, string value, bool caseSensitive)
         {
+            var output = new List<string>();
+
             if (this.SpecificColumnCheckBox.IsChecked == false)
             {
                 int columnCount = excelWrapper.GetColumnCount();
@@ -83,25 +118,18 @@ namespace ExcelTools.Pages
                         return;
                     }
 
-                    var output = new List<string>();
-
                     for (int j = 0; j < rows.Length; j++)
                     {
                         string rowValue = rows[j];
 
-                        if (rowValue.Equals(value))
+                        if (rowValue != null && rowValue.Equals(value))
                         {
                             output.Add($"\"{value}\" was found at {ExcelWrapper.ConvertStringColumnToNumber(i)}{j}");
                         }
-                        else if (!caseSensitive && rowValue.ToLower().Equals(value))
+                        else if (rowValue != null && !caseSensitive && rowValue.ToLower().Equals(value))
                         {
                             output.Add($"\"{value}\" was found at {ExcelWrapper.ConvertStringColumnToNumber(i)}{j}");
                         }
-                    }
-
-                    if (output.Count > 0)
-                    {
-                        this.Logger.Log(string.Join("\r\n", output));
                     }
                 }
             }
@@ -123,8 +151,6 @@ namespace ExcelTools.Pages
                     return;
                 }
 
-                var output = new List<string>();
-
                 for (int j = 0; j < rows.Length; j++)
                 {
                     string rowValue = rows[j];
@@ -138,12 +164,9 @@ namespace ExcelTools.Pages
                         output.Add($"\"{value}\" was found at {column}{j}");
                     }
                 }
-
-                if (output.Count > 0)
-                {
-                    this.Logger.Log(string.Join("\r\n", output));
-                }
             }
+
+            this.Logger.Log(output.Count > 0 ? string.Join("\r\n", output) : "No matches were found!");
         }
 
         private void FindAnalysis(ExcelWrapper[] excelWrappers, string column, string value, bool caseSensitive)
