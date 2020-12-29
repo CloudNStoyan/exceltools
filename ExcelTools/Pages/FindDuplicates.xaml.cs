@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using ExcelTools.Attributes;
@@ -28,60 +27,48 @@ namespace ExcelTools.Pages
             }
 
             var excelWrapper = new ExcelWrapper(this.FileSelection.SelectedFile);
-            this.FindDuplicatesAnalysis(excelWrapper, this.ColumnTextBox.Text);
+
+            string[] columns = this.ColumnTextBox.GetColumns();
+
+            this.FindDuplicatesAnalysis(excelWrapper,
+                this.SpecificColumnCheckBox.IsChecked == true ? columns : excelWrapper.GetColumns());
         }
 
-        private void FindDuplicatesAnalysis(ExcelWrapper excelWrapper, string column)
+        private void FindDuplicatesAnalysis(ExcelWrapper excelWrapper, string[] columns)
         {
-            int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
+            var duplicates = new List<string>();
 
-            if (columnNumber == -1)
+            foreach (string column in columns)
             {
-                MessageBox.Show($"Column '{column}' is not a valid column!");
-                return;
-            }
+                int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
 
-            string[] firstColumn = excelWrapper.GetStringRows(columnNumber).Where(x => x != null).ToArray();
+                string[] cells = excelWrapper.GetStringRows(columnNumber)?.Where(cell => !string.IsNullOrEmpty(cell)).ToArray();
 
-            var dictionary = new Dictionary<string, int>();
-
-            foreach (string cell in firstColumn)
-            {
-                if (!dictionary.ContainsKey(cell))
+                if (cells != null)
                 {
-                    dictionary.Add(cell, 1);
-                }
-                else
+                    var cellEntries = new Dictionary<string, int>();
+
+                    foreach (string cell in cells)
+                    {
+                        if (!cellEntries.ContainsKey(cell))
+                        {
+                            cellEntries.Add(cell, 1);
+                        }
+                        else
+                        {
+                            cellEntries[cell]++;
+                        }
+                    }
+
+                    duplicates.Add($"Checking column '{column}'");
+                    duplicates.AddRange(from pair in cellEntries where pair.Value > 1 select $"'{pair.Key}' is entered {pair.Value} times");
+                } else
                 {
-                    dictionary[cell]++;
-                }
-            }
-
-            var duplicates = new StringBuilder();
-
-            bool duplicatesAreFound = false;
-
-            foreach (var pair in dictionary)
-            {
-                if (pair.Value > 1)
-                {
-                    duplicatesAreFound = true;
-                    duplicates.AppendLine($"'{pair.Key}' is entered {pair.Value} times");
+                    duplicates.Add($"There is no '{column}' column in {excelWrapper.FileName}");
                 }
             }
 
-            string output;
-
-            if (duplicatesAreFound)
-            {
-                output = "Duplicates were found: \r\n" + duplicates;
-            }
-            else
-            {
-                output = "No duplicates found!";
-            }
-
-            this.Logger.Log(output.Trim());
+            this.Logger.Log(duplicates.Count > 0 ? "Duplicates were found: \n" + string.Join("\n", duplicates) : "No duplicates found!");
         }
     }
 }
