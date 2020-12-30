@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,66 +37,63 @@ namespace ExcelTools.Pages
                 return;
             }
 
-            string columnText = this.ColumnTextBox.Text;
-            int column = ExcelWrapper.ConvertStringColumnToNumber(columnText);
+            string[] columns = this.ColumnTextBox.GetColumns();
 
-            if (column == -1)
-            {
-                MessageBox.Show($"Column '{column}' is not a valid column!");
-                return;
-            }
-
-            var selectedComparisonType = (ComparisonType)Enum.Parse(typeof(ComparisonType),this.ComparsionTypePanel.Children.OfType<RadioButton>()
+            var selectedComparisonType = (ComparisonType)Enum.Parse(typeof(ComparisonType), this.ComparisonTypePanel.Children.OfType<RadioButton>()
                 .First(r => r.IsChecked == true).DataContext.ToString());
 
-            string[] firstExcelRows = firstExcelWrapper.GetStringRows(column).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-            string[] secondExcelRows = secondExcelWrapper.GetStringRows(column).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-
-            if (selectedComparisonType == ComparisonType.FindSimilarities)
+            switch (selectedComparisonType)
             {
-                string[] logs = firstExcelRows.Where(x => secondExcelRows.Contains(x))
-                    .Select(x => $"'{x}' was found in the both excels").ToArray();
+                case ComparisonType.FindSimilarities:
+                {
+                    var logs = new List<string>();
 
-                this.Logger.Log(logs.Length > 0 ? string.Join(Environment.NewLine, logs) : "No similarities were found between both excels!");
-            }
-            else if (selectedComparisonType == ComparisonType.FindDifferences)
-            {
-                string[] logs = firstExcelRows.Where(x => !secondExcelRows.Contains(x))
-                    .Select(x => $"'{x}' was found in {firstExcelWrapper.FileName} but not in {secondExcelWrapper.FileName}").ToArray();
+                    foreach (string column in columns)
+                    {
+                        int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
 
-                this.Logger.Log(logs.Length > 0 ? string.Join(Environment.NewLine, logs) : "No differences were found between both excels!");
+                        string[] firstExcelRows = firstExcelWrapper.GetStringRows(columnNumber)
+                            .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                        string[] secondExcelRows = secondExcelWrapper.GetStringRows(columnNumber)
+                            .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                        logs.AddRange(firstExcelRows.Where(x => secondExcelRows.Contains(x))
+                            .Select(x => $"'{x}' was found in the both excels"));
+                    }
+
+                    this.Logger.Log(logs.Count > 0
+                        ? string.Join(Environment.NewLine, logs)
+                        : "No similarities were found between both excels!");
+
+                    break;
+                }
+                case ComparisonType.FindDifferences:
+                {
+                    var logs = new List<string>();
+
+                    foreach (string column in columns)
+                    {
+                        int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
+
+                        string[] firstExcelRows = firstExcelWrapper.GetStringRows(columnNumber)
+                            .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                        string[] secondExcelRows = secondExcelWrapper.GetStringRows(columnNumber)
+                            .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                        logs.AddRange(firstExcelRows.Where(x => !secondExcelRows.Contains(x))
+                            .Select(x => $"'{x}' was found in {firstExcelWrapper.FileName} but not in {secondExcelWrapper.FileName}"));
+                    }
+
+                    this.Logger.Log(logs.Count > 0
+                        ? string.Join(Environment.NewLine, logs)
+                        : "No differences were found between both excels!");
+
+                    break;
+                }
             }
         }
-
-        private void CheckIfReady() => this.CompareButton.IsEnabled = this.FirstExcelFileSelected && this.SecondExcelFileSelected;
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             this.DataContext = this;
-        }
-
-        private void FirstFileSelection_OnFileChanged()
-        {
-            this.FirstExcelFileSelected = false;
-            this.CheckIfReady();
-        }
-
-        private void FirstFileSelection_OnFileSelected()
-        {
-            this.FirstExcelFileSelected = true;
-            this.CheckIfReady();
-        }
-
-        private void SecondFileSelection_OnFileChanged()
-        {
-            this.SecondExcelFileSelected = false;
-            this.CheckIfReady();
-        }
-
-        private void SecondFileSelection_OnFileSelected()
-        {
-            this.SecondExcelFileSelected = true;
-            this.CheckIfReady();
         }
     }
 }

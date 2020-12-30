@@ -2,38 +2,46 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ExcelTools.Pages"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:controls="clr-namespace:ExcelTools.Controls"
+      xmlns:converters="clr-namespace:ExcelTools.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="350" d:DesignWidth="400"
       Title="CompareTool">
+    <Page.Resources>
+        <converters:BoolMultiValueConverter x:Key="BoolMultiValueConverter"/>
+    </Page.Resources>
     <Grid Background="#F1F1F1" Loaded="OnLoaded">
         <StackPanel>
             <TextBlock Text="Compare Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
             <StackPanel Margin="10">
-                <controls:FileSelection x:Name="FirstFileSelection" HeaderText="First File" SubHeaderText="*The first file*"
-                                    FileChanged="FirstFileSelection_OnFileChanged" FileSelected="FirstFileSelection_OnFileSelected"/>
-                <controls:FileSelection x:Name="SecondFileSelection" HeaderText="Second File" SubHeaderText="*The second file*" 
-                                    FileChanged="SecondFileSelection_OnFileChanged" FileSelected="SecondFileSelection_OnFileSelected"/>
+                <controls:FileSelection x:Name="FirstFileSelection" HeaderText="First File" SubHeaderText="*The first file*"/>
+                <controls:FileSelection x:Name="SecondFileSelection" HeaderText="Second File" SubHeaderText="*The second file*"/>
                 <Label>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Column name"/>
+                        <TextBlock Text="Column names"/>
                         <TextBlock Text="*The letter representing the column*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
                     </StackPanel>
                 </Label>
-                <controls:Input Width="25" Height="25" HorizontalAlignment="Left" Margin="5,0,0,5" Text="A" x:Name="ColumnTextBox"/>
+                <controls:MultiInput HorizontalAlignment="Left" Margin="5,0,0,5" x:Name="ColumnTextBox"/>
                 <Label>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Comparison type"/>
                         <TextBlock Text="*How to compare the two excels*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
                     </StackPanel>
                 </Label>
-                <Grid Width="300" Margin="0,10,0,10" Name="ComparsionTypePanel">
+                <Grid Width="300" Margin="0,10,0,10" Name="ComparisonTypePanel">
                     <RadioButton HorizontalAlignment="Left" Content="Find similarities" IsChecked="True" GroupName="ComparisonType" DataContext="0"/>
                     <RadioButton HorizontalAlignment="Right" Content="Find differences" GroupName="ComparisonType" DataContext="1"/>
                 </Grid>
-                <Button Content="Compare" Margin="5" Padding="5" x:Name="CompareButton" IsEnabled="False" Click="RunAnalysis"/>
+                <Button Content="Compare" Margin="5" Padding="5" Click="RunAnalysis">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{StaticResource BoolMultiValueConverter}">
+                            <Binding ElementName="FirstFileSelection" Path="FileIsSelected"/>
+                            <Binding ElementName="SecondFileSelection" Path="FileIsSelected"/>
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
             </StackPanel>
         </StackPanel>
     </Grid>

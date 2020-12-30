@@ -72,6 +72,20 @@ namespace ExcelTools.Controls
                 new PropertyMetadata(false)
             );
 
+        public bool FileIsSelected
+        {
+            get => (bool)this.GetValue(FileIsSelectedProperty);
+            set => this.SetValue(FileIsSelectedProperty, value);
+        }
+
+        public static readonly DependencyProperty FileIsSelectedProperty
+            = DependencyProperty.Register(
+                "FileIsSelected",
+                typeof(bool),
+                typeof(FileSelection),
+                new PropertyMetadata(false)
+            );
+
         public event Action FileSelected;
         public event Action FileChanged;
 
@@ -99,6 +113,7 @@ namespace ExcelTools.Controls
                 this.FilePathTextBox.Text = fileName;
 
                 this.SelectedFile = fileName;
+                this.FileIsSelected = true;
 
                 this.SelectFileButton.Visibility = Visibility.Hidden;
 
@@ -117,6 +132,7 @@ namespace ExcelTools.Controls
 
                 this.FilePathTextBox.Text = string.Join(",", filePaths.Select(Path.GetFileName));
                 this.SelectedFiles = filePaths;
+                this.FileIsSelected = true;
 
                 this.SelectFileButton.Visibility = Visibility.Hidden;
 
@@ -147,6 +163,8 @@ namespace ExcelTools.Controls
                     this.SelectedFile = openFileDialog.FileName;
                 }
 
+                this.FileIsSelected = true;
+
                 this.SelectFileButton.Visibility = Visibility.Hidden;
 
                 this.FilePathViewWrapper.Visibility = Visibility.Visible;
@@ -158,6 +176,7 @@ namespace ExcelTools.Controls
         private void ChangeFileHandler(object sender, RoutedEventArgs e)
         {
             this.FilePathTextBox.Clear();
+            this.FileIsSelected = false;
 
             this.FilePathViewWrapper.Visibility = Visibility.Hidden;
             this.SelectFileButton.Visibility = Visibility.Visible;
