@@ -18,12 +18,6 @@
                 <controls:FileSelection x:Name="FileSelection"/>
                 <CheckBox Margin="5,0,0,0" Content="Specific Columns" x:Name="SpecificColumnCheckBox" IsChecked="True"/>
                 <StackPanel Visibility="{Binding ElementName=SpecificColumnCheckBox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <Label>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Column names"/>
-                            <TextBlock Text="*The letter representing the column*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
-                        </StackPanel>
-                    </Label>
                     <controls:MultiInput HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="ColumnTextBox"/>
                 </StackPanel>
                 <Button Content="Run" Margin="5" Click="RunAnalysis"/>

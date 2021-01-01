@@ -17,19 +17,8 @@
             <StackPanel Margin="10">
                 <controls:FileSelection x:Name="FirstFileSelection" HeaderText="First File" SubHeaderText="*The first file*"/>
                 <controls:FileSelection x:Name="SecondFileSelection" HeaderText="Second File" SubHeaderText="*The second file*"/>
-                <Label>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Column names"/>
-                        <TextBlock Text="*The letter representing the column*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
-                    </StackPanel>
-                </Label>
                 <controls:MultiInput HorizontalAlignment="Left" Margin="5,0,0,5" x:Name="ColumnTextBox"/>
-                <Label>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Comparison type"/>
-                        <TextBlock Text="*How to compare the two excels*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
-                    </StackPanel>
-                </Label>
+                <controls:CustomLabel Header="Comparison type" SubHeader="*How to compare the two excels*"/>
                 <Grid Width="300" Margin="0,10,0,10" Name="ComparisonTypePanel">
                     <RadioButton HorizontalAlignment="Left" Content="Find similarities" IsChecked="True" GroupName="ComparisonType" DataContext="0"/>
                     <RadioButton HorizontalAlignment="Right" Content="Find differences" GroupName="ComparisonType" DataContext="1"/>

@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:ExcelTools.Pages"
       xmlns:controls="clr-namespace:ExcelTools.Controls"
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="400"
@@ -16,23 +15,10 @@
             <TextBlock Text="Export Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
             <StackPanel Margin="10">
                 <controls:FileSelection x:Name="FileSelection" Selection="Both"/>
-                <Label>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Column name" />
-                        <TextBlock Text="*The letter representing the column*" FontSize="10" VerticalAlignment="Bottom"
-                                   Margin="5,0,0,0" Foreground="gray" />
-                    </StackPanel>
-                </Label>
                 <controls:MultiInput Margin="5,0,0,0" x:Name="Columns" />
                 <GroupBox Header="Options">
                     <StackPanel>
-                        <Label>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Separator" />
-                                <TextBlock Text="*The symbol that will be used to split the data rows*" FontSize="10" VerticalAlignment="Bottom"
-                                           Margin="5,0,0,0" Foreground="gray" />
-                            </StackPanel>
-                        </Label>
+                        <controls:CustomLabel Header="Separator" SubHeader="*The symbol that will be used to split the data rows*"/>
                         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="20,0,20,0" Name="SeparatorsPanel">
                             <RadioButton GroupName="Separator" Content="Space" HorizontalAlignment="Left" DataContext="0"/>
                             <RadioButton GroupName="Separator" Content="New Line" HorizontalAlignment="Center" DataContext="1" IsChecked="True"/>
@@ -56,14 +42,8 @@
                     </StackPanel>
                 </GroupBox>
                 <Button Content="Run" Margin="5" Click="RunAnalysis" />
-                <Label>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Exported Data" />
-                        <TextBlock Text="*The exported rows from the excel file*" FontSize="10" VerticalAlignment="Bottom"
-                                   Margin="5,0,0,0" Foreground="gray" />
-                    </StackPanel>
-                </Label>
-                <TextBox HorizontalAlignment="Left" Margin="5,0,0,0" Width="360" Height="100" Name="OutputTextbox"
+                <controls:CustomLabel Header="Exported Data" SubHeader="*The exported rows from the excel file*"/>
+                <TextBox HorizontalAlignment="Left" Margin="5,0,0,0" Width="360" Height="100" Name="Output"
                          VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
             </StackPanel>
         </StackPanel>

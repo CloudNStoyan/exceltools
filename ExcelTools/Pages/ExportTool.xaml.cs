@@ -54,7 +54,7 @@ namespace ExcelTools.Pages
                 string separator = this.separators[separatorIndex];
                 
 
-                this.OutputTextbox.Text = string.Join(separator, this.ConvertDataToTable(data));
+                this.Output.Text = string.Join(separator, this.ConvertDataToTable(data));
             }
             else
             {
@@ -107,7 +107,7 @@ namespace ExcelTools.Pages
                     output.Add(string.Join(separator, this.ConvertDataToTable(data[i])));
                 }
 
-                this.OutputTextbox.Text = string.Join("\r\n", output);
+                this.Output.Text = string.Join("\r\n", output);
             }
         }
 

@@ -15,12 +15,7 @@
             <TextBlock Text="Find Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
             <StackPanel Margin="10">
                 <controls:FileSelection Selection="Both" x:Name="FileSelection"/>
-                <Label>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Value" Margin="5,0,0,0" />
-                        <TextBlock Text="*The value you want to find. Must be text*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
-                    </StackPanel>
-                </Label>
+                <controls:CustomLabel Header="Value" SubHeader="*The value you want to find. Must be text*"/>
                 <TextBox HorizontalAlignment="Left" Margin="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                      Width="350" Name="FindValueInput"/>
                 <Label>
@@ -30,15 +25,7 @@
                     </StackPanel>
                 </Label>
                 <CheckBox Margin="5,0,0,0" Content="Specific Columns" x:Name="SpecificColumnCheckBox" IsChecked="True"/>
-                <StackPanel Visibility="{Binding ElementName=SpecificColumnCheckBox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <Label>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Column names"/>
-                            <TextBlock Text="*The letter representing the column*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
-                        </StackPanel>
-                    </Label>
-                    <controls:MultiInput HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="ColumnTextBox"/>
-                </StackPanel>
+                <controls:MultiInput HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="ColumnTextBox" Visibility="{Binding ElementName=SpecificColumnCheckBox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 <Button Content="Run" Margin="5" Click="RunAnalysis"/>
             </StackPanel>
         </StackPanel>

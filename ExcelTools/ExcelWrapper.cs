@@ -68,6 +68,20 @@ namespace ExcelTools
             return columns.ToArray();
         }
 
+        public string[][] GetAllRows()
+        {
+            int columnCount = this.GetColumnCount();
+
+            var rows = new List<string[]>();
+
+            for (int i = 0; i < columnCount; i++)
+            {
+                rows.Add(this.GetStringRows(i));
+            }
+
+            return rows.ToArray();
+        }
+
         public string[] GetStringRows(int col)
         {
             using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))
