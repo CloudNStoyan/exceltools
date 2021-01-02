@@ -30,7 +30,7 @@ namespace ExcelTools.Pages
 
                 if (!File.Exists(filePath))
                 {
-                    MessageBox.Show("No file selected!");
+                    MessageBox.Show(CustomAlerts.NoFileSelected);
                     return;
                 }
 
@@ -62,7 +62,7 @@ namespace ExcelTools.Pages
 
                 if (filePaths == null || filePaths.Length == 0)
                 {
-                    MessageBox.Show("No file selected!");
+                    MessageBox.Show(CustomAlerts.NoFileSelected);
                     return;
                 }
 
@@ -83,7 +83,7 @@ namespace ExcelTools.Pages
                 
                 if (data == null)
                 {
-                    MessageBox.Show($"No data can be exported");
+                    MessageBox.Show("No data can be exported");
                     return;
                 }
 

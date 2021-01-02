@@ -22,7 +22,7 @@ namespace ExcelTools.Pages
         {
             if (!File.Exists(this.FileSelection.SelectedFile))
             {
-                MessageBox.Show("No file selected!");
+                MessageBox.Show(CustomAlerts.NoFileSelected);
                 return;
             }
 

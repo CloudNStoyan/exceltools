@@ -26,17 +26,8 @@ namespace ExcelTools.Pages
             
                 if (filePaths == null || filePaths.Length == 0)
                 {
-                    MessageBox.Show("No files selected!");
+                    MessageBox.Show(CustomAlerts.NoFileSelected);
                     return;
-                }
-            
-                foreach (string filePath in filePaths)
-                {
-                    if (!File.Exists(filePath))
-                    {
-                        MessageBox.Show($"Can't find '{filePath}'");
-                        return;
-                    }
                 }
 
                 int count = filePaths.Select(excelFile => new ExcelWrapper(excelFile)).Select(excelWrapper => excelWrapper.GetCount()).Sum();
@@ -49,7 +40,7 @@ namespace ExcelTools.Pages
             
                 if (!File.Exists(filePath))
                 {
-                    MessageBox.Show("No file selected!");
+                    MessageBox.Show(CustomAlerts.NoFileSelected);
                     return;
                 }
 

@@ -37,7 +37,7 @@ namespace ExcelTools.Pages
 
                 if (!File.Exists(filePath))
                 {
-                    MessageBox.Show("No file selected!");
+                    MessageBox.Show(CustomAlerts.NoFileSelected);
                     return;
                 }
 
@@ -58,17 +58,8 @@ namespace ExcelTools.Pages
 
                 if (filePaths == null || filePaths.Length == 0)
                 {
-                    MessageBox.Show("No file selected!");
+                    MessageBox.Show(CustomAlerts.NoFileSelected);
                     return;
-                }
-
-                foreach (string selectedFile in filePaths)
-                {
-                    if (!File.Exists(selectedFile))
-                    {
-                        MessageBox.Show($"Cannot find {selectedFile}!");
-                        return;
-                    }
                 }
 
                 var excelWrappers = filePaths.Select(filePath => new ExcelWrapper(filePath)).ToArray();

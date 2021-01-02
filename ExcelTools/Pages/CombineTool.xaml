@@ -9,10 +9,9 @@
       Title="CombineTool">
     <Grid Background="#F1F1F1">
         <StackPanel>
-            <TextBlock Text="Compare Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
+            <TextBlock Text="Combine Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
             <StackPanel Margin="10">
                 <controls:FileSelection Selection="Multi" FileSelected="FileSelection_OnFileSelected" x:Name="FileSelection"/>
-                <controls:CustomLabel Header="Column names" SubHeader="*The letter representing the column*"/>
                 <controls:MultiInput Margin="5,0,0,0"/>
             </StackPanel>
         </StackPanel>

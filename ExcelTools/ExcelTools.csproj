@@ -117,6 +117,7 @@
       <DependentUpon>MultiInput.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolMultiValueConverter.cs" />
+    <Compile Include="CustomAlerts.cs" />
     <Compile Include="CustomResources.cs" />
     <Compile Include="ExcelWrapper.cs" />
     <Compile Include="Logger.cs" />
