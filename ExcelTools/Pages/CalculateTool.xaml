@@ -11,9 +11,30 @@
     <Grid Background="#F1F1F1">
         <StackPanel>
             <TextBlock Text="Calculate Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
+
             <StackPanel Margin="10">
                 <controls:FileSelection Selection="Multi" FileSelected="FileSelection_OnFileSelected" x:Name="FileSelection"/>
-                <controls:MultiInput Margin="5,0,0,0"/>
+                <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                    <controls:Input Text="A" Width="25" Height="25"/>
+                    <ComboBox Width="50" Background="White" Margin="5,0,0,0" x:Name="OperationSelector">
+                        <ComboBoxItem>
+                            <TextBlock Text="/" TextAlignment="Center"/>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Text="*" TextAlignment="Center"/>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Text="+"/>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Text="-"/>
+                        </ComboBoxItem>
+                    </ComboBox>
+                    <controls:Input Text="B" Width="25" Height="25" Margin="5,0,0,0"/>
+                </StackPanel>
+                <TextBox HorizontalAlignment="Left" Margin="5,5,0,0" Width="360" Height="100" Name="Output"
+                         VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                <Button Content="Run" Margin="5" Click="RunAnalysis" />
             </StackPanel>
         </StackPanel>
     </Grid>
