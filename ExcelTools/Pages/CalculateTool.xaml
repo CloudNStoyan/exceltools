@@ -15,7 +15,7 @@
             <StackPanel Margin="10">
                 <controls:FileSelection Selection="Multi" FileSelected="FileSelection_OnFileSelected" x:Name="FileSelection"/>
                 <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                    <controls:Input Text="A" Width="25" Height="25"/>
+                    <controls:Input Text="A" Width="25" Height="25" x:Name="FirstColumn"/>
                     <ComboBox Width="50" Background="White" Margin="5,0,0,0" x:Name="OperationSelector">
                         <ComboBoxItem>
                             <TextBlock Text="/" TextAlignment="Center"/>
@@ -30,7 +30,7 @@
                             <TextBlock Text="-"/>
                         </ComboBoxItem>
                     </ComboBox>
-                    <controls:Input Text="B" Width="25" Height="25" Margin="5,0,0,0"/>
+                    <controls:Input Text="B" Width="25" Height="25" Margin="5,0,0,0" x:Name="SecondColumn"/>
                 </StackPanel>
                 <TextBox HorizontalAlignment="Left" Margin="5,5,0,0" Width="360" Height="100" Name="Output"
                          VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
