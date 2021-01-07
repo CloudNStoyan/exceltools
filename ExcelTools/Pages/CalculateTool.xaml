@@ -11,30 +11,57 @@
     <Grid Background="#F1F1F1">
         <StackPanel>
             <TextBlock Text="Calculate Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
-
             <StackPanel Margin="10">
-                <controls:FileSelection Selection="Multi" FileSelected="FileSelection_OnFileSelected" x:Name="FileSelection"/>
-                <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                    <controls:Input Text="A" Width="25" Height="25" x:Name="FirstColumn"/>
-                    <ComboBox Width="50" Background="White" Margin="5,0,0,0" x:Name="OperationSelector">
-                        <ComboBoxItem>
-                            <TextBlock Text="/" TextAlignment="Center"/>
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            <TextBlock Text="*" TextAlignment="Center"/>
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            <TextBlock Text="+"/>
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            <TextBlock Text="-"/>
-                        </ComboBoxItem>
-                    </ComboBox>
-                    <controls:Input Text="B" Width="25" Height="25" Margin="5,0,0,0" x:Name="SecondColumn"/>
-                </StackPanel>
-                <TextBox HorizontalAlignment="Left" Margin="5,5,0,0" Width="360" Height="100" Name="Output"
-                         VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
-                <Button Content="Run" Margin="5" Click="RunAnalysis" />
+                <controls:FileSelection Selection="Multi" x:Name="FileSelection"/>
+                <controls:CustomLabel Header="Operation type" SubHeader="*The type of operation*"/>
+                <TabControl Margin="5,0,0,0" Height="350">
+                    <TabItem Header="Column">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                                <controls:Input Text="A" Width="25" Height="25" x:Name="FirstColumn"/>
+                                <ComboBox Width="50" Background="White" Margin="5,0,0,0" x:Name="OperationSelector" SelectedIndex="2">
+                                    <ComboBoxItem>
+                                        <TextBlock Text="/" TextAlignment="Center"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <TextBlock Text="*" TextAlignment="Center"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <TextBlock Text="+"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <TextBlock Text="-"/>
+                                    </ComboBoxItem>
+                                </ComboBox>
+                                <controls:Input Text="B" Width="25" Height="25" Margin="5,0,0,0" x:Name="SecondColumn"/>
+                            </StackPanel>
+                            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                <TextBox HorizontalAlignment="Left" Margin="0,5,0,0" Width="360" Height="100" Name="ColumnOutput"
+                                         VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                                <Button Content="Run" Margin="0,5,0,0" Click="RunColumnAnalysis" Width="360" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Multiple Files">
+                        <Grid>
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <controls:CustomLabel Header="Choose operation:"/>
+                                <ComboBox Width="70" Background="White" Margin="5,0,0,0" x:Name="MultipleFilesOperationSelector" SelectedIndex="0" HorizontalAlignment="Left">
+                                    <ComboBoxItem>
+                                        <TextBlock Text="Sum" TextAlignment="Center"/>
+                                    </ComboBoxItem>
+                                </ComboBox>
+                                <controls:CustomLabel Header="Column" SubHeader="*The letter representing the column*"/>
+                                <controls:Input Text="A" Width="25" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                <TextBox HorizontalAlignment="Left" Margin="0,5,0,0" Width="360" Height="100" Name="MultipleFilesOutput"
+                                         VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                                <Button Content="Run" Margin="0,5,0,0" Click="RunMultipleFilesAnalysis" Width="360" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
             </StackPanel>
         </StackPanel>
     </Grid>
