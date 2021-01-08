@@ -81,7 +81,7 @@ namespace ExcelTools
         {
             if (this.ActiveButton != null)
             {
-                this.ActiveButton.Background = SystemColors.ControlBrush;
+                this.ActiveButton.Background = SystemColors.ControlLightBrush;
             }
 
             this.ActiveButton = button;
