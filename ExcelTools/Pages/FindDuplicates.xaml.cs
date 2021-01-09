@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using ExcelTools.Alerts;
 using ExcelTools.Attributes;
 
 namespace ExcelTools.Pages
@@ -22,7 +23,7 @@ namespace ExcelTools.Pages
         {
             if (!File.Exists(this.FileSelection.SelectedFile))
             {
-                MessageBox.Show(CustomAlerts.NoFileSelected);
+                AlertManager.NoFileSelected();
                 return;
             }
 
