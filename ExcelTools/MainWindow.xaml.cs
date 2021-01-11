@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using ExcelTools.Alerts;
 using ExcelTools.Attributes;
 
 namespace ExcelTools
@@ -16,6 +17,7 @@ namespace ExcelTools
             this.InitializeComponent();
 
             this.Logger = new Logger(this.LogStackPanel, true);
+            AlertManager.SetupAlert(this.AlertBox,this.AlertBody);
 
             this.SetupPages();
         }
@@ -93,6 +95,11 @@ namespace ExcelTools
         private void ClearLogStackPanelHandler(object sender, RoutedEventArgs e)
         {
             this.LogStackPanel.Children.Clear();
+        }
+
+        private void CloseAlert(object sender, RoutedEventArgs e)
+        {
+            this.AlertBox.Visibility = Visibility.Hidden;
         }
     }
 }
