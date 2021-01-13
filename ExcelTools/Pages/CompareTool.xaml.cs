@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using ExcelTools.Alerts;
 using ExcelTools.Attributes;
 
 namespace ExcelTools.Pages
@@ -33,7 +34,7 @@ namespace ExcelTools.Pages
 
             if (firstExcelWrapper.FileName == secondExcelWrapper.FileName)
             {
-                MessageBox.Show("The excel files must be different!");
+                AlertManager.Custom("The excel files must be different!");
                 return;
             }
 

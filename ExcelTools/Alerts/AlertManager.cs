@@ -34,6 +34,7 @@ namespace ExcelTools.Alerts
         }
 
         public static void NoFileSelected() => Create("You need to select file first");
+        public static void Custom(string text) => Create(text);
 
         private static void Create(string text)
         {

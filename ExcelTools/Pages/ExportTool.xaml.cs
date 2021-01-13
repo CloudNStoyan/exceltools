@@ -43,7 +43,7 @@ namespace ExcelTools.Pages
                 
                 if (data == null)
                 {
-                    MessageBox.Show($"There is no column {columns} in {excelWrapper.FileName}");
+                    AlertManager.Custom($"There is no column {columns} in {excelWrapper.FileName}");
                     return;
                 }
 
@@ -71,7 +71,7 @@ namespace ExcelTools.Pages
                 {
                     if (!File.Exists(selectedFile))
                     {
-                        MessageBox.Show($"Cannot find {selectedFile}!");
+                        AlertManager.Custom($"Cannot find {selectedFile}!");
                         return;
                     }
                 }
@@ -84,7 +84,7 @@ namespace ExcelTools.Pages
                 
                 if (data == null)
                 {
-                    MessageBox.Show("No data can be exported");
+                    AlertManager.Custom("No data can be exported");
                     return;
                 }
 
@@ -167,7 +167,7 @@ namespace ExcelTools.Pages
                 int columnNumber = columnNumbers[i];
                 if (columnNumber == -1)
                 {
-                    MessageBox.Show($"Column '{column[i]}' is not a valid column, and it will be skipped!");
+                    AlertManager.Custom($"Column '{column[i]}' is not a valid column, and it will be skipped!");
                 }
             }
 
@@ -175,7 +175,7 @@ namespace ExcelTools.Pages
 
             if (columnNumbers.Length < 1)
             {
-                MessageBox.Show("There are no valid columns!");
+                AlertManager.Custom("There are no valid columns!");
                 return null;
             }
 
@@ -197,7 +197,7 @@ namespace ExcelTools.Pages
                 int columnNumber = columnNumbers[i];
                 if (columnNumber == -1)
                 {
-                    MessageBox.Show($"Column '{column[i]}' is not a valid column, and it will be skipped!");
+                    AlertManager.Custom($"Column '{column[i]}' is not a valid column, and it will be skipped!");
                 }
             }
 
@@ -205,7 +205,7 @@ namespace ExcelTools.Pages
 
             if (columnNumbers.Length < 1)
             {
-                MessageBox.Show("There are no valid columns!");
+                AlertManager.Custom("There are no valid columns!");
                 return null;
             }
 

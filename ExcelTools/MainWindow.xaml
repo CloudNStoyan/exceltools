@@ -28,7 +28,7 @@
                 </Border>
             </StackPanel>
         </DockPanel>
-        <Grid Width="400" Height="50" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#A6ffb200" Margin="0,25,0,0" Visibility="Visible" x:Name="AlertBox">
+        <Grid Width="400" Height="50" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#A6ffb200" Margin="0,25,0,0" Visibility="Hidden" x:Name="AlertBox">
             <TextBlock Text="Dw" TextAlignment="Center" VerticalAlignment="Center" Foreground="#160705" FontSize="20" x:Name="AlertBody"/>
             <Button Width="15" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,5,0"
                     Background="Transparent" BorderBrush="Transparent" Click="CloseAlert">

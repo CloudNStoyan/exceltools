@@ -24,7 +24,7 @@ namespace ExcelTools.Pages
         {
             if (string.IsNullOrWhiteSpace(this.FindValueInput.Text))
             {
-                MessageBox.Show("Value cannot be empty or white space only!");
+                AlertManager.Custom("Value cannot be empty or white space only!");
                 return;
             }
 
@@ -104,7 +104,8 @@ namespace ExcelTools.Pages
                 }
                 else
                 {
-                    MessageBox.Show($"There isn't {columns[i]} column in {excelWrapper.FileName}");
+
+                    AlertManager.Custom($"There isn't {columns[i]} column in {excelWrapper.FileName}");
                 }
             }
 

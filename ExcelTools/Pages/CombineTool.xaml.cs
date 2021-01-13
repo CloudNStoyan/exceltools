@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using ExcelTools.Alerts;
 using ExcelTools.Attributes;
 
 namespace ExcelTools.Pages
@@ -26,7 +27,7 @@ namespace ExcelTools.Pages
             }
             else
             {
-                MessageBox.Show("You need at least 2 files to combine them");
+                AlertManager.Custom("You need at least 2 files to combine them");
             }
         }
     }
