@@ -9,11 +9,11 @@
     <StackPanel HorizontalAlignment="Left">
         <local:CustomLabel Header="Column names" SubHeader="*The letter representing the column*" Margin="-5,0,0,0"/>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-            <Button Content="-" Height="25" Width="25" Background="White" Click="RemoveInput" x:Name="RemoveBtn"/>
+            <Button Content="-" Height="25" Width="25" Background="White" Click="RemoveInput" x:Name="RemoveBtn" ToolTip="Removing Column" IsEnabled="False"/>
                 <StackPanel Orientation="Horizontal" x:Name="InputPanel" Margin="5,0,0,0">
                     <local:Input Height="25" Width="25" Text="A"/>
                 </StackPanel>
-                <Button Content="+" Height="25" Width="25" Background="White" Margin="5,0,0,0" Click="AddInput" x:Name="AddBtn"/>
+                <Button Content="+" Height="25" Width="25" Background="White" Margin="5,0,0,0" Click="AddInput" x:Name="AddBtn" ToolTip="Adding Column"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

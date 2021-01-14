@@ -17,16 +17,15 @@
                 <controls:FileSelection Selection="Both" x:Name="FileSelection"/>
                 <controls:CustomLabel Header="Value" SubHeader="*The value you want to find. Must be text*"/>
                 <TextBox HorizontalAlignment="Left" Margin="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                     Width="350" Name="FindValueInput"/>
-                <Label>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox Name="CaseSensitiveCheck" IsChecked="True"/>
-                        <TextBlock Text="Case-Sensitive" Margin="5,0,0,0"/>
-                    </StackPanel>
-                </Label>
-                <CheckBox Margin="5,0,0,0" Content="Specific Columns" x:Name="SpecificColumnCheckBox" IsChecked="True"/>
+                     Width="350" Name="FindValueInput" ToolTip="The value you want to find. Must be text"/>
+
+                <CheckBox Margin="5,5,0,0" x:Name="CaseSensitiveCheck" IsChecked="True" 
+                          Content="Case-Sensitive" ToolTip="If it's checked the find tool will search for exactly the same text"/>
+                <CheckBox Margin="5,5,0,0" x:Name="SpecificColumnCheckBox" IsChecked="True" 
+                          Content="Specific Columns" ToolTip="If it's checked the find tool will search values only in these columns"/>
+
                 <controls:MultiInput HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="ColumnTextBox" Visibility="{Binding ElementName=SpecificColumnCheckBox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                <Button Content="Run" Margin="5" Click="RunAnalysis"/>
+                <Button Content="Run" Margin="5" Click="RunAnalysis" ToolTip="Run the analysis"/>
             </StackPanel>
         </StackPanel>
     </Grid>

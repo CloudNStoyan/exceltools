@@ -23,7 +23,7 @@
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Height="430" Padding="5">
                             <StackPanel Name="LogStackPanel" />
                         </ScrollViewer>
-                        <Button Content="Clear" VerticalAlignment="Bottom" Click="ClearLogStackPanelHandler" Height="25" Margin="5"/>
+                        <Button Content="Clear" VerticalAlignment="Bottom" Click="ClearLogStackPanelHandler" Height="25" Margin="5" ToolTip="Clear log"/>
                     </StackPanel>
                 </Border>
             </StackPanel>

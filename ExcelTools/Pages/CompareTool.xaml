@@ -23,7 +23,7 @@
                     <RadioButton HorizontalAlignment="Left" Content="Find similarities" IsChecked="True" GroupName="ComparisonType" DataContext="0"/>
                     <RadioButton HorizontalAlignment="Right" Content="Find differences" GroupName="ComparisonType" DataContext="1"/>
                 </Grid>
-                <Button Content="Compare" Margin="5" Padding="5" Click="RunAnalysis">
+                <Button Content="Compare" Margin="5" Padding="5" Click="RunAnalysis" ToolTip="Compare the files">
                     <Button.IsEnabled>
                         <MultiBinding Converter="{StaticResource BoolMultiValueConverter}">
                             <Binding ElementName="FirstFileSelection" Path="FileIsSelected"/>

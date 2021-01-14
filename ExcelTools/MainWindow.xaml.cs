@@ -55,7 +55,8 @@ namespace ExcelTools
                 {
                     Content = header,
                     Padding = new Thickness(5),
-                    Margin = new Thickness(5)
+                    Margin = new Thickness(5),
+                    ToolTip = $"Navigate to {header}"
                 };
 
                 button.Click += (sender, args) => this.NavigateToPage(instance, button);
