@@ -9,7 +9,7 @@ using ExcelTools.Attributes;
 
 namespace ExcelTools.Pages
 {
-    [PageInfo(Header = "Export Tool")]
+    [PageInfo(Header = "Export Tool", Order = 0)]
     public partial class ExportTool : Page
     {
         private Logger Logger { get; }

@@ -3,7 +3,7 @@ using ExcelTools.Attributes;
 
 namespace ExcelTools.Pages
 {
-    [PageInfo(Header = "Features", Order = 0)]
+    [PageInfo(Header = "Features", ShowInNavigation = false)]
     public partial class Features : Page
     {
         public Features() => this.InitializeComponent();

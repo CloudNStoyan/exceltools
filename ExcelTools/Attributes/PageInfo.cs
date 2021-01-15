@@ -7,5 +7,6 @@ namespace ExcelTools.Attributes
     {
         public string Header { get; set; }
         public int Order = 10;
+        public bool ShowInNavigation = true;
     }
 }

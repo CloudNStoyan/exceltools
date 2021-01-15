@@ -48,24 +48,24 @@ namespace ExcelTools
                 }
 
                 var instance = hasLoggerParameter ? (Page) Activator.CreateInstance(pageClass, this.Logger) : (Page) Activator.CreateInstance(pageClass);
-                string header = pageClass.GetCustomAttribute<PageInfo>().Header;
-                int order = pageClass.GetCustomAttribute<PageInfo>().Order;
+
+                var pageInfo = pageClass.GetCustomAttribute<PageInfo>();
 
                 var button = new Button
                 {
-                    Content = header,
+                    Content = pageInfo.Header,
                     Padding = new Thickness(5),
                     Margin = new Thickness(5),
-                    ToolTip = $"Navigate to {header}"
+                    ToolTip = $"Navigate to {pageInfo.Header}"
                 };
 
                 button.Click += (sender, args) => this.NavigateToPage(instance, button);
 
-                button.DataContext = order;
+                button.DataContext = pageInfo.Order;
                 
                 buttons.Add(button);
                 
-                if (order == 0)
+                if (pageInfo.Order == 0 && pageInfo.ShowInNavigation)
                 {
                     this.NavigateToPage(instance, button);
                 }
