@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using ExcelTools.Alerts;
 using ExcelTools.Attributes;
+using ExcelTools.Pages;
 
 namespace ExcelTools
 {
@@ -26,7 +27,7 @@ namespace ExcelTools
 
         private void SetupPages()
         {
-            var pageClasses = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.Namespace == "ExcelTools.Pages" && x.BaseType?.Name == "Page").ToArray();
+            var pageClasses = Assembly.GetExecutingAssembly().DefinedTypes.Where(x => x.Namespace == "ExcelTools.Pages" && x.BaseType == typeof(Page)).ToArray();
 
             var buttons = new List<Button>();
 
@@ -51,6 +52,17 @@ namespace ExcelTools
 
                 var pageInfo = pageClass.GetCustomAttribute<PageInfo>();
 
+                if (pageInfo.Header == typeof(Features).GetCustomAttribute<PageInfo>().Header)
+                {
+                    this.ToFeaturesButton.Click += (o, e) => this.NavigateToPage(instance, this.ToFeaturesButton);
+                    this.ToFeaturesButton.ToolTip = $"Navigate to {pageInfo.Header}";
+                }
+
+                if (!pageInfo.ShowInNavigation)
+                {
+                    continue;
+                }
+
                 var button = new Button
                 {
                     Content = pageInfo.Header,
@@ -65,7 +77,7 @@ namespace ExcelTools
                 
                 buttons.Add(button);
                 
-                if (pageInfo.Order == 0 && pageInfo.ShowInNavigation)
+                if (pageInfo.Order == 0)
                 {
                     this.NavigateToPage(instance, button);
                 }

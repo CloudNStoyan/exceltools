@@ -7,14 +7,11 @@
         Title="Excel Tools" Height="530" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
         <DockPanel Background="#F1F1F1">
-            <Border Background="#217346">
-                <GroupBox DockPanel.Dock="Left" Width="150" BorderThickness="0">
-                    <GroupBox.Header>
-                        <TextBlock Text="Navigation" Foreground="White" FontSize="28"/>
-                    </GroupBox.Header>
-                    <StackPanel Name="NavigationContainer"/>
-                </GroupBox>
-            </Border>
+            <StackPanel Background="#217346" DockPanel.Dock="Left" Width="150">
+                <TextBlock Text="Navigation" Foreground="White" FontSize="17" Height="25" TextAlignment="Center"/>
+                <StackPanel Name="NavigationContainer" Height="430"/>
+                <Button Content="Features" Height="25" Margin="5" x:Name="ToFeaturesButton"/>
+            </StackPanel>
             <Frame Name="Settings" Width="400" NavigationUIVisibility="Hidden"/>
             <StackPanel>
                 <TextBlock Text="Result Log" Foreground="White" FontSize="17" Height="25" TextAlignment="Center" Background="#217346"/>
