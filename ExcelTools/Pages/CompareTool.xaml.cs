@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using ExcelTools.Alerts;
 using ExcelTools.Attributes;
 
 namespace ExcelTools.Pages
@@ -12,8 +11,6 @@ namespace ExcelTools.Pages
     public partial class CompareTool : Page
     {
         private Logger Logger { get; }
-        private bool FirstExcelFileSelected { get; set; }
-        private bool SecondExcelFileSelected { get; set; }
         public CompareTool(Logger logger)
         {
             this.InitializeComponent();

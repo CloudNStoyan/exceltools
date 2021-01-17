@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-namespace ExcelTools.Alerts
+namespace ExcelTools
 {
     public static class AlertManager
     {

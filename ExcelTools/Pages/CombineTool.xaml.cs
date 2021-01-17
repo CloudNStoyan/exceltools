@@ -1,7 +1,5 @@
 ﻿using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
-using ExcelTools.Alerts;
 using ExcelTools.Attributes;
 
 namespace ExcelTools.Pages
