@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -9,11 +10,19 @@ namespace ExcelTools
     {
         private StackPanel StackPanel { get; }
         private bool UseTimestamp { get; }
+        public string LogText => string.Join("\r\n", this.LogData);
+        private List<string> LogData = new List<string>();
 
         public Logger(StackPanel stackPanel, bool useTimestamp)
         {
             this.StackPanel = stackPanel;
             this.UseTimestamp = useTimestamp;
+        }
+
+        public void Clear()
+        {
+            this.StackPanel.Children.Clear();
+            this.LogData.Clear();
         }
 
         public void Log(string[] logs)
@@ -43,6 +52,8 @@ namespace ExcelTools
                 };
 
                 logWrapper.Children.Add(timeStampTextBlock);
+
+                this.LogData.Add($"{timestamp}\r\n{text}");
             }
 
             logWrapper.Children.Add(textBlock);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -104,14 +105,21 @@ namespace ExcelTools
             this.Settings.Navigate(page);
         }
 
-        private void ClearLogStackPanelHandler(object sender, RoutedEventArgs e)
+        private void ClearLogStackPanelHandler(object sender, RoutedEventArgs e) => this.Logger.Clear();
+
+        private void SaveLogStackPanelHandler(object sender, RoutedEventArgs e)
         {
-            this.LogStackPanel.Children.Clear();
+            var date = DateTime.Now;
+
+            string timestamp = $"{date.Hour.ToString().PadLeft(2, '0')}{date.Minute.ToString().PadLeft(2, '0')}{date.Second.ToString().PadLeft(2, '0')}-{date.Day}-{date.Month}-{date.Year}";
+
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"et-log-{timestamp}.txt");
+
+            File.WriteAllText(path, this.Logger.LogText);
+
+            AlertManager.Custom($"Succesfully saved to Desktop");
         }
 
-        private void CloseAlert(object sender, RoutedEventArgs e)
-        {
-            this.AlertBox.Visibility = Visibility.Hidden;
-        }
+        private void CloseAlert(object sender, RoutedEventArgs e) => this.AlertBox.Visibility = Visibility.Hidden;
     }
 }

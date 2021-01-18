@@ -20,7 +20,10 @@
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Height="430" Padding="5">
                             <StackPanel Name="LogStackPanel" />
                         </ScrollViewer>
-                        <Button Content="Clear" VerticalAlignment="Bottom" Click="ClearLogStackPanelHandler" Height="25" Margin="5" ToolTip="Clear log"/>
+                        <Grid>
+                            <Button Content="Clear" HorizontalAlignment="Left" Click="ClearLogStackPanelHandler" Height="25" Margin="5" ToolTip="Clear log" Width="100"/>
+                            <Button Content="Save" HorizontalAlignment="Right" Click="SaveLogStackPanelHandler" Height="25" Margin="5" ToolTip="Save the log" Width="100"/>
+                        </Grid>
                     </StackPanel>
                 </Border>
             </StackPanel>
