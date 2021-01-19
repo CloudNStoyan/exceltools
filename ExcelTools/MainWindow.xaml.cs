@@ -112,12 +112,13 @@ namespace ExcelTools
             var date = DateTime.Now;
 
             string timestamp = $"{date.Hour.ToString().PadLeft(2, '0')}{date.Minute.ToString().PadLeft(2, '0')}{date.Second.ToString().PadLeft(2, '0')}-{date.Day}-{date.Month}-{date.Year}";
+            string fileName = $"et-log-{timestamp}.txt";
 
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"et-log-{timestamp}.txt");
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName);
 
             File.WriteAllText(path, this.Logger.LogText);
 
-            AlertManager.Custom($"Succesfully saved to Desktop");
+            AlertManager.Custom($"Succesfully saved {fileName} to Desktop");
         }
 
         private void CloseAlert(object sender, RoutedEventArgs e) => this.AlertBox.Visibility = Visibility.Hidden;
