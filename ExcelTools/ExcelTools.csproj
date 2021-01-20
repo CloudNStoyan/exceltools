@@ -95,6 +95,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Output.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -116,6 +120,9 @@
     </Compile>
     <Compile Include="Controls\MultiInput.xaml.cs">
       <DependentUpon>MultiInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Output.xaml.cs">
+      <DependentUpon>Output.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolMultiValueConverter.cs" />
     <Compile Include="CustomResources.cs" />
@@ -224,8 +231,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Alerts\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
