@@ -43,8 +43,7 @@
                 </GroupBox>
                 <Button Content="Run" Margin="5" Click="RunAnalysis" ToolTip="Run the analysis"/>
                 <controls:CustomLabel Header="Exported Data" SubHeader="*The exported rows from the excel file*"/>
-                <TextBox HorizontalAlignment="Left" Margin="5,0,0,0" Width="360" Height="100" Name="Output"
-                         VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                <controls:Output Margin="5,0,0,0" Width="360" Height="100" x:Name="Output"/>
             </StackPanel>
         </StackPanel>
     </Grid>

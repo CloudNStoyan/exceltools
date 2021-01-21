@@ -19,7 +19,8 @@ namespace ExcelTools.Controls
 
             var saveFileDialog = new SaveFileDialog
             {
-                DefaultExt = ".txt", InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                DefaultExt = ".txt", InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                FileName = "export-data.txt"
             };
 
             if (saveFileDialog.ShowDialog() == true)
