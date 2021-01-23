@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:ExcelTools.Pages"
       xmlns:controls="clr-namespace:ExcelTools.Controls"
       mc:Ignorable="d" 
-      d:DesignHeight="350" d:DesignWidth="400"
+      d:DesignHeight="550" d:DesignWidth="400"
       Title="CalculateTool">
     <Grid Background="#F1F1F1">
         <StackPanel>

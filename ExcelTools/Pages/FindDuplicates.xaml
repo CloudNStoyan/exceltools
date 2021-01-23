@@ -15,11 +15,13 @@
        <StackPanel>
             <TextBlock Text="Find Duplicates" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
             <StackPanel Margin="10">
-                <controls:FileSelection x:Name="FileSelection"/>
-                <CheckBox Margin="5,0,0,0" Content="Specific Columns" x:Name="SpecificColumnCheckBox" IsChecked="True"/>
+                <controls:FileSelection x:Name="FileSelection" Selection="Both"/>
+                <Separator />
+                <CheckBox Margin="5,0,0,0" Content="Specific Columns" x:Name="SpecificColumnCheckBox"/>
                 <StackPanel Visibility="{Binding ElementName=SpecificColumnCheckBox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <controls:MultiInput HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="ColumnTextBox"/>
                 </StackPanel>
+                <Separator />
                 <Button Content="Run" Margin="5" Click="RunAnalysis" ToolTip="Run the analysis"/>
             </StackPanel>
         </StackPanel>

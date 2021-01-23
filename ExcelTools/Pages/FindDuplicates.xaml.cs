@@ -20,18 +20,35 @@ namespace ExcelTools.Pages
 
         private void RunAnalysis(object sender, RoutedEventArgs e)
         {
-            if (!File.Exists(this.FileSelection.SelectedFile))
+            if (!this.FileSelection.FileIsSelected)
             {
                 AlertManager.NoFileSelected();
                 return;
             }
 
-            var excelWrapper = new ExcelWrapper(this.FileSelection.SelectedFile);
+            if (this.FileSelection.MultipleFilesChecked)
+            {
+                string[] files = this.FileSelection.SelectedFiles;
 
-            string[] columns = this.ColumnTextBox.GetColumns();
+                foreach (string file in files)
+                {
+                    var excelWrapper = new ExcelWrapper(file);
 
-            this.FindDuplicatesAnalysis(excelWrapper,
-                this.SpecificColumnCheckBox.IsChecked == true ? columns : excelWrapper.GetColumns());
+                    string[] columns = this.ColumnTextBox.GetColumns();
+
+                    this.FindDuplicatesAnalysis(excelWrapper,
+                        this.SpecificColumnCheckBox.IsChecked == true ? columns : excelWrapper.GetColumns());
+                }
+            }
+            else
+            {
+                var excelWrapper = new ExcelWrapper(this.FileSelection.SelectedFile);
+
+                string[] columns = this.ColumnTextBox.GetColumns();
+
+                this.FindDuplicatesAnalysis(excelWrapper,
+                    this.SpecificColumnCheckBox.IsChecked == true ? columns : excelWrapper.GetColumns());
+            }
         }
 
         private void FindDuplicatesAnalysis(ExcelWrapper excelWrapper, string[] columns)
@@ -68,7 +85,11 @@ namespace ExcelTools.Pages
                 }
             }
 
-            this.Logger.Log(duplicates.Count > 0 ? "Duplicates were found: \n" + string.Join("\n", duplicates) : "No duplicates found!");
+            string log = duplicates.Count > 0
+                ? "Duplicates were found: \n" + string.Join("\n", duplicates)
+                : "No duplicates found!";
+
+            this.Logger.Log($"{excelWrapper.FileName}\r\n" + log);
         }
     }
 }
