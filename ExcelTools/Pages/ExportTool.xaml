@@ -15,7 +15,10 @@
             <TextBlock Text="Export Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
             <StackPanel Margin="10">
                 <controls:FileSelection x:Name="FileSelection" Selection="Both"/>
-                <controls:MultiInput Margin="5,0,0,0" x:Name="Columns" />
+                <Separator />
+                <CheckBox Margin="5,0,0,0" Content="Specific Columns" x:Name="SpecificColumnCheckBox"/>
+                <controls:MultiInput HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="Columns" Visibility="{Binding ElementName=SpecificColumnCheckBox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <Separator />
                 <GroupBox Header="Options">
                     <StackPanel>
                         <controls:CustomLabel Header="Separator" SubHeader="*The symbol that will be used to split the data rows*"/>
@@ -43,7 +46,7 @@
                 </GroupBox>
                 <Button Content="Run" Margin="5" Click="RunAnalysis" ToolTip="Run the analysis"/>
                 <controls:CustomLabel Header="Exported Data" SubHeader="*The exported rows from the excel file*"/>
-                <controls:Output Margin="5,0,0,0" Width="360" Height="100" x:Name="Output"/>
+                <controls:Output Margin="5,0,0,0" x:Name="Output"/>
             </StackPanel>
         </StackPanel>
     </Grid>

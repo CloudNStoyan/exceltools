@@ -36,7 +36,7 @@ namespace ExcelTools.Pages
 
                 var excelWrapper = new ExcelWrapper(filePath);
 
-                string[] columns = this.Columns.GetColumns();
+                string[] columns = this.SpecificColumnCheckBox.IsChecked == true ? this.Columns.GetColumns() : excelWrapper.GetColumns();
 
                 var data = this.Export(excelWrapper, columns, this.SkipEmpty.IsChecked == true);
                 
