@@ -13,7 +13,8 @@
     </Page.Resources>
     <Grid Background="#F1F1F1" Loaded="OnLoaded">
         <StackPanel>
-            <TextBlock Text="Compare Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
+            <TextBlock Text="Compare Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"
+                       ToolTip="The Compare Tool lets you compare excels to see if they have any differences or similarities"/>
             <StackPanel Margin="10">
                 <controls:FileSelection x:Name="FirstFileSelection" HeaderText="First File" SubHeaderText="*The first file*"/>
                 <controls:FileSelection x:Name="SecondFileSelection" HeaderText="Second File" SubHeaderText="*The second file*"/>

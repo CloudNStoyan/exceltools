@@ -9,7 +9,8 @@
       Title="MultiCounter">
     <Grid Background="#F1F1F1">
         <StackPanel>
-            <TextBlock Text="Multi Counter" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
+            <TextBlock Text="Multi Counter" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"
+                       ToolTip="The Multi Counter feature lets you count how many cells are in a excel file/s"/>
             <StackPanel Margin="10">
                 <controls:FileSelection Selection="Both" x:Name="FileSelection"/>
                 <Button Content="Run" Margin="5" Click="RunAnalysis" ToolTip="Run the analysis"/>

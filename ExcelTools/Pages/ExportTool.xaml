@@ -12,7 +12,8 @@
     </Page.Resources>
     <Grid Background="#F1F1F1">
         <StackPanel>
-            <TextBlock Text="Export Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
+            <TextBlock Text="Export Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"
+                       ToolTip="The Export Tool lets you export excel files to data rows with many options including different separators and multiple columns"/>
             <StackPanel Margin="10">
                 <controls:FileSelection x:Name="FileSelection" Selection="Both"/>
                 <Separator />

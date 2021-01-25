@@ -13,7 +13,8 @@
     </Page.Resources>
     <Grid Background="#F1F1F1">
        <StackPanel>
-            <TextBlock Text="Find Duplicates" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
+            <TextBlock Text="Find Duplicates" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"
+                       ToolTip="The Find Duplicates feature lets you know if there are duplicates (same cells) in two different excels and whats there position"/>
             <StackPanel Margin="10">
                 <controls:FileSelection x:Name="FileSelection" Selection="Both"/>
                 <Separator />

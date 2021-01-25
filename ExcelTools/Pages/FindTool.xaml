@@ -12,7 +12,8 @@
     </Page.Resources>
     <Grid Background="#F1F1F1">
         <StackPanel>
-            <TextBlock Text="Find Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
+            <TextBlock Text="Find Tool" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"
+                       ToolTip="The Find Tool lets you search through one or more excels to find specific value"/>
             <StackPanel Margin="10">
                 <controls:FileSelection Selection="Both" x:Name="FileSelection"/>
                 <controls:CustomLabel Header="Value" SubHeader="*The value you want to find. Must be text*"/>
