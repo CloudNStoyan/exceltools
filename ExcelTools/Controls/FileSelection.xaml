@@ -17,12 +17,7 @@
                 </CheckBox.Content>
             </CheckBox>
         </Label>
-        <Label>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding HeaderText}" Name="FileTextBlock"/>
-                <TextBlock Text="{Binding SubHeaderText}" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray" Name="FileSubTextBlock"/>
-            </StackPanel>
-        </Label>
+        <local:CustomLabel x:Name="LabelFileText"/>
         <Grid>
             <Button Content="Select File" Margin="5" Click="SelectFileHandler" Name="SelectFileButton" ToolTip="File selector"/>
             <StackPanel Orientation="Horizontal" Name="FilePathViewWrapper" Visibility="Hidden">

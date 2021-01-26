@@ -189,16 +189,16 @@ namespace ExcelTools.Controls
             if (this.MultipleFiles.IsChecked == true)
             {
                 this.SelectFileButton.Content = "Select Files";
-                this.FileTextBlock.Text = "Files";
-                this.FileSubTextBlock.Text = "*The excel files you want to analyse*";
+                this.LabelFileText.Header = "Files";
+                this.LabelFileText.SubHeader = "*The excel files you want to analyse*";
 
                 this.MultipleFilesChecked = true;
             }
             else
             {
                 this.SelectFileButton.Content = "Select File";
-                this.FileTextBlock.Text = "File";
-                this.FileSubTextBlock.Text = "*The excel file you want to analyse*";
+                this.LabelFileText.Header = "File";
+                this.LabelFileText.SubHeader = "*The excel file you want to analyse*";
 
                 this.MultipleFilesChecked = false;
             }
@@ -213,18 +213,24 @@ namespace ExcelTools.Controls
             if (this.Selection == SelectionType.Single)
             {
                 this.MultipleFilesLabel.Visibility = Visibility.Collapsed;
+                this.SelectFileButton.Content = "Select File";
+                this.LabelFileText.Header = "File";
+                this.LabelFileText.SubHeader = "*The excel file you want to analyse*";
             }
             else if (this.Selection == SelectionType.Multi)
             {
                 this.MultipleFilesLabel.Visibility = Visibility.Collapsed;
                 this.SelectFileButton.Content = "Select Files";
-                this.FileTextBlock.Text = "Files";
-                this.FileSubTextBlock.Text = "*The excel files you want to analyse*";
+                this.LabelFileText.Header = "Files";
+                this.LabelFileText.SubHeader = "*The excel files you want to analyse*";
 
             }
             else if (this.Selection == SelectionType.Both)
             {
                 this.MultipleFilesLabel.Visibility = Visibility.Visible;
+                this.SelectFileButton.Content = "Select File";
+                this.LabelFileText.Header = "File";
+                this.LabelFileText.SubHeader = "*The excel file you want to analyse*";
             }
         }
     }
