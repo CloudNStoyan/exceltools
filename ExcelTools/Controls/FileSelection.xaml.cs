@@ -20,7 +20,7 @@ namespace ExcelTools.Controls
                 "HeaderText",
                 typeof(string),
                 typeof(FileSelection),
-                new PropertyMetadata("File")
+                new PropertyMetadata(CustomResources.File)
             );
 
         public enum SelectionType
@@ -55,7 +55,7 @@ namespace ExcelTools.Controls
                 "SubHeaderText",
                 typeof(string),
                 typeof(FileSelection),
-                new PropertyMetadata("*The excel file you want to analyse*")
+                new PropertyMetadata(CustomResources.ExcelFileAnalysis)
             );
 
         public bool MultipleFilesChecked
@@ -188,17 +188,17 @@ namespace ExcelTools.Controls
         {
             if (this.MultipleFiles.IsChecked == true)
             {
-                this.SelectFileButton.Content = "Select Files";
-                this.LabelFileText.Header = "Files";
-                this.LabelFileText.SubHeader = "*The excel files you want to analyse*";
+                this.SelectFileButton.Content = CustomResources.SelectFiles;
+                this.LabelFileText.Header = CustomResources.Files;
+                this.LabelFileText.SubHeader = CustomResources.ExcelFilesAnalysis;
 
                 this.MultipleFilesChecked = true;
             }
             else
             {
-                this.SelectFileButton.Content = "Select File";
-                this.LabelFileText.Header = "File";
-                this.LabelFileText.SubHeader = "*The excel file you want to analyse*";
+                this.SelectFileButton.Content = CustomResources.SelectFile;
+                this.LabelFileText.Header = CustomResources.File;
+                this.LabelFileText.SubHeader = CustomResources.ExcelFileAnalysis;
 
                 this.MultipleFilesChecked = false;
             }
@@ -213,24 +213,23 @@ namespace ExcelTools.Controls
             if (this.Selection == SelectionType.Single)
             {
                 this.MultipleFilesLabel.Visibility = Visibility.Collapsed;
-                this.SelectFileButton.Content = "Select File";
-                this.LabelFileText.Header = "File";
-                this.LabelFileText.SubHeader = "*The excel file you want to analyse*";
+                this.SelectFileButton.Content = CustomResources.SelectFile;
+                this.LabelFileText.Header = CustomResources.File;
+                this.LabelFileText.SubHeader = CustomResources.ExcelFileAnalysis;
             }
             else if (this.Selection == SelectionType.Multi)
             {
                 this.MultipleFilesLabel.Visibility = Visibility.Collapsed;
-                this.SelectFileButton.Content = "Select Files";
-                this.LabelFileText.Header = "Files";
-                this.LabelFileText.SubHeader = "*The excel files you want to analyse*";
-
+                this.SelectFileButton.Content = CustomResources.SelectFiles;
+                this.LabelFileText.Header = CustomResources.Files;
+                this.LabelFileText.SubHeader = CustomResources.ExcelFilesAnalysis;
             }
             else if (this.Selection == SelectionType.Both)
             {
                 this.MultipleFilesLabel.Visibility = Visibility.Visible;
-                this.SelectFileButton.Content = "Select File";
-                this.LabelFileText.Header = "File";
-                this.LabelFileText.SubHeader = "*The excel file you want to analyse*";
+                this.SelectFileButton.Content = CustomResources.SelectFile;
+                this.LabelFileText.Header = CustomResources.File;
+                this.LabelFileText.SubHeader = CustomResources.ExcelFileAnalysis;
             }
         }
     }
