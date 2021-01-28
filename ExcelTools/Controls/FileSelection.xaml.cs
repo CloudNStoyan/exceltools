@@ -17,7 +17,7 @@ namespace ExcelTools.Controls
 
         public static readonly DependencyProperty HeaderTextProperty
             = DependencyProperty.Register(
-                "HeaderText",
+                nameof(HeaderText),
                 typeof(string),
                 typeof(FileSelection),
                 new PropertyMetadata(CustomResources.File)
@@ -38,7 +38,7 @@ namespace ExcelTools.Controls
 
         public static readonly DependencyProperty SelectionProperty
             = DependencyProperty.Register(
-                "Selection",
+                nameof(Selection),
                 typeof(SelectionType),
                 typeof(FileSelection),
                 new PropertyMetadata(SelectionType.Single)
@@ -52,7 +52,7 @@ namespace ExcelTools.Controls
 
         public static readonly DependencyProperty SubHeaderTextProperty
             = DependencyProperty.Register(
-                "SubHeaderText",
+                nameof(SubHeaderText),
                 typeof(string),
                 typeof(FileSelection),
                 new PropertyMetadata(CustomResources.ExcelFileAnalysis)
@@ -66,7 +66,7 @@ namespace ExcelTools.Controls
 
         public static readonly DependencyProperty MultipleFilesCheckedProperty
             = DependencyProperty.Register(
-                "MultipleFilesChecked",
+                nameof(MultipleFilesChecked),
                 typeof(bool),
                 typeof(FileSelection),
                 new PropertyMetadata(false)
@@ -80,7 +80,7 @@ namespace ExcelTools.Controls
 
         public static readonly DependencyProperty FileIsSelectedProperty
             = DependencyProperty.Register(
-                "FileIsSelected",
+                nameof(FileIsSelected),
                 typeof(bool),
                 typeof(FileSelection),
                 new PropertyMetadata(false)

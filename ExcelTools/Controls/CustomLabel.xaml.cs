@@ -14,7 +14,7 @@ namespace ExcelTools.Controls
 
         public static readonly DependencyProperty HeaderProperty
             = DependencyProperty.Register(
-                "Header",
+                nameof(Header),
                 typeof(string),
                 typeof(CustomLabel),
                 new PropertyMetadata(string.Empty)
@@ -28,7 +28,7 @@ namespace ExcelTools.Controls
 
         public static readonly DependencyProperty SubHeaderProperty
             = DependencyProperty.Register(
-                "SubHeader",
+                nameof(SubHeader),
                 typeof(string),
                 typeof(CustomLabel),
                 new PropertyMetadata(string.Empty)

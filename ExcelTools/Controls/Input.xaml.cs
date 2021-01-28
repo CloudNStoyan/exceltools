@@ -13,7 +13,7 @@ namespace ExcelTools.Controls
 
         public static readonly DependencyProperty TextProperty
             = DependencyProperty.Register(
-                "Text",
+                nameof(Text),
                 typeof(string),
                 typeof(Input),
                 new PropertyMetadata(string.Empty)
