@@ -9,5 +9,7 @@
         public const string SelectFiles = "Select Files";
         public const string ExcelFileAnalysis = "*The excel file you want to analyse*";
         public const string ExcelFilesAnalysis = "*The excel files you want to analyse*";
+        public const string NoMatchesFound = "No matches were found!";
+        public const string NoValidColumns = "There are no valid columns!";
     }
 }

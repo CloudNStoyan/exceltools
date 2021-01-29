@@ -11,16 +11,10 @@ namespace ExcelTools.Pages
     [PageInfo(Header = "Export Tool", Order = 0)]
     public partial class ExportTool : Page
     {
-        private Logger Logger { get; }
 
-        public ExportTool(Logger logger)
-        {
-            this.InitializeComponent();
+        public ExportTool() => this.InitializeComponent();
 
-            this.Logger = logger;
-        }
-
-        private string[] separators = {" ", Environment.NewLine, ","};
+        private readonly string[] separators = {" ", Environment.NewLine, ","};
 
         private void RunAnalysis(object sender, RoutedEventArgs e)
         {
@@ -174,7 +168,7 @@ namespace ExcelTools.Pages
 
             if (columnNumbers.Length < 1)
             {
-                AlertManager.Custom("There are no valid columns!");
+                AlertManager.Custom(CustomResources.NoValidColumns);
                 return null;
             }
 
@@ -204,7 +198,7 @@ namespace ExcelTools.Pages
 
             if (columnNumbers.Length < 1)
             {
-                AlertManager.Custom("There are no valid columns!");
+                AlertManager.Custom(CustomResources.NoValidColumns);
                 return null;
             }
 

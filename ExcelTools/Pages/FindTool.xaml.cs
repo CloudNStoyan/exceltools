@@ -117,7 +117,7 @@ namespace ExcelTools.Pages
 
             string[] logs = this.CheckColumns(columns, excelWrapper, value, caseSensitive);
 
-            this.Logger.Log(logs.Length > 0 ? string.Join("\r\n", logs) : "No matches were found!");
+            this.Logger.Log(logs.Length > 0 ? string.Join("\r\n", logs) : CustomResources.NoMatchesFound);
         }
 
         private void FindAnalysis(ExcelWrapper[] excelWrappers, string value, bool caseSensitive)
@@ -131,7 +131,7 @@ namespace ExcelTools.Pages
                 logs.AddRange(this.CheckColumns(columns, excelWrapper, value, caseSensitive));
             }
 
-            this.Logger.Log(logs.Count > 0 ? string.Join("\r\n", logs) : "No matches were found!");
+            this.Logger.Log(logs.Count > 0 ? string.Join("\r\n", logs) : CustomResources.NoMatchesFound);
         }
 
         private void FindAnalysis(ExcelWrapper excelWrapper, string value, bool caseSensitive, string[] columns)
