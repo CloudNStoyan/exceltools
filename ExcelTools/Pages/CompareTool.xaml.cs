@@ -93,5 +93,29 @@ namespace ExcelTools.Pages
         {
             this.DataContext = this;
         }
+
+        private void OpeningToolTip(object sender, ToolTipEventArgs e)
+        {
+            var grid = (Grid) sender;
+
+            var errors = new List<string>();
+
+            if (!this.FirstFileSelection.FileIsSelected)
+            {
+                errors.Add("First file is not selected!");
+            }
+
+            if (!this.SecondFileSelection.FileIsSelected)
+            {
+                errors.Add("Second file is not selected!");
+            }
+
+            if (errors.Count == 0)
+            {
+                errors.Add("Compare the files");
+            }
+
+            grid.ToolTip = string.Join("\n", errors);
+        }
     }
 }

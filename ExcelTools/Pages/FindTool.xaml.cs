@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -93,11 +94,11 @@ namespace ExcelTools.Pages
 
                         if (rowValue != null && rowValue.Equals(value))
                         {
-                            output.Add($"\"{value}\" was found at {columns[i]}{j}");
+                            output.Add($"\"{rowValue}\" was found at {columns[i]}{j}");
                         }
-                        else if (rowValue != null && !caseSensitive && rowValue.ToLower().Equals(value))
+                        else if (rowValue != null && !caseSensitive && string.Equals(rowValue, value, StringComparison.CurrentCultureIgnoreCase))
                         {
-                            output.Add($"\"{value}\" was found at {columns[i]}{j}");
+                            output.Add($"\"{rowValue}\" was found at {columns[i]}{j}");
                         }
                     }
                 }

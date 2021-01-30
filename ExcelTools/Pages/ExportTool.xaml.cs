@@ -40,7 +40,7 @@ namespace ExcelTools.Pages
                     return;
                 }
 
-                data = data.Select(x => x.Select(y => y.Replace("\n", " ")).ToArray()).ToArray();
+                data = data.Select(x => x.Select(y => y?.Replace("\n", " ")).ToArray()).ToArray();
 
                 int separatorIndex = int.Parse(this.SeparatorsPanel.Children.OfType<RadioButton>()
                     .First(r => r.IsChecked == true).DataContext.ToString());
