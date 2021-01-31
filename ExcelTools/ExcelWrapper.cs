@@ -22,7 +22,7 @@ namespace ExcelTools
             return alphabet.IndexOf(column, StringComparison.Ordinal);
         }
 
-        public static string ConvertStringColumnToNumber(int column)
+        private static string ConvertStringColumnToNumber(int column)
         {
             const string alphabet = "ABCDEFGHIJKLMNPPQRSTUVWX";
 
@@ -36,17 +36,6 @@ namespace ExcelTools
                 using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
                     return reader.RowCount;
-                }
-            }
-        }
-
-        public int GetColumnCount()
-        {
-            using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
-                {
-                    return reader.FieldCount;
                 }
             }
         }
@@ -66,20 +55,6 @@ namespace ExcelTools
             }
 
             return columns.ToArray();
-        }
-
-        public string[][] GetAllRows()
-        {
-            int columnCount = this.GetColumnCount();
-
-            var rows = new List<string[]>();
-
-            for (int i = 0; i < columnCount; i++)
-            {
-                rows.Add(this.GetStringRows(i));
-            }
-
-            return rows.ToArray();
         }
 
         public string[] GetStringRows(int col)

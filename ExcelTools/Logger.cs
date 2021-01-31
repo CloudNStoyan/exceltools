@@ -10,8 +10,8 @@ namespace ExcelTools
     {
         private StackPanel StackPanel { get; }
         private bool UseTimestamp { get; }
-        public string LogText => string.Join("\r\n", this.LogData);
-        private List<string> LogData = new List<string>();
+        public string LogText => string.Join("\r\n", this.logData);
+        private readonly List<string> logData = new List<string>();
 
         public Logger(StackPanel stackPanel, bool useTimestamp)
         {
@@ -22,15 +22,7 @@ namespace ExcelTools
         public void Clear()
         {
             this.StackPanel.Children.Clear();
-            this.LogData.Clear();
-        }
-
-        public void Log(string[] logs)
-        {
-            foreach (string log in logs)
-            {
-                this.Log(log);
-            }
+            this.logData.Clear();
         }
 
         public void Log(string text)
@@ -53,7 +45,7 @@ namespace ExcelTools
 
                 logWrapper.Children.Add(timeStampTextBlock);
 
-                this.LogData.Add($"{timestamp}\r\n{text}");
+                this.logData.Add($"{timestamp}\r\n{text}");
             }
 
             logWrapper.Children.Add(textBlock);
