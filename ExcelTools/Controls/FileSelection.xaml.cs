@@ -232,5 +232,36 @@ namespace ExcelTools.Controls
                 this.LabelFileText.SubHeader = CustomResources.ExcelFileAnalysis;
             }
         }
+
+        private void SelectFileButton_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var contextMenu = new ContextMenu();
+
+            string[] recentFiles = {"test.xlsx", "test 2.xlsx"};
+
+            foreach (string recentFile in recentFiles)
+            {
+                var menuItem = new MenuItem {Header = recentFile};
+
+                menuItem.Click += (o, args) =>
+                {
+                    this.SelectedFile = recentFile;
+
+                    this.FilePathTextBox.Text = recentFile;
+
+                    this.FileIsSelected = true;
+
+                    this.SelectFileButton.Visibility = Visibility.Hidden;
+
+                    this.FilePathViewWrapper.Visibility = Visibility.Visible;
+
+                    this.FileSelected?.Invoke();
+                };
+
+                contextMenu.Items.Add(menuItem);
+            }
+
+            this.SelectFileButton.ContextMenu = contextMenu;
+        }
     }
 }
