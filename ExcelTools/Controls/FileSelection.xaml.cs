@@ -161,6 +161,17 @@ namespace ExcelTools.Controls
                 else
                 {
                     this.SelectedFile = openFileDialog.FileName;
+
+                    if (SavedData.RecentFiles != null)
+                    {
+                        var recentFiles = SavedData.RecentFiles.ToList();
+                        recentFiles.Add(this.SelectedFile);
+                        SavedData.RecentFiles = recentFiles.ToArray();
+                    }
+                    else
+                    {
+                        SavedData.RecentFiles = new[] {this.SelectedFile};
+                    }
                 }
 
                 this.FileIsSelected = true;
@@ -235,33 +246,36 @@ namespace ExcelTools.Controls
 
         private void SelectFileButton_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var contextMenu = new ContextMenu();
+            string[] recentFiles = SavedData.RecentFiles;
 
-            string[] recentFiles = {"test.xlsx", "test 2.xlsx"};
-
-            foreach (string recentFile in recentFiles)
+            if (recentFiles != null && recentFiles.Length > 0)
             {
-                var menuItem = new MenuItem {Header = recentFile};
+                var contextMenu = new ContextMenu();
 
-                menuItem.Click += (o, args) =>
+                foreach (string recentFile in recentFiles)
                 {
-                    this.SelectedFile = recentFile;
+                    var menuItem = new MenuItem { Header = recentFile };
 
-                    this.FilePathTextBox.Text = recentFile;
+                    menuItem.Click += (o, args) =>
+                    {
+                        this.SelectedFile = recentFile;
 
-                    this.FileIsSelected = true;
+                        this.FilePathTextBox.Text = recentFile;
 
-                    this.SelectFileButton.Visibility = Visibility.Hidden;
+                        this.FileIsSelected = true;
 
-                    this.FilePathViewWrapper.Visibility = Visibility.Visible;
+                        this.SelectFileButton.Visibility = Visibility.Hidden;
 
-                    this.FileSelected?.Invoke();
-                };
+                        this.FilePathViewWrapper.Visibility = Visibility.Visible;
 
-                contextMenu.Items.Add(menuItem);
+                        this.FileSelected?.Invoke();
+                    };
+
+                    contextMenu.Items.Add(menuItem);
+                }
+
+                this.SelectFileButton.ContextMenu = contextMenu;
             }
-
-            this.SelectFileButton.ContextMenu = contextMenu;
         }
     }
 }
