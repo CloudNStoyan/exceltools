@@ -19,7 +19,7 @@
         </Label>
         <local:CustomLabel x:Name="LabelFileText"/>
         <Grid>
-            <Button Content="Select File" Margin="5" Click="SelectFileHandler" Name="SelectFileButton" ToolTip="File selector" Loaded="SelectFileButton_OnLoaded"/>
+            <Button Content="Select File" Margin="5" Click="SelectFileHandler" Name="SelectFileButton" ToolTip="File selector" Loaded="SelectFileButton_OnLoaded" MouseRightButtonDown="SelectFileButton_OnMouseRightButtonDown"/>
             <StackPanel Orientation="Horizontal" Name="FilePathViewWrapper" Visibility="Hidden">
                 <TextBox Width="300" Height="25" Margin="5,0,0,0"
                          HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 

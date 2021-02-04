@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.Win32;
 
 namespace ExcelTools.Controls
@@ -91,6 +92,7 @@ namespace ExcelTools.Controls
 
         public string SelectedFile { get; set; }
         public string[] SelectedFiles { get; set; }
+        private readonly SavedData savedData = new SavedData();
 
         public FileSelection()
         {
@@ -162,16 +164,7 @@ namespace ExcelTools.Controls
                 {
                     this.SelectedFile = openFileDialog.FileName;
 
-                    if (SavedData.RecentFiles != null)
-                    {
-                        var recentFiles = SavedData.RecentFiles.ToList();
-                        recentFiles.Add(this.SelectedFile);
-                        SavedData.RecentFiles = recentFiles.ToArray();
-                    }
-                    else
-                    {
-                        SavedData.RecentFiles = new[] {this.SelectedFile};
-                    }
+                    this.savedData.AddFilePath(this.SelectedFile);
                 }
 
                 this.FileIsSelected = true;
@@ -244,9 +237,9 @@ namespace ExcelTools.Controls
             }
         }
 
-        private void SelectFileButton_OnLoaded(object sender, RoutedEventArgs e)
+        private void LoadContextMenu()
         {
-            string[] recentFiles = SavedData.RecentFiles;
+            string[] recentFiles = this.savedData.RecentFiles;
 
             if (recentFiles != null && recentFiles.Length > 0)
             {
@@ -277,5 +270,9 @@ namespace ExcelTools.Controls
                 this.SelectFileButton.ContextMenu = contextMenu;
             }
         }
+
+        private void SelectFileButton_OnLoaded(object sender, RoutedEventArgs e) => this.LoadContextMenu();
+        private void SelectFileButton_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e) =>
+            this.LoadContextMenu();
     }
 }

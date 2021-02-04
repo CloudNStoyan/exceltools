@@ -1,14 +1,40 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace ExcelTools
 {
-    public static class SavedData
+    public class SavedData
     {
         private const string SavedDataPath = "./savedData.txt";
-        public static string[] RecentFiles
+        public string[] RecentFiles { get; set; }
+
+        public SavedData()
         {
-            get => File.Exists(SavedDataPath) ? File.ReadAllLines(SavedDataPath) : null;
-            set => File.WriteAllLines(SavedDataPath, value);
+            this.LoadSavedData();
+        }
+
+        public void AddFilePath(string filePath)
+        {
+            var recentFiles = new List<string>();
+
+            if (this.RecentFiles != null)
+            {
+                recentFiles.AddRange(this.RecentFiles);
+            }
+
+            recentFiles.Add(filePath);
+
+            this.RecentFiles = recentFiles.ToArray();
+
+            File.WriteAllLines(SavedDataPath, this.RecentFiles);
+        }
+
+        private void LoadSavedData()
+        {
+            if (File.Exists(SavedDataPath))
+            {
+                this.RecentFiles = File.ReadAllLines(SavedDataPath);
+            }
         }
     }
 }
