@@ -56,6 +56,9 @@
     <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <HintPath>packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -79,7 +82,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="SavedData.cs" />
+    <Compile Include="SavedData\Config.cs" />
+    <Compile Include="SavedData\SavedData.cs" />
     <Page Include="Controls\CustomLabel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

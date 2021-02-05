@@ -92,11 +92,13 @@ namespace ExcelTools.Controls
 
         public string SelectedFile { get; set; }
         public string[] SelectedFiles { get; set; }
-        private readonly SavedData savedData = new SavedData();
+        private SavedData.SavedData SavedData { get; set; }
 
         public FileSelection()
         {
             this.InitializeComponent();
+
+            this.SavedData = new SavedData.SavedData();
         }
 
         private void SelectFileHandler(object sender, RoutedEventArgs e)
@@ -116,6 +118,9 @@ namespace ExcelTools.Controls
 
                 this.SelectedFile = fileName;
                 this.FileIsSelected = true;
+
+                this.SavedData.Config.RecentFiles.Add(openFileDialog.FileName);
+                this.SavedData.Save();
 
                 this.SelectFileButton.Visibility = Visibility.Hidden;
 
@@ -164,7 +169,8 @@ namespace ExcelTools.Controls
                 {
                     this.SelectedFile = openFileDialog.FileName;
 
-                    this.savedData.AddFilePath(this.SelectedFile);
+                    this.SavedData.Config.RecentFiles.Add(openFileDialog.FileName);
+                    this.SavedData.Save();
                 }
 
                 this.FileIsSelected = true;
@@ -239,7 +245,7 @@ namespace ExcelTools.Controls
 
         private void LoadContextMenu()
         {
-            string[] recentFiles = this.savedData.RecentFiles;
+            string[] recentFiles = this.SavedData.Config?.RecentFiles?.ToArray();
 
             if (recentFiles != null && recentFiles.Length > 0)
             {
