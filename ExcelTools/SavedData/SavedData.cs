@@ -15,7 +15,8 @@ namespace ExcelTools.SavedData
 
         private void LoadData()
         {
-            this.Config = File.Exists(ConfigPath) ? JsonConvert.DeserializeObject<Config>(File.ReadAllText(ConfigPath)) : new Config();
+            this.Config = (File.Exists(ConfigPath) ? JsonConvert.DeserializeObject<Config>(File.ReadAllText(ConfigPath)) : new Config()) ??
+                          new Config();
         }
 
         public void Save() => File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(this.Config));
