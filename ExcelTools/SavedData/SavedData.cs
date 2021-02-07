@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ExcelTools.SavedData
 {
@@ -15,10 +16,35 @@ namespace ExcelTools.SavedData
 
         private void LoadData()
         {
-            this.Config = (File.Exists(ConfigPath) ? JsonConvert.DeserializeObject<Config>(File.ReadAllText(ConfigPath)) : new Config()) ??
-                          new Config();
+            if (File.Exists(ConfigPath))
+            {
+                string json = File.ReadAllText(ConfigPath);
+
+                if (this.ValidateJSON(json))
+                {
+                    this.Config = JsonConvert.DeserializeObject<Config>(json);
+                }
+            }
+
+            if (this.Config == null)
+            {
+                this.Config = new Config();
+            }
         }
 
         public void Save() => File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(this.Config));
+
+        private bool ValidateJSON(string json)
+        {
+            try
+            {
+                JToken.Parse(json);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

@@ -4,6 +4,6 @@ namespace ExcelTools.SavedData
 {
     public class Config
     {
-        public List<string> RecentFiles = new List<string>();
+        public List<string> RecentFiles { get; set; }
     }
 }
