@@ -257,10 +257,35 @@ namespace ExcelTools.Controls
 
                     menuItem.Click += (o, args) =>
                     {
-                        this.SelectedFile = recentFile;
+                        if (this.Selection == SelectionType.Single)
+                        {
+                            this.SelectedFile = recentFile;
 
-                        this.FilePathTextBox.Text = recentFile;
+                            this.FilePathTextBox.Text = recentFile;
+                        }
+                        else if (this.Selection == SelectionType.Multi)
+                        {
+                            this.SelectedFiles = new[] {recentFile};
 
+                            this.FilePathTextBox.Text = recentFile;
+                        }
+                        else if (this.Selection == SelectionType.Both)
+                        {
+                            if (this.MultipleFilesChecked)
+                            {
+                                this.SelectedFiles = new[] { recentFile };
+
+                                this.FilePathTextBox.Text = recentFile;
+                            }
+                            else
+                            {
+                                this.SelectedFile = recentFile;
+
+                                this.FilePathTextBox.Text = recentFile;
+                            }
+                        }
+
+                        
                         this.FileIsSelected = true;
 
                         this.SelectFileButton.Visibility = Visibility.Hidden;
