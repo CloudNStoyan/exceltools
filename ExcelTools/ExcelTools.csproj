@@ -130,7 +130,6 @@
       <DependentUpon>Output.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolMultiValueConverter.cs" />
-    <Compile Include="CustomResources.cs" />
     <Compile Include="ExcelWrapper.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MainWindow.xaml.cs">

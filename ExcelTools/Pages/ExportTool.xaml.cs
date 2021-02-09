@@ -151,6 +151,8 @@ namespace ExcelTools.Pages
             return output.ToArray();
         }
 
+        private const string NoValidColumns = "There are no valid columns!";
+
         private string[][] Export(ExcelWrapper excelWrapper, string[] column, bool skipEmpty = false)
         {
             int[] columnNumbers = column.Select(ExcelWrapper.ConvertStringColumnToNumber).ToArray();
@@ -168,7 +170,7 @@ namespace ExcelTools.Pages
 
             if (columnNumbers.Length < 1)
             {
-                AlertManager.Custom(CustomResources.NoValidColumns);
+                AlertManager.Custom(NoValidColumns);
                 return null;
             }
 
@@ -198,7 +200,7 @@ namespace ExcelTools.Pages
 
             if (columnNumbers.Length < 1)
             {
-                AlertManager.Custom(CustomResources.NoValidColumns);
+                AlertManager.Custom(NoValidColumns);
                 return null;
             }
 

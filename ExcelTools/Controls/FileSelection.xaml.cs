@@ -10,6 +10,12 @@ namespace ExcelTools.Controls
 {
     public partial class FileSelection : UserControl
     {
+        private const string File = "File";
+        private const string Files = "Files";
+        private const string SelectFile = "Select File";
+        private const string SelectFiles = "Select Files";
+        private const string ExcelFileAnalysis = "*The excel file you want to analyse*";
+        private const string ExcelFilesAnalysis = "*The excel files you want to analyse*";
         public string HeaderText
         {
             get => (string)this.GetValue(HeaderTextProperty);
@@ -21,7 +27,7 @@ namespace ExcelTools.Controls
                 nameof(HeaderText),
                 typeof(string),
                 typeof(FileSelection),
-                new PropertyMetadata(CustomResources.File)
+                new PropertyMetadata(File)
             );
 
         public enum SelectionType
@@ -56,7 +62,7 @@ namespace ExcelTools.Controls
                 nameof(SubHeaderText),
                 typeof(string),
                 typeof(FileSelection),
-                new PropertyMetadata(CustomResources.ExcelFileAnalysis)
+                new PropertyMetadata(ExcelFileAnalysis)
             );
 
         public bool MultipleFilesChecked
@@ -103,7 +109,7 @@ namespace ExcelTools.Controls
 
         private void SelectFileHandler(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog { Filter = CustomResources.ExcelFileFilter };
+            var openFileDialog = new OpenFileDialog { Filter = "Excel Files|*.xls;*.xlsx|CSV files (*.csv)|*.csv" };
 
             if (this.Selection == SelectionType.Single)
             {
@@ -198,17 +204,17 @@ namespace ExcelTools.Controls
         {
             if (this.MultipleFiles.IsChecked == true)
             {
-                this.SelectFileButton.Content = CustomResources.SelectFiles;
-                this.LabelFileText.Header = CustomResources.Files;
-                this.LabelFileText.SubHeader = CustomResources.ExcelFilesAnalysis;
+                this.SelectFileButton.Content = SelectFiles;
+                this.LabelFileText.Header = Files;
+                this.LabelFileText.SubHeader = ExcelFilesAnalysis;
 
                 this.MultipleFilesChecked = true;
             }
             else
             {
-                this.SelectFileButton.Content = CustomResources.SelectFile;
-                this.LabelFileText.Header = CustomResources.File;
-                this.LabelFileText.SubHeader = CustomResources.ExcelFileAnalysis;
+                this.SelectFileButton.Content = SelectFile;
+                this.LabelFileText.Header = File;
+                this.LabelFileText.SubHeader = ExcelFileAnalysis;
 
                 this.MultipleFilesChecked = false;
             }
@@ -223,23 +229,23 @@ namespace ExcelTools.Controls
             if (this.Selection == SelectionType.Single)
             {
                 this.MultipleFilesLabel.Visibility = Visibility.Collapsed;
-                this.SelectFileButton.Content = CustomResources.SelectFile;
-                this.LabelFileText.Header = CustomResources.File;
-                this.LabelFileText.SubHeader = CustomResources.ExcelFileAnalysis;
+                this.SelectFileButton.Content = SelectFile;
+                this.LabelFileText.Header = File;
+                this.LabelFileText.SubHeader = ExcelFileAnalysis;
             }
             else if (this.Selection == SelectionType.Multi)
             {
                 this.MultipleFilesLabel.Visibility = Visibility.Collapsed;
-                this.SelectFileButton.Content = CustomResources.SelectFiles;
-                this.LabelFileText.Header = CustomResources.Files;
-                this.LabelFileText.SubHeader = CustomResources.ExcelFilesAnalysis;
+                this.SelectFileButton.Content = SelectFiles;
+                this.LabelFileText.Header = Files;
+                this.LabelFileText.SubHeader = ExcelFilesAnalysis;
             }
             else if (this.Selection == SelectionType.Both)
             {
                 this.MultipleFilesLabel.Visibility = Visibility.Visible;
-                this.SelectFileButton.Content = CustomResources.SelectFile;
-                this.LabelFileText.Header = CustomResources.File;
-                this.LabelFileText.SubHeader = CustomResources.ExcelFileAnalysis;
+                this.SelectFileButton.Content = SelectFile;
+                this.LabelFileText.Header = File;
+                this.LabelFileText.SubHeader = ExcelFileAnalysis;
             }
         }
 
