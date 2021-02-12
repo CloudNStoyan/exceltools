@@ -25,70 +25,57 @@ namespace ExcelTools.Pages
                 return;
             }
 
-            if (this.FileSelection.MultipleFilesChecked)
-            {
-                string[] files = this.FileSelection.SelectedFiles;
+            var excelWrappers = this.FileSelection.MultipleFilesChecked
+                ? this.FileSelection.SelectedFiles.Select(x => new ExcelWrapper(x)).ToArray()
+                : new[] {new ExcelWrapper(this.FileSelection.SelectedFile)};
 
-                foreach (string file in files)
-                {
-                    var excelWrapper = new ExcelWrapper(file);
-
-                    string[] columns = this.ColumnTextBox.GetColumns();
-
-                    this.FindDuplicatesAnalysis(excelWrapper,
-                        this.SpecificColumnCheckBox.IsChecked == true ? columns : excelWrapper.GetColumns());
-                }
-            }
-            else
-            {
-                var excelWrapper = new ExcelWrapper(this.FileSelection.SelectedFile);
-
-                string[] columns = this.ColumnTextBox.GetColumns();
-
-                this.FindDuplicatesAnalysis(excelWrapper,
-                    this.SpecificColumnCheckBox.IsChecked == true ? columns : excelWrapper.GetColumns());
-            }
+            this.FindDuplicatesAnalysis(excelWrappers, this.SpecificColumnCheckBox.IsChecked == true);
         }
 
-        private void FindDuplicatesAnalysis(ExcelWrapper excelWrapper, string[] columns)
+        private void FindDuplicatesAnalysis(ExcelWrapper[] excelWrappers, bool specificColumns)
         {
-            var duplicates = new List<string>();
-
-            foreach (string column in columns)
+            foreach (var excelWrapper in excelWrappers)
             {
-                int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
+                var duplicates = new List<string>();
 
-                string[] cells = excelWrapper.GetStringRows(columnNumber)?.Where(cell => !string.IsNullOrEmpty(cell)).ToArray();
+                string[] columns = specificColumns ? this.ColumnTextBox.GetColumns() : excelWrapper.GetColumns();
 
-                if (cells != null)
+                foreach (string column in columns)
                 {
-                    var cellEntries = new Dictionary<string, int>();
+                    int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
 
-                    foreach (string cell in cells)
+                    string[] cells = excelWrapper.GetStringRows(columnNumber)?.Where(cell => !string.IsNullOrEmpty(cell)).ToArray();
+
+                    if (cells != null)
                     {
-                        if (!cellEntries.ContainsKey(cell))
+                        var cellEntries = new Dictionary<string, int>();
+
+                        foreach (string cell in cells)
                         {
-                            cellEntries.Add(cell, 1);
+                            if (!cellEntries.ContainsKey(cell))
+                            {
+                                cellEntries.Add(cell, 1);
+                            }
+                            else
+                            {
+                                cellEntries[cell]++;
+                            }
                         }
-                        else
-                        {
-                            cellEntries[cell]++;
-                        }
+
+                        duplicates.Add($"Checking column '{column}'");
+                        duplicates.AddRange(from pair in cellEntries where pair.Value > 1 select $"'{pair.Key}' is entered {pair.Value} times");
+                    } else
+                    {
+                        duplicates.Add($"There is no '{column}' column in {excelWrapper.FileName}");
                     }
-
-                    duplicates.Add($"Checking column '{column}'");
-                    duplicates.AddRange(from pair in cellEntries where pair.Value > 1 select $"'{pair.Key}' is entered {pair.Value} times");
-                } else
-                {
-                    duplicates.Add($"There is no '{column}' column in {excelWrapper.FileName}");
                 }
+
+                string log = duplicates.Count > 0
+                    ? "Duplicates were found: \n" + string.Join("\n", duplicates)
+                    : "No duplicates found!";
+
+                this.Logger.Log($"{excelWrapper.FileName}\r\n" + log);
             }
-
-            string log = duplicates.Count > 0
-                ? "Duplicates were found: \n" + string.Join("\n", duplicates)
-                : "No duplicates found!";
-
-            this.Logger.Log($"{excelWrapper.FileName}\r\n" + log);
         }
     }
 }
