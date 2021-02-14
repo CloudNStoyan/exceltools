@@ -40,53 +40,49 @@ namespace ExcelTools.Pages
             var selectedComparisonType = (ComparisonType)Enum.Parse(typeof(ComparisonType), this.ComparisonTypePanel.Children.OfType<RadioButton>()
                 .First(r => r.IsChecked == true).DataContext.ToString());
 
-            switch (selectedComparisonType)
+            var logs = new List<string>();
+
+            string emptyOutput = string.Empty;
+
+            if (selectedComparisonType == ComparisonType.FindSimilarities)
             {
-                case ComparisonType.FindSimilarities:
+                emptyOutput = "No similarities were found between both excels!";
+
+                foreach (string column in columns)
                 {
-                    var logs = new List<string>();
+                    int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
 
-                    foreach (string column in columns)
-                    {
-                        int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
+                    string[] firstExcelRows = firstExcelWrapper.GetStringRows(columnNumber)
+                        .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                    string[] secondExcelRows = secondExcelWrapper.GetStringRows(columnNumber)
+                        .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
-                        string[] firstExcelRows = firstExcelWrapper.GetStringRows(columnNumber)
-                            .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-                        string[] secondExcelRows = secondExcelWrapper.GetStringRows(columnNumber)
-                            .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-                        logs.AddRange(firstExcelRows.Where(x => secondExcelRows.Contains(x))
-                            .Select(x => $"'{x}' was found in the both excels"));
-                    }
-
-                    this.Logger.Log(logs.Count > 0
-                        ? string.Join(Environment.NewLine, logs)
-                        : "No similarities were found between both excels!");
-
-                    break;
-                }
-                case ComparisonType.FindDifferences:
-                {
-                    var logs = new List<string>();
-
-                    foreach (string column in columns)
-                    {
-                        int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
-
-                        string[] firstExcelRows = firstExcelWrapper.GetStringRows(columnNumber)
-                            .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-                        string[] secondExcelRows = secondExcelWrapper.GetStringRows(columnNumber)
-                            .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-                        logs.AddRange(firstExcelRows.Where(x => !secondExcelRows.Contains(x))
-                            .Select(x => $"'{x}' was found in {firstExcelWrapper.FileName} but not in {secondExcelWrapper.FileName}"));
-                    }
-
-                    this.Logger.Log(logs.Count > 0
-                        ? string.Join(Environment.NewLine, logs)
-                        : "No differences were found between both excels!");
-
-                    break;
+                    logs.AddRange(firstExcelRows.Where(x => secondExcelRows.Contains(x))
+                        .Select(x => $"'{x}' was found in the both excels"));
                 }
             }
+            else if (selectedComparisonType == ComparisonType.FindDifferences)
+            {
+                emptyOutput = "No differences were found between both excels!";
+
+                foreach (string column in columns)
+                {
+                    int columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column);
+
+                    string[] firstExcelRows = firstExcelWrapper.GetStringRows(columnNumber)
+                        .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                    string[] secondExcelRows = secondExcelWrapper.GetStringRows(columnNumber)
+                        .Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
+                    logs.AddRange(firstExcelRows.Where(x => !secondExcelRows.Contains(x))
+                        .Select(x =>
+                            $"'{x}' was found in {firstExcelWrapper.FileName} but not in {secondExcelWrapper.FileName}"));
+                }
+            }
+
+            this.Logger.Log(logs.Count > 0
+                ? string.Join(Environment.NewLine, logs)
+                : emptyOutput);
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
