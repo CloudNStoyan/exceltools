@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,59 +29,36 @@ namespace ExcelTools.Pages
 
             string value = this.FindValueInput.Text;
             bool caseSensitive = this.CaseSensitiveCheck.IsChecked == true;
-            string[] columns = this.ColumnTextBox.GetColumns();
+            string[] columns = this.SpecificColumnCheckBox.IsChecked == true ? this.ColumnTextBox.GetColumns() : null;
 
-            if (this.FileSelection.MultipleFilesChecked == false)
+            bool multipleFiles = this.FileSelection.MultipleFilesChecked;
+
+            string[] filePaths =
+                multipleFiles ? this.FileSelection.SelectedFiles : new[] {this.FileSelection.SelectedFile};
+
+            this.FindInExcel(value, caseSensitive, columns, filePaths);
+        }
+
+        private void FindInExcel(string value, bool caseSensitive, string[] columns, string[] filePaths)
+        {
+            if (filePaths == null || filePaths.Length == 0)
             {
-                string filePath = this.FileSelection.SelectedFile;
-
-                if (!File.Exists(filePath))
-                {
-                    AlertManager.NoFileSelected();
-                    return;
-                }
-
-                var excelWrapper = new ExcelWrapper(filePath);
-
-                if (this.SpecificColumnCheckBox.IsChecked == true)
-                {
-                    this.FindAnalysis(excelWrapper, value, caseSensitive, columns);
-                }
-                else
-                {
-                    this.FindAnalysis(excelWrapper, value, caseSensitive);
-                }
+                AlertManager.NoFileSelected();
+                return;
             }
-            else
-            {
-                string[] filePaths = this.FileSelection.SelectedFiles;
 
-                if (filePaths == null || filePaths.Length == 0)
-                {
-                    AlertManager.NoFileSelected();
-                    return;
-                }
+            var excelWrappers = filePaths.Select(filePath => new ExcelWrapper(filePath)).ToArray();
 
-                var excelWrappers = filePaths.Select(filePath => new ExcelWrapper(filePath)).ToArray();
-
-                if (this.SpecificColumnCheckBox.IsChecked == true)
-                {
-                    this.FindAnalysis(excelWrappers, value, caseSensitive, columns);
-                }
-                else
-                {
-                    this.FindAnalysis(excelWrappers, value, caseSensitive);
-                }
-            }
+            this.FindAnalysis(excelWrappers, value, caseSensitive, columns);
         }
 
         private string[] CheckColumns(string[] columns, ExcelWrapper excelWrapper, string value, bool caseSensitive)
         {
             var output = new List<string>();
 
-            for (int i = 0; i < columns.Length; i++)
+            foreach (string columnNumber in columns)
             {
-                int column = ExcelWrapper.ConvertStringColumnToNumber(columns[i]);
+                int column = ExcelWrapper.ConvertStringColumnToNumber(columnNumber);
 
                 string[] rows = excelWrapper.GetStringRows(column);
 
@@ -94,18 +70,18 @@ namespace ExcelTools.Pages
 
                         if (rowValue != null && rowValue.Equals(value))
                         {
-                            output.Add($"\"{rowValue}\" was found at {columns[i]}{j}");
+                            output.Add($"\"{rowValue}\" was found at {columnNumber}{j}");
                         }
                         else if (rowValue != null && !caseSensitive && string.Equals(rowValue, value, StringComparison.CurrentCultureIgnoreCase))
                         {
-                            output.Add($"\"{rowValue}\" was found at {columns[i]}{j}");
+                            output.Add($"\"{rowValue}\" was found at {columnNumber}{j}");
                         }
                     }
                 }
                 else
                 {
 
-                    AlertManager.Custom($"There isn't {columns[i]} column in {excelWrapper.FileName}");
+                    AlertManager.Custom($"There isn't {columnNumber} column in {excelWrapper.FileName}");
                 }
             }
 
@@ -113,47 +89,21 @@ namespace ExcelTools.Pages
         }
 
         private const string NoMatchesFound = "No matches were found!";
-
-        private void FindAnalysis(ExcelWrapper excelWrapper, string value, bool caseSensitive)
-        {
-            string[] columns = excelWrapper.GetColumns();
-
-            string[] logs = this.CheckColumns(columns, excelWrapper, value, caseSensitive);
-
-            this.Logger.Log(logs.Length > 0 ? string.Join("\r\n", logs) : NoMatchesFound);
-        }
-
-        private void FindAnalysis(ExcelWrapper[] excelWrappers, string value, bool caseSensitive)
-        {
-            var logs = new List<string>();
-
-            foreach (var excelWrapper in excelWrappers)
-            {
-                string[] columns = excelWrapper.GetColumns();
-
-                logs.AddRange(this.CheckColumns(columns, excelWrapper, value, caseSensitive));
-            }
-
-            this.Logger.Log(logs.Count > 0 ? string.Join("\r\n", logs) : NoMatchesFound);
-        }
-
-        private void FindAnalysis(ExcelWrapper excelWrapper, string value, bool caseSensitive, string[] columns)
-        {
-            string[] logs = this.CheckColumns(columns, excelWrapper, value, caseSensitive);
-
-            this.Logger.Log(logs.Length > 0 ? string.Join("\r\n", logs) : "No matches were found!");
-        }
-
         private void FindAnalysis(ExcelWrapper[] excelWrappers, string value, bool caseSensitive, string[] columns)
         {
             var logs = new List<string>();
 
             foreach (var excelWrapper in excelWrappers)
             {
+                if (columns == null)
+                {
+                    columns = excelWrapper.GetColumns();
+                }
+
                 logs.AddRange(this.CheckColumns(columns, excelWrapper, value, caseSensitive));
             }
 
-            this.Logger.Log(logs.Count > 0 ? string.Join("\r\n", logs) : "No matches were found!");
+            this.Logger.Log(logs.Count > 0 ? string.Join("\r\n", logs) : NoMatchesFound);
         }
     }
 }
