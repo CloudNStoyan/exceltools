@@ -82,6 +82,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\MultifilesOperation.xaml.cs">
+      <DependentUpon>MultifilesOperation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SavedData\Config.cs" />
     <Compile Include="SavedData\SavedData.cs" />
     <Page Include="Controls\CustomLabel.xaml">
@@ -165,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MultiCounter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MultifilesOperation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
