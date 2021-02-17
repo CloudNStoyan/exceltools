@@ -22,7 +22,8 @@
                         <ComboBox Width="70" HorizontalAlignment="Left" x:Name="OperationDropdown"/>
                     </StackPanel>
                 </StackPanel>
-                <Button Margin="5" Content="Run Operation" ToolTip="Run Operation" HorizontalAlignment="Left" Width="120" Height="25"/>
+                <Button Margin="5" Content="Run Operation" ToolTip="Run Operation" HorizontalAlignment="Left" Width="120" Height="25" Click="RunOperation"/>
+                <controls:Output x:Name="Output"/>
             </StackPanel>
         </StackPanel>
     </Grid>
