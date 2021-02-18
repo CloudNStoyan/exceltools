@@ -11,11 +11,11 @@
         <StackPanel>
             <TextBlock Text="Multifiles Operation" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White" />
             <StackPanel Margin="10">
-                <controls:FileSelection Selection="Multi"/>
+                <controls:FileSelection Selection="Multi" x:Name="FileSelection"/>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Width="55" HorizontalAlignment="Left">
                         <controls:CustomLabel Header="Column" HorizontalAlignment="Center"/>
-                        <controls:Input Width="25" Height="25" Text="A" ToolTip="*The letter representing the column*"/>
+                        <controls:Input Width="25" Height="25" Text="A" ToolTip="*The letter representing the column*" x:Name="ColumnInput"/>
                     </StackPanel>
                     <StackPanel>
                         <controls:CustomLabel Header="Select operation" Margin="-5,0,0,0"/>
