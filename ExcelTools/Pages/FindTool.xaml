@@ -16,9 +16,10 @@
                        ToolTip="The Find Tool lets you search through one or more excels to find specific value"/>
             <StackPanel Margin="10">
                 <controls:FileSelection Selection="Both" x:Name="FileSelection"/>
-                <controls:CustomLabel Header="Value" SubHeader="*The value you want to find. Must be text*"/>
+                <CheckBox Margin="5,5,0,0" x:Name="MultipleValuesCheck" Content="Multiple Values" ToolTip="Check if you want to search for multiple values" Checked="MultipleValuesCheck_OnChecked" Unchecked="MultipleValuesCheck_OnUnchecked"/>
+                <controls:CustomLabel Header="Value" SubHeader="*The value you want to find. Must be text*" x:Name="ValueHeader"/>
                 <TextBox HorizontalAlignment="Left" Margin="5,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                     Width="350" Name="FindValueInput" ToolTip="The value you want to find. Must be text"/>
+                     Width="350" Name="FindValueInput" ToolTip="Type in what you search"/>
 
                 <CheckBox Margin="5,5,0,0" x:Name="CaseSensitiveCheck" IsChecked="True" 
                           Content="Case-Sensitive" ToolTip="If it's checked the find tool will search for exactly the same text"/>

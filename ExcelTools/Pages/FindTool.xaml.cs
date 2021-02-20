@@ -21,13 +21,22 @@ namespace ExcelTools.Pages
 
         private void RunAnalysis(object sender, RoutedEventArgs e)
         {
+            if (!this.FileSelection.FileIsSelected)
+            {
+                AlertManager.NoFileSelected();
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(this.FindValueInput.Text))
             {
                 AlertManager.Custom("Value cannot be empty or white space only!");
                 return;
             }
 
-            string value = this.FindValueInput.Text;
+            string[] value = this.MultipleValuesCheck.IsChecked == true
+                ? this.FindValueInput.Text.Split(',')
+                : new[] {this.FindValueInput.Text};
+
             bool caseSensitive = this.CaseSensitiveCheck.IsChecked == true;
             string[] columns = this.SpecificColumnCheckBox.IsChecked == true ? this.ColumnTextBox.GetColumns() : null;
 
@@ -39,7 +48,7 @@ namespace ExcelTools.Pages
             this.FindInExcel(value, caseSensitive, columns, filePaths);
         }
 
-        private void FindInExcel(string value, bool caseSensitive, string[] columns, string[] filePaths)
+        private void FindInExcel(string[] values, bool caseSensitive, string[] columns, string[] filePaths)
         {
             if (filePaths == null || filePaths.Length == 0)
             {
@@ -49,7 +58,7 @@ namespace ExcelTools.Pages
 
             var excelWrappers = filePaths.Select(filePath => new ExcelWrapper(filePath)).ToArray();
 
-            this.FindAnalysis(excelWrappers, value, caseSensitive, columns);
+            this.FindAnalysis(excelWrappers, values, caseSensitive, columns);
         }
 
         private string[] CheckColumns(string[] columns, ExcelWrapper excelWrapper, string value, bool caseSensitive)
@@ -80,7 +89,6 @@ namespace ExcelTools.Pages
                 }
                 else
                 {
-
                     AlertManager.Custom($"There isn't {columnNumber} column in {excelWrapper.FileName}");
                 }
             }
@@ -88,8 +96,7 @@ namespace ExcelTools.Pages
             return output.ToArray();
         }
 
-        private const string NoMatchesFound = "No matches were found!";
-        private void FindAnalysis(ExcelWrapper[] excelWrappers, string value, bool caseSensitive, string[] columns)
+        private void FindAnalysis(ExcelWrapper[] excelWrappers, string[] values, bool caseSensitive, string[] columns)
         {
             var logs = new List<string>();
 
@@ -100,10 +107,39 @@ namespace ExcelTools.Pages
                     columns = excelWrapper.GetColumns();
                 }
 
-                logs.AddRange(this.CheckColumns(columns, excelWrapper, value, caseSensitive));
+                logs.Add($"Searching in {excelWrapper.FileName}");
+
+                var matches = new List<string>();
+                foreach (string value in values)
+                {
+                    matches.AddRange(this.CheckColumns(columns, excelWrapper, value, caseSensitive));
+                }
+
+                if (matches.Count > 0)
+                {
+                    logs.AddRange(matches);
+                }
+                else
+                {
+                    logs.Add("No matches!");
+                }
             }
 
-            this.Logger.Log(logs.Count > 0 ? string.Join("\r\n", logs) : NoMatchesFound);
+            this.Logger.Log(string.Join("\r\n", logs));
+        }
+
+        private void MultipleValuesCheck_OnChecked(object sender, RoutedEventArgs e)
+        {
+            this.ValueHeader.Header = "Values";
+            this.ValueHeader.SubHeader = "*The values you want to find. Must be text*";
+            this.FindValueInput.ToolTip = "Type in what you search separated by comma";
+        }
+
+        private void MultipleValuesCheck_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            this.ValueHeader.Header = "Value";
+            this.ValueHeader.SubHeader = "*The value you want to find. Must be text*";
+            this.FindValueInput.ToolTip = "Type in what you search";
         }
     }
 }
