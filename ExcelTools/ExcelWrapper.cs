@@ -57,6 +57,32 @@ namespace ExcelTools
             return columns.ToArray();
         }
 
+        public string[] GetValueRows(int col)
+        {
+            using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    var rowsData = new List<string>();
+
+                    do
+                    {
+                        while (reader.Read())
+                        {
+                            if (col >= reader.FieldCount)
+                            {
+                                return null;
+                            };
+
+                            rowsData.Add(reader.GetValue(col)?.ToString());
+                        }
+                    } while (reader.NextResult());
+
+                    return rowsData.ToArray();
+                }
+            }
+        }
+
         public string[] GetStringRows(int col)
         {
             using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))

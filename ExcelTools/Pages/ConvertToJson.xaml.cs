@@ -35,7 +35,11 @@ namespace ExcelTools.Pages
 
             string[] columns = excelWrapper.GetColumns();
 
-            var jsonData = (from column in columns let columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column) select new ExcelJsonData {Column = column, ColumnNumber = columnNumber, Data = excelWrapper.GetStringRows(columnNumber)}).ToList();
+            var jsonData = (from column in columns
+                    let columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column)
+                    select new ExcelJsonData
+                        {Column = column, ColumnNumber = columnNumber, Data = excelWrapper.GetValueRows(columnNumber)})
+                .ToList();
 
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                 excelWrapper.FileName.Split('.')[0] + ".json");
