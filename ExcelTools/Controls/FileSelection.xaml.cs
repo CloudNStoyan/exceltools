@@ -189,7 +189,7 @@ namespace ExcelTools.Controls
             this.FileSelected?.Invoke();
         }
 
-        private void ChangeFileHandler(object sender, RoutedEventArgs e)
+        public void ChangeFileHandler(object sender, RoutedEventArgs e)
         {
             this.FilePathTextBox.Clear();
             this.FileIsSelected = false;

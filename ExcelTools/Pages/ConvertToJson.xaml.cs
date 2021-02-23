@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 using ExcelTools.Attributes;
 using Newtonsoft.Json;
@@ -15,9 +12,11 @@ namespace ExcelTools.Pages
         public ConvertToJson()
         {
             this.InitializeComponent();
+
+            this.FileSelection.FileSelected += this.Convert;
         }
 
-        private void Convert(object sender, RoutedEventArgs e)
+        private void Convert()
         {
             if (!this.FileSelection.FileIsSelected)
             {
@@ -41,12 +40,11 @@ namespace ExcelTools.Pages
                         {Column = column, ColumnNumber = columnNumber, Data = excelWrapper.GetValueRows(columnNumber)})
                 .ToList();
 
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                excelWrapper.FileName.Split('.')[0] + ".json");
+            this.Output.FileName = excelWrapper.FileName.Split('.')[0] + ".json";
 
-            File.WriteAllText(path, JsonConvert.SerializeObject(jsonData));
+            this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
 
-            AlertManager.Custom("Success!");
+            this.FileSelection.ChangeFileHandler(null, null);
         }
 
         public class ExcelJsonData
