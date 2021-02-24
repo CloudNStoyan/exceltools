@@ -14,7 +14,7 @@
                        Foreground="White"
                        ToolTip="The Find Tool lets you search through one or more excels to find specific value" />
             <StackPanel Margin="10">
-                <controls:FileSelection x:Name="FileSelection" Selection="Single" />
+                <controls:FileSelection x:Name="FileSelection" Selection="Single" Persistent="False"/>
                 <controls:Output x:Name="Output" DefaultExt=".json" TextboxHeight="200"/>
             </StackPanel>
         </StackPanel>

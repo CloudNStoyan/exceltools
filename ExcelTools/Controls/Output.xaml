@@ -4,11 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="400">
+             d:DesignHeight="450" d:DesignWidth="400" x:Name="UserControl">
     <StackPanel>
         <TextBox VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" 
                  AcceptsReturn="True" AcceptsTab="True" IsReadOnly="True" TextWrapping="Wrap"
-                 Padding="5" x:Name="OutputTextBox" Height="60"/>
+                 Padding="5" x:Name="OutputTextBox" Height="{Binding TextboxHeight, ElementName=UserControl}"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Height="25" Width="100" Margin="5" Content="Clear" ToolTip="Clear output!" Click="ClearOutput"/>
             <Button Height="25" Width="100" Margin="5" Content="Copy" ToolTip="Copy to clipboard!" Click="CopyToClipboard"/>

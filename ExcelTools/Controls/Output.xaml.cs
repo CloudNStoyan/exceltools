@@ -30,7 +30,7 @@ namespace ExcelTools.Controls
 
         public static readonly DependencyProperty TextboxHeightProperty
             = DependencyProperty.Register(
-                nameof(TextboxHeightProperty),
+                nameof(TextboxHeight),
                 typeof(double),
                 typeof(Output),
                 new PropertyMetadata(60d)
@@ -38,12 +38,7 @@ namespace ExcelTools.Controls
 
         public string FileName { get; set; }
 
-        public Output()
-        {
-            this.InitializeComponent();
-
-            this.OutputTextBox.Height = this.TextboxHeight;
-        }
+        public Output() => this.InitializeComponent();
 
         private void SaveOutput(object sender, RoutedEventArgs e)
         {

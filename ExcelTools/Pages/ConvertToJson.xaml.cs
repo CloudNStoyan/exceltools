@@ -43,8 +43,6 @@ namespace ExcelTools.Pages
             this.Output.FileName = excelWrapper.FileName.Split('.')[0] + ".json";
 
             this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
-
-            this.FileSelection.ChangeFileHandler(null, null);
         }
 
         public class ExcelJsonData

@@ -51,6 +51,20 @@ namespace ExcelTools.Controls
                 new PropertyMetadata(SelectionType.Single)
             );
 
+        public bool Persistent
+        {
+            get => (bool) this.GetValue(PersistentProperty);
+            set => this.SetValue(PersistentProperty, value);
+        }
+
+        public static readonly DependencyProperty PersistentProperty = 
+            DependencyProperty.Register(
+                nameof(Persistent),
+                typeof(bool),
+                typeof(FileSelection), 
+                new PropertyMetadata(true)
+                );
+
         public string SubHeaderText
         {
             get => (string)this.GetValue(SubHeaderTextProperty);
@@ -187,9 +201,14 @@ namespace ExcelTools.Controls
             }
 
             this.FileSelected?.Invoke();
+
+            if (!this.Persistent)
+            {
+                this.ChangeFileHandler(sender, e);
+            }
         }
 
-        public void ChangeFileHandler(object sender, RoutedEventArgs e)
+        private void ChangeFileHandler(object sender, RoutedEventArgs e)
         {
             this.FilePathTextBox.Clear();
             this.FileIsSelected = false;
@@ -299,6 +318,11 @@ namespace ExcelTools.Controls
                         this.FilePathViewWrapper.Visibility = Visibility.Visible;
 
                         this.FileSelected?.Invoke();
+
+                        if (!this.Persistent)
+                        {
+                            this.ChangeFileHandler(o, args);
+                        }
                     };
 
                     contextMenu.Items.Add(menuItem);
