@@ -19,7 +19,7 @@ namespace ExcelTools.Controls
                 nameof(DefaultExt),
                 typeof(string),
                 typeof(Output),
-                new PropertyMetadata(".txt")
+                new PropertyMetadata("json")
             );
 
         public double TextboxHeight
@@ -47,7 +47,8 @@ namespace ExcelTools.Controls
             var saveFileDialog = new SaveFileDialog
             {
                 DefaultExt = this.DefaultExt, InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                FileName = this.FileName
+                FileName = this.FileName,
+                Filter = "JSON|*.json|TXT files (*.txt)|*.txt"
             };
 
             if (saveFileDialog.ShowDialog() == true)
