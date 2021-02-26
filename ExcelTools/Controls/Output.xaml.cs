@@ -19,7 +19,21 @@ namespace ExcelTools.Controls
                 nameof(DefaultExt),
                 typeof(string),
                 typeof(Output),
-                new PropertyMetadata("json")
+                new PropertyMetadata("txt")
+            );
+
+        public string DefaultFilter
+        {
+            get => (string)this.GetValue(DefaultFilterProperty);
+            set => this.SetValue(DefaultFilterProperty, value);
+        }
+
+        public static readonly DependencyProperty DefaultFilterProperty
+            = DependencyProperty.Register(
+                nameof(DefaultFilter),
+                typeof(string),
+                typeof(Output),
+                new PropertyMetadata("Text files(*.txt)|*.txt")
             );
 
         public double TextboxHeight
@@ -48,7 +62,7 @@ namespace ExcelTools.Controls
             {
                 DefaultExt = this.DefaultExt, InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                 FileName = this.FileName,
-                Filter = "JSON|*.json|TXT files (*.txt)|*.txt"
+                Filter = this.DefaultFilter
             };
 
             if (saveFileDialog.ShowDialog() == true)
