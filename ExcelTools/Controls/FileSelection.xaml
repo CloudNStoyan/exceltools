@@ -11,7 +11,7 @@
             <CheckBox x:Name="MultipleFiles" Click="MultipleFiles_OnClick">
                 <CheckBox.Content>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Multiple Files" Margin="5,0,0,0" />
+                        <TextBlock Text="Multiple FilesLabel" Margin="5,0,0,0" />
                         <TextBlock Text="*If checked it will perform the analysis on multiple files*" FontSize="10" VerticalAlignment="Bottom" Margin="5,0,0,0" Foreground="gray"/>
                     </StackPanel>
                 </CheckBox.Content>
@@ -19,7 +19,7 @@
         </Label>
         <local:CustomLabel x:Name="LabelFileText"/>
         <Grid>
-            <Button Content="Select File" Margin="5" Click="SelectFileHandler" Name="SelectFileButton" ToolTip="File selector" Loaded="SelectFileButton_OnLoaded" MouseRightButtonDown="SelectFileButton_OnMouseRightButtonDown"/>
+            <Button Content="Select FileLabel" Margin="5" Click="SelectFileHandler" Name="SelectFileButton" ToolTip="FileLabel selector" Loaded="SelectFileButton_OnLoaded" MouseRightButtonDown="SelectFileButton_OnMouseRightButtonDown"/>
             <StackPanel Orientation="Horizontal" Name="FilePathViewWrapper" Visibility="Hidden">
                 <TextBox Width="300" Height="25" Margin="5,0,0,0"
                          HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 

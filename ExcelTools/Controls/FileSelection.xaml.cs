@@ -10,12 +10,12 @@ namespace ExcelTools.Controls
 {
     public partial class FileSelection : UserControl
     {
-        private const string File = "File";
-        private const string Files = "Files";
-        private const string SelectFile = "Select File";
-        private const string SelectFiles = "Select Files";
-        private const string ExcelFileAnalysis = "*The excel file you want to analyse*";
-        private const string ExcelFilesAnalysis = "*The excel files you want to analyse*";
+        private const string FileLabel = "File";
+        private const string FilesLabel = "Files";
+        private const string SelectFileLabel = "Select File";
+        private const string SelectFilesLabel = "Select Files";
+        private const string ExcelFileAnalysisLabel = "*The excel file you want to analyse*";
+        private const string ExcelFilesAnalysisLabel = "*The excel files you want to analyse*";
         public string HeaderText
         {
             get => (string)this.GetValue(HeaderTextProperty);
@@ -27,7 +27,7 @@ namespace ExcelTools.Controls
                 nameof(HeaderText),
                 typeof(string),
                 typeof(FileSelection),
-                new PropertyMetadata(File)
+                new PropertyMetadata(FileLabel)
             );
 
         public enum SelectionType
@@ -76,7 +76,7 @@ namespace ExcelTools.Controls
                 nameof(SubHeaderText),
                 typeof(string),
                 typeof(FileSelection),
-                new PropertyMetadata(ExcelFileAnalysis)
+                new PropertyMetadata(ExcelFileAnalysisLabel)
             );
 
         public bool MultipleFilesChecked
@@ -123,7 +123,7 @@ namespace ExcelTools.Controls
 
         private void SelectFileHandler(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog { Filter = "Excel Files|*.xls;*.xlsx|CSV files (*.csv)|*.csv" };
+            var openFileDialog = new OpenFileDialog { Filter = "Excel FilesLabel|*.xls;*.xlsx|CSV files (*.csv)|*.csv" };
 
             if (this.Selection == SelectionType.Single)
             {
@@ -132,19 +132,7 @@ namespace ExcelTools.Controls
                     return;
                 }
 
-                string fileName = openFileDialog.FileName;
-
-                this.FilePathTextBox.Text = fileName;
-
-                this.SelectedFile = fileName;
-                this.FileIsSelected = true;
-
-                this.SavedData.Config.RecentFiles.Add(openFileDialog.FileName);
-                this.SavedData.Save();
-
-                this.SelectFileButton.Visibility = Visibility.Hidden;
-
-                this.FilePathViewWrapper.Visibility = Visibility.Visible;
+                this.SelectFile(openFileDialog.FileName);
             }
             else if (this.Selection == SelectionType.Multi)
             {
@@ -155,15 +143,7 @@ namespace ExcelTools.Controls
                     return;
                 }
 
-                string[] filePaths = openFileDialog.FileNames;
-
-                this.FilePathTextBox.Text = string.Join(",", filePaths.Select(Path.GetFileName));
-                this.SelectedFiles = filePaths;
-                this.FileIsSelected = true;
-
-                this.SelectFileButton.Visibility = Visibility.Hidden;
-
-                this.FilePathViewWrapper.Visibility = Visibility.Visible;
+                this.SelectFile(openFileDialog.FileNames);
             }
             else if (this.Selection == SelectionType.Both)
             {
@@ -177,34 +157,48 @@ namespace ExcelTools.Controls
                     return;
                 }
 
-                this.FilePathTextBox.Text = this.MultipleFiles.IsChecked == true
-                    ? string.Join(",", openFileDialog.FileNames.Select(Path.GetFileName))
-                    : openFileDialog.FileName;
-
                 if (this.MultipleFiles.IsChecked == true)
                 {
-                    this.SelectedFiles = openFileDialog.FileNames;
+                    this.SelectFile(openFileDialog.FileNames);
                 }
                 else
                 {
-                    this.SelectedFile = openFileDialog.FileName;
-
-                    this.SavedData.Config.RecentFiles.Add(openFileDialog.FileName);
-                    this.SavedData.Save();
+                    this.SelectFile(openFileDialog.FileName);
                 }
-
-                this.FileIsSelected = true;
-
-                this.SelectFileButton.Visibility = Visibility.Hidden;
-
-                this.FilePathViewWrapper.Visibility = Visibility.Visible;
             }
+        }
+
+        private void SelectFile(string filepath) => this.SelectFile(new[] {filepath});
+
+        private void SelectFile(string[] filepaths)
+        {
+            string[] fileNames = filepaths.Select(Path.GetFileName).ToArray();
+
+            if (this.MultipleFiles.IsChecked == true)
+            {
+                this.SelectedFiles = filepaths;
+                this.FilePathTextBox.Text = string.Join(",", fileNames);
+            }
+            else
+            {
+                this.SelectedFile = filepaths[0];
+                this.FilePathTextBox.Text = fileNames[0];
+            }
+
+            this.SavedData.Config.AddToRecentFiles(filepaths[0]);
+            this.SavedData.Save();
+
+            this.FileIsSelected = true;
+
+            this.SelectFileButton.Visibility = Visibility.Hidden;
+
+            this.FilePathViewWrapper.Visibility = Visibility.Visible;
 
             this.FileSelected?.Invoke();
 
             if (!this.Persistent)
             {
-                this.ChangeFileHandler(sender, e);
+                this.ChangeFileHandler(null, null);
             }
         }
 
@@ -223,17 +217,17 @@ namespace ExcelTools.Controls
         {
             if (this.MultipleFiles.IsChecked == true)
             {
-                this.SelectFileButton.Content = SelectFiles;
-                this.LabelFileText.Header = Files;
-                this.LabelFileText.SubHeader = ExcelFilesAnalysis;
+                this.SelectFileButton.Content = SelectFilesLabel;
+                this.LabelFileText.Header = FilesLabel;
+                this.LabelFileText.SubHeader = ExcelFilesAnalysisLabel;
 
                 this.MultipleFilesChecked = true;
             }
             else
             {
-                this.SelectFileButton.Content = SelectFile;
-                this.LabelFileText.Header = File;
-                this.LabelFileText.SubHeader = ExcelFileAnalysis;
+                this.SelectFileButton.Content = SelectFileLabel;
+                this.LabelFileText.Header = FileLabel;
+                this.LabelFileText.SubHeader = ExcelFileAnalysisLabel;
 
                 this.MultipleFilesChecked = false;
             }
@@ -248,23 +242,23 @@ namespace ExcelTools.Controls
             if (this.Selection == SelectionType.Single)
             {
                 this.MultipleFilesLabel.Visibility = Visibility.Collapsed;
-                this.SelectFileButton.Content = SelectFile;
-                this.LabelFileText.Header = File;
-                this.LabelFileText.SubHeader = ExcelFileAnalysis;
+                this.SelectFileButton.Content = SelectFileLabel;
+                this.LabelFileText.Header = FileLabel;
+                this.LabelFileText.SubHeader = ExcelFileAnalysisLabel;
             }
             else if (this.Selection == SelectionType.Multi)
             {
                 this.MultipleFilesLabel.Visibility = Visibility.Collapsed;
-                this.SelectFileButton.Content = SelectFiles;
-                this.LabelFileText.Header = Files;
-                this.LabelFileText.SubHeader = ExcelFilesAnalysis;
+                this.SelectFileButton.Content = SelectFilesLabel;
+                this.LabelFileText.Header = FilesLabel;
+                this.LabelFileText.SubHeader = ExcelFilesAnalysisLabel;
             }
             else if (this.Selection == SelectionType.Both)
             {
                 this.MultipleFilesLabel.Visibility = Visibility.Visible;
-                this.SelectFileButton.Content = SelectFile;
-                this.LabelFileText.Header = File;
-                this.LabelFileText.SubHeader = ExcelFileAnalysis;
+                this.SelectFileButton.Content = SelectFileLabel;
+                this.LabelFileText.Header = FileLabel;
+                this.LabelFileText.SubHeader = ExcelFileAnalysisLabel;
             }
         }
 
@@ -272,64 +266,26 @@ namespace ExcelTools.Controls
         {
             string[] recentFiles = this.SavedData.Config?.RecentFiles?.ToArray();
 
-            if (recentFiles != null && recentFiles.Length > 0)
+            if (recentFiles == null || recentFiles.Length <= 0)
             {
-                var contextMenu = new ContextMenu();
-
-                foreach (string recentFile in recentFiles)
-                {
-                    var menuItem = new MenuItem { Header = recentFile };
-
-                    menuItem.Click += (o, args) =>
-                    {
-                        if (this.Selection == SelectionType.Single)
-                        {
-                            this.SelectedFile = recentFile;
-
-                            this.FilePathTextBox.Text = recentFile;
-                        }
-                        else if (this.Selection == SelectionType.Multi)
-                        {
-                            this.SelectedFiles = new[] {recentFile};
-
-                            this.FilePathTextBox.Text = recentFile;
-                        }
-                        else if (this.Selection == SelectionType.Both)
-                        {
-                            if (this.MultipleFilesChecked)
-                            {
-                                this.SelectedFiles = new[] { recentFile };
-
-                                this.FilePathTextBox.Text = recentFile;
-                            }
-                            else
-                            {
-                                this.SelectedFile = recentFile;
-
-                                this.FilePathTextBox.Text = recentFile;
-                            }
-                        }
-
-                        
-                        this.FileIsSelected = true;
-
-                        this.SelectFileButton.Visibility = Visibility.Hidden;
-
-                        this.FilePathViewWrapper.Visibility = Visibility.Visible;
-
-                        this.FileSelected?.Invoke();
-
-                        if (!this.Persistent)
-                        {
-                            this.ChangeFileHandler(o, args);
-                        }
-                    };
-
-                    contextMenu.Items.Add(menuItem);
-                }
-
-                this.SelectFileButton.ContextMenu = contextMenu;
+                return;
             }
+
+            var contextMenu = new ContextMenu();
+
+            foreach (string recentFile in recentFiles)
+            {
+                var menuItem = new MenuItem { Header = recentFile };
+
+                menuItem.Click += (o, args) =>
+                {
+                    this.SelectFile(recentFile);
+                };
+
+                contextMenu.Items.Add(menuItem);
+            }
+
+            this.SelectFileButton.ContextMenu = contextMenu;
         }
 
         private void SelectFileButton_OnLoaded(object sender, RoutedEventArgs e) => this.LoadContextMenu();
