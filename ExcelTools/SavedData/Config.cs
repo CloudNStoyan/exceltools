@@ -6,22 +6,9 @@ namespace ExcelTools.SavedData
 {
     public class Config
     {
-        [JsonProperty]
-        private List<string> recentFiles;
-        [JsonIgnore]
-        public string[] RecentFiles => this.recentFiles.ToArray();
+        [JsonProperty] private List<string> recentFiles = new List<string>();
 
-        public Config()
-        {
-            this.recentFiles = new List<string>();
-        }
-
-        public void FillRecentFiles(string[] filePaths)
-        {
-            this.recentFiles.Clear();
-
-            this.recentFiles.AddRange(filePaths);
-        }
+        [JsonIgnore] public string[] RecentFiles => this.recentFiles.ToArray();
 
         public void AddToRecentFiles(string filePath)
         {
