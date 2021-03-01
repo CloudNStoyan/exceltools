@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using ExcelTools.Attributes;
+using ExcelTools.DataSaving;
 using ExcelTools.Pages;
 
 namespace ExcelTools
@@ -21,6 +22,8 @@ namespace ExcelTools
             AlertManager.SetupAlert(this.AlertBox,this.AlertBody);
 
             this.SetupPages();
+
+            SavedData.LoadData();
         }
 
         private Button ActiveButton { get; set; }

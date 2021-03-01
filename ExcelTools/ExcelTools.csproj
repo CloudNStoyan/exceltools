@@ -89,8 +89,8 @@
     <Compile Include="Pages\MultifilesOperation.xaml.cs">
       <DependentUpon>MultifilesOperation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SavedData\Config.cs" />
-    <Compile Include="SavedData\SavedData.cs" />
+    <Compile Include="DataSaving\Config.cs" />
+    <Compile Include="DataSaving\SavedData.cs" />
     <Page Include="Controls\CustomLabel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ExcelTools.DataSaving;
 using Microsoft.Win32;
 
 namespace ExcelTools.Controls
@@ -112,13 +113,10 @@ namespace ExcelTools.Controls
 
         public string SelectedFile { get; set; }
         public string[] SelectedFiles { get; set; }
-        private SavedData.SavedData SavedData { get; set; }
 
         public FileSelection()
         {
             this.InitializeComponent();
-
-            this.SavedData = new SavedData.SavedData();
         }
 
         private void SelectFileHandler(object sender, RoutedEventArgs e)
@@ -174,19 +172,20 @@ namespace ExcelTools.Controls
         {
             string[] fileNames = filepaths.Select(Path.GetFileName).ToArray();
 
-            if (this.MultipleFiles.IsChecked == true)
+            if (this.Selection == SelectionType.Multi || (this.Selection == SelectionType.Both && this.MultipleFilesChecked))
             {
                 this.SelectedFiles = filepaths;
                 this.FilePathTextBox.Text = string.Join(",", fileNames);
+                SavedData.Config.AddToRecentFiles(filepaths);
             }
             else
             {
                 this.SelectedFile = filepaths[0];
                 this.FilePathTextBox.Text = fileNames[0];
+                SavedData.Config.AddToRecentFiles(filepaths[0]);
             }
 
-            this.SavedData.Config.AddToRecentFiles(filepaths[0]);
-            this.SavedData.Save();
+            SavedData.Save();
 
             this.FileIsSelected = true;
 
@@ -232,6 +231,7 @@ namespace ExcelTools.Controls
                 this.MultipleFilesChecked = false;
             }
 
+            this.SelectFileButton.ContextMenu = null;
             this.ChangeFileHandler(sender, e);
         }
 
@@ -264,9 +264,22 @@ namespace ExcelTools.Controls
 
         private void LoadContextMenu()
         {
-            string[] recentFiles = this.SavedData.Config?.RecentFiles?.ToArray();
+            string[] recentFiles;
 
-            if (recentFiles == null || recentFiles.Length <= 0)
+            bool isMulti = false;
+
+            if (this.Selection == SelectionType.Multi || (this.Selection == SelectionType.Both && this.MultipleFilesChecked))
+            {
+                recentFiles = SavedData.Config.RecentMultipleFiles
+                    .Select(x => string.Join(", ", x)).ToArray();
+                isMulti = true;
+            }
+            else
+            {
+                recentFiles = SavedData.Config.RecentFiles.ToArray();
+            }
+
+            if (recentFiles.Length <= 0)
             {
                 return;
             }
@@ -275,7 +288,13 @@ namespace ExcelTools.Controls
 
             foreach (string recentFile in recentFiles)
             {
-                var menuItem = new MenuItem { Header = recentFile };
+                var menuItem = new MenuItem {Header = recentFile};
+
+                if (isMulti)
+                {
+                    menuItem.Header = string.Join(", ",
+                        recentFile.Split(new[] {", "}, StringSplitOptions.None).Select(Path.GetFileName));
+                }
 
                 menuItem.Click += (o, args) =>
                 {
@@ -288,7 +307,6 @@ namespace ExcelTools.Controls
             this.SelectFileButton.ContextMenu = contextMenu;
         }
 
-        private void SelectFileButton_OnLoaded(object sender, RoutedEventArgs e) => this.LoadContextMenu();
         private void SelectFileButton_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e) =>
             this.LoadContextMenu();
     }
