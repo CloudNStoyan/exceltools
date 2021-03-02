@@ -86,6 +86,9 @@
     <Compile Include="Pages\ConvertToJson.xaml.cs">
       <DependentUpon>ConvertToJson.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ConvertToJsonObject.xaml.cs">
+      <DependentUpon>ConvertToJsonObject.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\MultifilesOperation.xaml.cs">
       <DependentUpon>MultifilesOperation.xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ConvertToJson.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ConvertToJsonObject.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
