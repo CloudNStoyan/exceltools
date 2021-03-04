@@ -15,6 +15,11 @@
                        ToolTip="The Find Tool lets you search through one or more excels to find specific value" />
             <StackPanel Margin="10">
                 <controls:FileSelection x:Name="FileSelection" Selection="Single" Persistent="False"/>
+                <controls:CustomLabel Header="Choose type of JSON conversion" HorizontalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,1,0,5" x:Name="TypeOfJsonConversionContainer">
+                    <RadioButton Content="Rows as JSON objects" GroupName="TypeOfJsonConversion" IsChecked="True" DataContext="Rows"/>
+                    <RadioButton Content="Columns as JSON object" GroupName="TypeOfJsonConversion" Margin="50,0,0,0" DataContext="Columns"/>
+                </StackPanel>
                 <controls:Output x:Name="Output" DefaultExt=".json" DefaultFilter="JSON|*.json|TXT files (*.txt)|*.txt" TextboxHeight="200"/>
             </StackPanel>
         </StackPanel>
