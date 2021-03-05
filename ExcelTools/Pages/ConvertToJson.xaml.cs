@@ -1,15 +1,17 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Controls;
 using ExcelTools.Attributes;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ExcelTools.Pages
 {
-    [PageInfo(Header = "Convert To Json")]
-    public partial class ConvertToJson : Page
+    [PageInfo(Header = "Convert to JSON")]
+    public partial class ConvertToJsonObject : Page
     {
-        public ConvertToJson()
+        public ConvertToJsonObject()
         {
             this.InitializeComponent();
 
@@ -34,22 +36,62 @@ namespace ExcelTools.Pages
 
             string[] columns = excelWrapper.GetColumns();
 
-            var jsonData = (from column in columns
-                    let columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column)
-                    select new ExcelJsonData
-                        {Column = column, ColumnNumber = columnNumber, Data = excelWrapper.GetValueRows(columnNumber)})
-                .ToList();
+            string typeOfJsonConvert = this.TypeOfJsonConversionContainer.Children.OfType<RadioButton>()
+                .First(r => r.IsChecked == true).DataContext.ToString();
 
-            this.Output.FileName = excelWrapper.FileName.Split('.')[0] + ".json";
+            if (typeOfJsonConvert == "Rows")
+            {
+                string[] propertyNames = columns.Select(column =>
+                    excelWrapper.GetValueRows(ExcelWrapper.ConvertStringColumnToNumber(column))[0]).ToArray();
 
-            this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
-        }
+                string[][] propertyValues = columns.Select(column =>
+                        excelWrapper.GetValueRows(ExcelWrapper.ConvertStringColumnToNumber(column)).Skip(1).ToArray())
+                    .ToArray();
 
-        public class ExcelJsonData
-        {
-            public string Column { get; set; }
-            public int ColumnNumber { get; set; }
-            public string[] Data { get; set; }
+                int jObjectCount = propertyValues.Select(propertyValue => propertyValue.Length).Max();
+
+                var jsonObjects = new List<JObject>();
+
+                for (int i = 0; i < jObjectCount; i++)
+                {
+                    var jsonObject = new JObject();
+
+                    for (int j = 0; j < propertyNames.Length; j++)
+                    {
+                        jsonObject.Add(propertyNames[j], propertyValues[j][i]);
+                    }
+
+                    jsonObjects.Add(jsonObject);
+                }
+
+                this.Output.FileName = excelWrapper.FileName.Split('.')[0] + ".json";
+                this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jsonObjects, Formatting.Indented);
+            }
+            else if (typeOfJsonConvert == "Columns")
+            {
+                var jsonProperties = (
+                    from column in columns
+                    let dataRows = excelWrapper.GetValueRows(ExcelWrapper.ConvertStringColumnToNumber(column))
+                    select new JProperty(dataRows[0], dataRows.Skip(1))
+                ).ToList();
+
+                var jObject = new JObject(jsonProperties);
+
+                this.Output.FileName = excelWrapper.FileName.Split('.')[0] + ".json";
+                this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jObject, Formatting.Indented);
+            }
+            else if (typeOfJsonConvert == "Excel")
+            {
+                var jsonData = (from column in columns
+                        let columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column)
+                        select new JObject(new JProperty("Column", column), new JProperty("ColumnNumber", columnNumber),
+                            new JProperty("Data", excelWrapper.GetValueRows(columnNumber)))
+                    ).ToList();
+
+                this.Output.FileName = excelWrapper.FileName.Split('.')[0] + ".json";
+
+                this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
+            }
         }
     }
 }
