@@ -18,8 +18,9 @@
                 <controls:CustomLabel Header="Choose type of JSON conversion" HorizontalAlignment="Center"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,1,0,5" x:Name="TypeOfJsonConversionContainer">
                     <RadioButton Content="Rows as JSON" GroupName="TypeOfJsonConversion" IsChecked="True" DataContext="Rows"/>
-                    <RadioButton Content="Columns As JSON" GroupName="TypeOfJsonConversion" Margin="10,0,0,0" DataContext="Columns"/>
-                    <RadioButton Content="Excel JSON" GroupName="TypeOfJsonConversion" Margin="10,0,0,0" DataContext="Excel"/>
+                    <RadioButton Content="Columns As JSON" GroupName="TypeOfJsonConversion" Margin="5,0,0,0" DataContext="Columns"/>
+                    <RadioButton Content="Excel JSON" GroupName="TypeOfJsonConversion" Margin="5,0,0,0" DataContext="Excel"/>
+                    <RadioButton Content="JSON Array" GroupName="TypeOfJsonConversion" Margin="5,0,0,0" DataContext="Array"/>
                 </StackPanel>
                 <controls:Output x:Name="Output" DefaultExt=".json" DefaultFilter="JSON|*.json|TXT files (*.txt)|*.txt" TextboxHeight="200"/>
             </StackPanel>

@@ -92,6 +92,10 @@ namespace ExcelTools.Pages
 
                 this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
             }
+            else if (typeOfJsonConvert == "Array")
+            {
+                var jArray = new JArray();
+            }
         }
     }
 }
