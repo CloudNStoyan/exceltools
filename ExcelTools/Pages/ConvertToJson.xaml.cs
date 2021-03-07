@@ -64,7 +64,6 @@ namespace ExcelTools.Pages
                     jsonObjects.Add(jsonObject);
                 }
 
-                this.Output.FileName = excelWrapper.FileName.Split('.')[0] + ".json";
                 this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jsonObjects, Formatting.Indented);
             }
             else if (typeOfJsonConvert == "Columns")
@@ -77,7 +76,6 @@ namespace ExcelTools.Pages
 
                 var jObject = new JObject(jsonProperties);
 
-                this.Output.FileName = excelWrapper.FileName.Split('.')[0] + ".json";
                 this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jObject, Formatting.Indented);
             }
             else if (typeOfJsonConvert == "Excel")
@@ -88,14 +86,21 @@ namespace ExcelTools.Pages
                             new JProperty("Data", excelWrapper.GetValueRows(columnNumber)))
                     ).ToList();
 
-                this.Output.FileName = excelWrapper.FileName.Split('.')[0] + ".json";
-
                 this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
             }
             else if (typeOfJsonConvert == "Array")
             {
                 var jArray = new JArray();
+
+                foreach (string column in columns)
+                {
+                    jArray.Add(excelWrapper.GetValueRows(ExcelWrapper.ConvertStringColumnToNumber(column)));
+                }
+
+                this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jArray, Formatting.Indented);
             }
+
+            this.Output.FileName = excelWrapper.FileName.Split('.')[0] + ".json";
         }
     }
 }
