@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using ExcelTools.Attributes;
 using Newtonsoft.Json;
@@ -11,14 +12,15 @@ namespace ExcelTools.Pages
     [PageInfo(Header = "Convert to JSON")]
     public partial class ConvertToJsonObject : Page
     {
+        private string LastPath { get; set; }
         public ConvertToJsonObject()
         {
             this.InitializeComponent();
 
-            this.FileSelection.FileSelected += this.Convert;
+            this.FileSelection.FileSelected += this.ConvertHandler;
         }
 
-        private void Convert()
+        private void ConvertHandler()
         {
             if (!this.FileSelection.FileIsSelected)
             {
@@ -32,12 +34,23 @@ namespace ExcelTools.Pages
                 return;
             }
 
-            var excelWrapper = new ExcelWrapper(this.FileSelection.SelectedFile);
+            string selectedFile = this.FileSelection.SelectedFile;
+
+            this.Convert(selectedFile);
+
+            this.LastPath = selectedFile;
+        }
+
+        private void Convert(string filePath)
+        {
+            var excelWrapper = new ExcelWrapper(filePath);
 
             string[] columns = excelWrapper.GetColumns();
 
             string typeOfJsonConvert = this.TypeOfJsonConversionContainer.Children.OfType<RadioButton>()
                 .First(r => r.IsChecked == true).DataContext.ToString();
+
+            object json = null;
 
             if (typeOfJsonConvert == "Rows")
             {
@@ -64,6 +77,7 @@ namespace ExcelTools.Pages
                     jsonObjects.Add(jsonObject);
                 }
 
+                json = jsonObjects;
                 this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jsonObjects, Formatting.Indented);
             }
             else if (typeOfJsonConvert == "Columns")
@@ -74,19 +88,17 @@ namespace ExcelTools.Pages
                     select new JProperty(dataRows[0], dataRows.Skip(1))
                 ).ToList();
 
-                var jObject = new JObject(jsonProperties);
-
-                this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jObject, Formatting.Indented);
+                json = new JObject(jsonProperties);
             }
             else if (typeOfJsonConvert == "Excel")
             {
                 var jsonData = (from column in columns
-                        let columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column)
-                        select new JObject(new JProperty("Column", column), new JProperty("ColumnNumber", columnNumber),
-                            new JProperty("Data", excelWrapper.GetValueRows(columnNumber)))
+                                let columnNumber = ExcelWrapper.ConvertStringColumnToNumber(column)
+                                select new JObject(new JProperty("Column", column), new JProperty("ColumnNumber", columnNumber),
+                                    new JProperty("Data", excelWrapper.GetValueRows(columnNumber)))
                     ).ToList();
 
-                this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
+                json = jsonData;
             }
             else if (typeOfJsonConvert == "Array")
             {
@@ -97,10 +109,22 @@ namespace ExcelTools.Pages
                     jArray.Add(excelWrapper.GetValueRows(ExcelWrapper.ConvertStringColumnToNumber(column)));
                 }
 
-                this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(jArray, Formatting.Indented);
+                json = jArray;
             }
 
+
+            this.Output.OutputTextBox.Text = JsonConvert.SerializeObject(json, Formatting.Indented);
             this.Output.FileName = excelWrapper.FileName.Split('.')[0] + ".json";
+        }
+
+        private void RadioButtonChecked(object sender, RoutedEventArgs e)
+        {
+            if (this.LastPath == null)
+            {
+                return;
+            }
+
+            this.Convert(this.LastPath);
         }
     }
 }
