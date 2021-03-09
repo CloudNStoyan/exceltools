@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace ExcelTools.Controls
@@ -19,6 +20,8 @@ namespace ExcelTools.Controls
                 new PropertyMetadata(string.Empty)
             );
 
+        public event Action InputChanged;
+
         public Input() => this.InitializeComponent();
 
         private void MainTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -35,6 +38,10 @@ namespace ExcelTools.Controls
             this.MainTextBox.Text = char.IsLetter(lastChar) ? lastChar.ToString().ToUpper() : text.Replace(lastChar.ToString(), "").ToUpper();
 
             this.MainTextBox.CaretIndex = 1;
+
+            this.Text = this.MainTextBox.Text;
+
+            this.InputChanged?.Invoke();
         }
 
         private void Input_OnLoaded(object sender, RoutedEventArgs e) => this.DataContext = this;

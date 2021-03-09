@@ -20,7 +20,6 @@
                     <RadioButton Content="Rows as JSON" GroupName="TypeOfJsonConversion" IsChecked="True" DataContext="Rows" Checked="RadioButtonChecked"/>
                     <RadioButton Content="Columns As JSON" GroupName="TypeOfJsonConversion" Margin="5,0,0,0" DataContext="Columns" Checked="RadioButtonChecked"/>
                     <RadioButton Content="Excel JSON" GroupName="TypeOfJsonConversion" Margin="5,0,0,0" DataContext="Excel" Checked="RadioButtonChecked"/>
-                    <RadioButton Content="JSON Array" GroupName="TypeOfJsonConversion" Margin="5,0,0,0" DataContext="Array" Checked="RadioButtonChecked"/>
                 </StackPanel>
                 <controls:Output x:Name="Output" DefaultExt=".json" DefaultFilter="JSON|*.json|TXT files (*.txt)|*.txt" TextboxHeight="200"/>
             </StackPanel>
