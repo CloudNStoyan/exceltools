@@ -31,9 +31,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=RowsRadioButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <controls:CustomLabel Header="Row:" VerticalContentAlignment="Center"/>
-                    <TextBox Margin="0,5,5,5" Height="25" Width="50" Text="1"
-                             HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                             x:Name="InputRow" TextChanged="InputRow_OnTextChanged"/>
+                    <controls:NumberBox x:Name="InputRow" Margin="5"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=ColumnsRadioButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <controls:CustomLabel Header="Choose Column:" VerticalContentAlignment="Center"/>

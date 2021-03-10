@@ -16,16 +16,12 @@ namespace ExcelTools.Pages
         public ConvertToJsonArray()
         {
             this.InitializeComponent(); 
-            this.FileSelection.FileSelected += this.ConvertHandler;
-            this.InputColumn.InputChanged += () =>
-            {
-                if (this.LastPath == null)
-                {
-                    return;
-                }
 
-                this.Convert(this.LastPath);
-            };
+            this.FileSelection.FileSelected += this.ConvertHandler;
+
+            this.InputColumn.InputChanged += this.ReselectFile;
+
+            this.InputRow.NumberChanged += this.ReselectFile;
         }
 
         private void ConvertHandler()
@@ -62,7 +58,7 @@ namespace ExcelTools.Pages
             {
                 case "Rows":
                 {
-                    json = RowConverter(excelWrapper, int.Parse(this.InputRow.Text) - 1);
+                    json = RowConverter(excelWrapper, this.InputRow.Number - 1);
                     break;
                 }
                 case "Columns":
@@ -119,17 +115,9 @@ namespace ExcelTools.Pages
             return jArray;
         }
 
-        private void RadioButtonChecked(object sender, RoutedEventArgs e)
-        {
-            if (this.LastPath == null)
-            {
-                return;
-            }
+        private void RadioButtonChecked(object sender, RoutedEventArgs e) => this.ReselectFile();
 
-            this.Convert(this.LastPath);
-        }
-
-        private void InputRow_OnTextChanged(object sender, TextChangedEventArgs e)
+        private void ReselectFile()
         {
             if (this.LastPath == null)
             {
