@@ -6,6 +6,34 @@ namespace ExcelTools.Controls
 {
     public partial class NumberBox : UserControl
     {
+        public int Min
+        {
+            get => (int)this.GetValue(MinProperty);
+            set => this.SetValue(MinProperty, value);
+        }
+
+        public static readonly DependencyProperty MinProperty
+            = DependencyProperty.Register(
+                nameof(Min),
+                typeof(int),
+                typeof(NumberBox),
+                new PropertyMetadata(0)
+            );
+
+        public int Max
+        {
+            get => (int)this.GetValue(MaxProperty);
+            set => this.SetValue(MaxProperty, value);
+        }
+
+        public static readonly DependencyProperty MaxProperty
+            = DependencyProperty.Register(
+                nameof(Max),
+                typeof(int),
+                typeof(NumberBox),
+                new PropertyMetadata(1)
+            );
+
         public NumberBox()
         {
             this.InitializeComponent();
@@ -26,13 +54,20 @@ namespace ExcelTools.Controls
 
             if (string.IsNullOrWhiteSpace(text))
             {
-                this.Input.Text = "1";
+                this.Input.Text = this.Min.ToString();
                 return;
             }
 
             if (!int.TryParse(text, out int result))
             {
-                this.Input.Text = this.Text ?? "1";
+                this.Input.Text = this.Text ?? this.Min.ToString();
+                this.Input.CaretIndex = this.Input.Text.Length;
+                return;
+            }
+
+            if (result > this.Max)
+            {
+                this.Input.Text = this.Max.ToString();
                 this.Input.CaretIndex = this.Input.Text.Length;
                 return;
             }
@@ -42,7 +77,7 @@ namespace ExcelTools.Controls
 
             this.Input.Text = this.Input.Text.Trim();
 
-            if (this.Input.Text != "1")
+            if (this.Input.Text != this.Min.ToString())
             {
                 this.Input.Text = this.Input.Text.TrimStart('0');
             }
