@@ -9,10 +9,14 @@ namespace ExcelTools
     {
         private string FilePath { get; }
         public string FileName { get; }
+        private string Extension { get; }
+        private bool IsCsv { get; }
         public ExcelWrapper(string filePath)
         {
             this.FilePath = filePath;
             this.FileName = Path.GetFileName(filePath);
+            this.Extension = Path.GetExtension(filePath);
+            this.IsCsv = this.Extension == ".csv";
         }
 
         public static int ConvertStringColumnToNumber(string column)
@@ -33,7 +37,15 @@ namespace ExcelTools
         {
             using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))
             {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                if (!this.IsCsv)
+                {
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        return reader.RowCount;
+                    }
+                }
+
+                using (var reader = ExcelReaderFactory.CreateCsvReader(stream))
                 {
                     return reader.RowCount;
                 }
@@ -45,11 +57,24 @@ namespace ExcelTools
             var columns = new List<string>();
             using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))
             {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                if (!this.IsCsv)
                 {
-                    for (int i = 0; i < reader.FieldCount; i++)
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
-                        columns.Add(ConvertStringColumnToNumber(i));
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            columns.Add(ConvertStringColumnToNumber(i));
+                        }
+                    }
+                }
+                else
+                {
+                    using (var reader = ExcelReaderFactory.CreateCsvReader(stream))
+                    {
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            columns.Add(ConvertStringColumnToNumber(i));
+                        }
                     }
                 }
             }
@@ -61,25 +86,46 @@ namespace ExcelTools
         {
             using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))
             {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                var rowsData = new List<string>();
+
+                if (!this.IsCsv)
                 {
-                    var rowsData = new List<string>();
-
-                    do
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
-                        while (reader.Read())
+                        do
                         {
-                            if (col >= reader.FieldCount)
+                            while (reader.Read())
                             {
-                                return null;
-                            };
+                                if (col >= reader.FieldCount)
+                                {
+                                    return null;
+                                };
 
-                            rowsData.Add(reader.GetValue(col)?.ToString());
-                        }
-                    } while (reader.NextResult());
-
-                    return rowsData.ToArray();
+                                rowsData.Add(reader.GetValue(col)?.ToString());
+                            }
+                        } while (reader.NextResult());
+                    }
                 }
+                else
+                {
+                    using (var reader = ExcelReaderFactory.CreateCsvReader(stream))
+                    {
+                        do
+                        {
+                            while (reader.Read())
+                            {
+                                if (col >= reader.FieldCount)
+                                {
+                                    return null;
+                                };
+
+                                rowsData.Add(reader.GetValue(col)?.ToString());
+                            }
+                        } while (reader.NextResult());
+                    }
+                }
+
+                return rowsData.ToArray();
             }
         }
 
@@ -87,27 +133,50 @@ namespace ExcelTools
         {
             using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))
             {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                var rowsData = new List<string>();
+
+                if (!this.IsCsv)
                 {
-                    var rowsData = new List<string>();
-
-                    do
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
-                        while (reader.Read())
+                        do
                         {
-                            if (col >= reader.FieldCount)
+                            while (reader.Read())
                             {
-                                return null;
-                            };
+                                if (col >= reader.FieldCount)
+                                {
+                                    return null;
+                                };
 
-                            var fieldType = reader.GetFieldType(col);
+                                var fieldType = reader.GetFieldType(col);
 
-                            rowsData.Add(fieldType == typeof(string) ? reader.GetString(col) : null);
-                        }
-                    } while (reader.NextResult());
-
-                    return rowsData.ToArray();
+                                rowsData.Add(fieldType == typeof(string) ? reader.GetString(col) : null);
+                            }
+                        } while (reader.NextResult());
+                    }
                 }
+                else
+                {
+                    using (var reader = ExcelReaderFactory.CreateCsvReader(stream))
+                    {
+                        do
+                        {
+                            while (reader.Read())
+                            {
+                                if (col >= reader.FieldCount)
+                                {
+                                    return null;
+                                };
+
+                                var fieldType = reader.GetFieldType(col);
+
+                                rowsData.Add(fieldType == typeof(string) ? reader.GetString(col) : null);
+                            }
+                        } while (reader.NextResult());
+                    }
+                }
+
+                return rowsData.ToArray();
             }
         }
 
@@ -115,27 +184,55 @@ namespace ExcelTools
         {
             using (var stream = File.Open(this.FilePath, FileMode.Open, FileAccess.Read))
             {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                var rowsData = new List<double>();
+
+                if (!this.IsCsv)
                 {
-                    var rowsData = new List<double>();
-
-                    do
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
-                        while (reader.Read())
+                        do
                         {
-                            if (col >= reader.FieldCount)
+                            while (reader.Read())
                             {
-                                return null;
-                            };
+                                if (col >= reader.FieldCount)
+                                {
+                                    return null;
+                                };
 
-                            var fieldType = reader.GetFieldType(col);
-                            
-                            rowsData.Add(fieldType == typeof(double) ? reader.GetDouble(col) : -1);
-                        }
-                    } while (reader.NextResult());
+                                var fieldType = reader.GetFieldType(col);
 
-                    return rowsData.ToArray();
+                                rowsData.Add(fieldType == typeof(double) ? reader.GetDouble(col) : -1);
+                            }
+                        } while (reader.NextResult());
+                    }
                 }
+                else
+                {
+                    using (var reader = ExcelReaderFactory.CreateCsvReader(stream))
+                    {
+                        do
+                        {
+                            while (reader.Read())
+                            {
+                                if (col >= reader.FieldCount)
+                                {
+                                    return null;
+                                };
+
+                                if (double.TryParse(reader.GetString(col), out double result))
+                                {
+                                    rowsData.Add(result);
+                                }
+                                else
+                                {
+                                    rowsData.Add(-1);
+                                }
+                            }
+                        } while (reader.NextResult());
+                    }
+                }
+
+                return rowsData.ToArray();
             }
         }
     }

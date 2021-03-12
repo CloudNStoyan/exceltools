@@ -121,7 +121,7 @@ namespace ExcelTools.Controls
 
         private void SelectFileHandler(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog { Filter = "Excel FilesLabel|*.xls;*.xlsx|CSV files (*.csv)|*.csv" };
+            var openFileDialog = new OpenFileDialog { Filter = "Excel Files|*.xls;*.xlsx|CSV files (*.csv)|*.csv" };
 
             if (this.Selection == SelectionType.Single)
             {

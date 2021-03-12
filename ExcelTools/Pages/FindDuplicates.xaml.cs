@@ -62,17 +62,23 @@ namespace ExcelTools.Pages
                             }
                         }
 
-                        duplicates.Add($"Checking column '{column}'");
+                        string checkingColumn = $"Checking column '{column}'";
+
+                        duplicates.Add(checkingColumn);
                         duplicates.AddRange(from pair in cellEntries where pair.Value > 1 select $"'{pair.Key}' is entered {pair.Value} times");
+
+                        if (duplicates.Last() == checkingColumn)
+                        {
+                            duplicates.Add("Nothing found!");
+                        }
+
                     } else
                     {
                         duplicates.Add($"There is no '{column}' column in {excelWrapper.FileName}");
                     }
                 }
 
-                string log = duplicates.Count > 0
-                    ? "Duplicates were found: \n" + string.Join("\n", duplicates)
-                    : "No duplicates found!";
+                string log = string.Join("\n", duplicates);
 
                 this.Logger.Log($"{excelWrapper.FileName}\r\n" + log);
             }
