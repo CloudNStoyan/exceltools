@@ -86,6 +86,9 @@
     <Compile Include="Controls\NumberBox.xaml.cs">
       <DependentUpon>NumberBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Options\OptionsWindow.xaml.cs">
+      <DependentUpon>OptionsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ConvertToJson.xaml.cs">
       <DependentUpon>ConvertToJson.xaml</DependentUpon>
     </Compile>
@@ -153,6 +156,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Options\OptionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\CalculateTool.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

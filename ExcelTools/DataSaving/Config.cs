@@ -21,6 +21,8 @@ namespace ExcelTools.DataSaving
             this.recentFiles.AddRange(oldPaths);
         }
 
+        public void RemoveFromRecentFiles(string filePath) => this.recentFiles.Remove(filePath);
+
         [JsonProperty] private List<string[]> recentMultipleFiles = new List<string[]>();
 
         [JsonIgnore] public string[][] RecentMultipleFiles => this.recentMultipleFiles.ToArray();

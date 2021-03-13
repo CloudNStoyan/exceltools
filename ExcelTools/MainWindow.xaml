@@ -9,8 +9,9 @@
         <DockPanel Background="#F1F1F1">
             <StackPanel Background="#217346" DockPanel.Dock="Left" Width="150">
                 <TextBlock Text="Navigation" Foreground="White" FontSize="17" Height="25" TextAlignment="Center"/>
-                <StackPanel Name="NavigationContainer" Height="430"/>
+                <StackPanel Name="NavigationContainer" Height="390"/>
                 <Button Content="Features" Height="25" Margin="5" x:Name="ToFeaturesButton"/>
+                <Button Content="Options" Height="25" Margin="5" x:Name="ToOptionsButton"/>
             </StackPanel>
             <Frame Name="Settings" Width="400" NavigationUIVisibility="Hidden"/>
             <StackPanel>

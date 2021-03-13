@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using ExcelTools.Attributes;
 using ExcelTools.DataSaving;
+using ExcelTools.Options;
 using ExcelTools.Pages;
 
 namespace ExcelTools
@@ -24,6 +25,13 @@ namespace ExcelTools
             this.SetupPages();
 
             SavedData.LoadData();
+
+            this.ToOptionsButton.Click += (sender, args) =>
+            {
+                var options = new OptionsWindow {Owner = this};
+
+                options.ShowDialog();
+            };
         }
 
         private Button ActiveButton { get; set; }

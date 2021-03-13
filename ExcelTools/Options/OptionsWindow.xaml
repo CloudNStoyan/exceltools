@@ -1,0 +1,30 @@
+﻿<Window x:Class="ExcelTools.Options.OptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExcelTools.Options"
+        mc:Ignorable="d"
+        Title="Options" Height="450" Width="550" WindowStartupLocation="CenterOwner">
+    <StackPanel>
+        <TextBlock Text="Options" Background="#217346" Height="25" TextAlignment="Center" FontSize="17" Foreground="White"/>
+        <StackPanel Margin="0,10,0,0" HorizontalAlignment="Center">
+            <TextBlock Text="Recent Files" FontSize="16"/>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
+                <ScrollViewer Width="350" Height="200">
+                    <ListView SelectionMode="Multiple" x:Name="RecentFilesListView"/>
+                </ScrollViewer>
+                <Border Margin="10,0,0,0" BorderBrush="LightBlue" BorderThickness="2">
+                    <StackPanel>
+                        <Border BorderBrush="LightBlue" BorderThickness="0,0,0,2">
+                            <TextBlock Text="Action" TextAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                        </Border>
+                        <StackPanel Margin="0,5,0,0">
+                            <Button Content="Delete" Margin="5" Width="120" Height="25" Click="DeleteSelectedPaths"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</Window>
