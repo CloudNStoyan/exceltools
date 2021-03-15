@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using ExcelTools.DataSaving;
@@ -16,6 +17,13 @@ namespace ExcelTools.Options
             foreach (string filePath in filePaths)
             {
                 this.RecentFilesListView.Items.Add(new TextBlock {Text = filePath});
+            }
+
+            string[][] multiFilePaths = SavedData.Config.RecentMultipleFiles;
+
+            foreach (string[] multiFilePath in multiFilePaths)
+            {
+                this.RecentMultipleFilesListView.Items.Add(new TextBlock {Text = string.Join(", ", multiFilePath), DataContext = multiFilePath});
             }
         }
 
@@ -39,6 +47,31 @@ namespace ExcelTools.Options
                 var id = itemIds[i];
 
                 this.RecentFilesListView.Items.RemoveAt(id - i);
+            }
+
+            SavedData.Save();
+        }
+
+        private void DeleteSelectedMultiplePaths(object sender, RoutedEventArgs e)
+        {
+            var items = this.RecentMultipleFilesListView.SelectedItems;
+
+            var itemIds = new List<int>();
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                itemIds.Add(i);
+
+                var textBlock = (TextBlock)items[i];
+
+                SavedData.Config.RemoveFromRecentFiles((string[])textBlock.DataContext);
+            }
+
+            for (int i = 0; i < itemIds.Count; i++)
+            {
+                var id = itemIds[i];
+                
+                this.RecentMultipleFilesListView.Items.RemoveAt(id - i);
             }
 
             SavedData.Save();

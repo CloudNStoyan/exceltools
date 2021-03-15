@@ -38,6 +38,8 @@ namespace ExcelTools.DataSaving
             this.recentMultipleFiles.AddRange(oldPaths);
         }
 
+        public void RemoveFromRecentFiles(string[] filePaths) => this.recentMultipleFiles.Remove(filePaths);
+
         private static bool AreArraysEqual(string[] firstArray, string[] secondArray)
         {
             if (firstArray.Length != secondArray.Length)
