@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ExcelTools.DataSaving;
@@ -16,14 +18,18 @@ namespace ExcelTools.Options
 
             foreach (string filePath in filePaths)
             {
-                this.RecentFilesListView.Items.Add(new TextBlock {Text = filePath});
+                this.RecentFilesListView.Items.Add(new TextBlock {Text = Path.GetFileName(filePath), DataContext = filePath, ToolTip = filePath});
             }
 
             string[][] multiFilePaths = SavedData.Config.RecentMultipleFiles;
 
             foreach (string[] multiFilePath in multiFilePaths)
             {
-                this.RecentMultipleFilesListView.Items.Add(new TextBlock {Text = string.Join(", ", multiFilePath), DataContext = multiFilePath});
+                this.RecentMultipleFilesListView.Items.Add(new TextBlock
+                {
+                    Text = string.Join(", ", multiFilePath.Select(Path.GetFileName)), DataContext = multiFilePath,
+                    ToolTip = string.Join(", ", multiFilePath)
+                });
             }
         }
 
