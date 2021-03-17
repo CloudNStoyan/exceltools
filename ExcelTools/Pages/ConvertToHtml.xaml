@@ -1,0 +1,26 @@
+﻿<Page x:Class="ExcelTools.Pages.ConvertToHtml"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ExcelTools.Pages"
+      xmlns:controls="clr-namespace:ExcelTools.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="400"
+      Title="ConvertToHtml">
+    <Grid Background="#F1F1F1">
+        <StackPanel>
+            <TextBlock Text="Convert to HTML" Background="#217346" Height="25" TextAlignment="Center" FontSize="17"
+                       Foreground="White"
+                       ToolTip="Convert to HTML" />
+            <StackPanel Margin="10">
+                <controls:FileSelection x:Name="FileSelection" Selection="Single" Persistent="False"/>
+                <controls:CustomLabel Header="Choose type of HTML conversion" HorizontalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,1,0,5" x:Name="TypeOfJsonConversionContainer">
+                    
+                </StackPanel>
+                <controls:Output x:Name="Output" DefaultExt=".html" DefaultFilter="HTML|*.html|TXT files (*.txt)|*.txt" TextboxHeight="200"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

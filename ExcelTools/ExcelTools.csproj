@@ -89,6 +89,9 @@
     <Compile Include="Options\OptionsWindow.xaml.cs">
       <DependentUpon>OptionsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ConvertToHtml.xaml.cs">
+      <DependentUpon>ConvertToHtml.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ConvertToJson.xaml.cs">
       <DependentUpon>ConvertToJson.xaml</DependentUpon>
     </Compile>
@@ -169,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\CompareTool.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ConvertToHtml.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
