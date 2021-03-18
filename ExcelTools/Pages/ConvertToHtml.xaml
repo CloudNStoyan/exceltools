@@ -16,8 +16,8 @@
             <StackPanel Margin="10">
                 <controls:FileSelection x:Name="FileSelection" Selection="Single" Persistent="False"/>
                 <controls:CustomLabel Header="Choose type of HTML conversion" HorizontalAlignment="Center"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,1,0,5" x:Name="TypeOfJsonConversionContainer">
-                    
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,1,0,5" x:Name="TypeOfHtmlConversionContainer">
+                    <RadioButton Content="As Table" GroupName="TypeOfHtmlConversion" IsChecked="True" DataContext="Table"/>
                 </StackPanel>
                 <controls:Output x:Name="Output" DefaultExt=".html" DefaultFilter="HTML|*.html|TXT files (*.txt)|*.txt" TextboxHeight="200"/>
             </StackPanel>
