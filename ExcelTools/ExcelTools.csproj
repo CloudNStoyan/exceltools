@@ -167,10 +167,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\CombineTool.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\CompareTool.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -215,9 +211,6 @@
   <ItemGroup>
     <Compile Include="Pages\CalculateTool.xaml.cs">
       <DependentUpon>CalculateTool.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\CombineTool.xaml.cs">
-      <DependentUpon>CombineTool.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\CompareTool.xaml.cs">
       <DependentUpon>CompareTool.xaml</DependentUpon>

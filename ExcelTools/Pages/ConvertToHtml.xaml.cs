@@ -23,9 +23,6 @@ namespace ExcelTools.Pages
 
             string[] columns = excelWrapper.GetColumns();
 
-            string typeOfJsonConvert = this.TypeOfHtmlConversionContainer.Children.OfType<RadioButton>()
-                .First(r => r.IsChecked == true).DataContext.ToString();
-
             string html = "<table>\r\n\t<tbody>\r\n\t\t<tr>";
 
             html = columns
