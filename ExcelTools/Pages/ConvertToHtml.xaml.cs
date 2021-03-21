@@ -23,41 +23,73 @@ namespace ExcelTools.Pages
 
             string[] columns = excelWrapper.GetColumns();
 
-            string html = "<table>\r\n\t<tbody>\r\n\t\t<tr>";
+            string typeOfJsonConvert = this.TypeOfHtmlConversionContainer.Children.OfType<RadioButton>()
+                .First(r => r.IsChecked == true).DataContext.ToString();
 
-            html = columns
-                .Select(column =>
-                excelWrapper.GetValueRows(ExcelWrapper.ConvertStringColumnToNumber(column))[0])
-                .Aggregate(html, (current, propertyName) => current + $"\r\n\t\t\t<th>{propertyName}</th>");
+            string html = string.Empty;
 
-            html += "\r\n\t\t</tr>";
-            
-            string[][] propertyValues = columns.Select(column =>
-                    excelWrapper.GetValueRows(ExcelWrapper.ConvertStringColumnToNumber(column)).Skip(1).ToArray())
-                .ToArray();
-
-            var list = new List<List<string>>();
-
-            foreach (string[] values in propertyValues)
+            if (typeOfJsonConvert == "Table")
             {
-                for (int j = 0; j < values.Length; j++)
+                html = "<table>\r\n\t<tbody>\r\n\t\t<tr>" + columns
+                    .Select(column =>
+                        excelWrapper.GetValueRows(ExcelWrapper.ConvertStringColumnToNumber(column))[0])
+                    .Aggregate(html, (current, propertyName) => current + $"\r\n\t\t\t<th>{propertyName}</th>");
+
+                html += "\r\n\t\t</tr>";
+
+                string[][] propertyValues = columns.Select(column =>
+                        excelWrapper.GetValueRows(ExcelWrapper.ConvertStringColumnToNumber(column)).Skip(1).ToArray())
+                    .ToArray();
+
+                var list = new List<List<string>>();
+
+                foreach (string[] values in propertyValues)
                 {
-                    if (list.Count >= j + 1)
+                    for (int j = 0; j < values.Length; j++)
                     {
-                        list[j].Add(values[j]);
-                    }
-                    else
-                    {
-                        list.Add(new List<string>{values[j]});
+                        if (list.Count >= j + 1)
+                        {
+                            list[j].Add(values[j]);
+                        }
+                        else
+                        {
+                            list.Add(new List<string> {values[j]});
+                        }
                     }
                 }
-            }
 
-            html = list.Aggregate(html,
-                       (current, row) =>
-                           current +
-                           $"\r\n\t\t<tr>\r\n{string.Join("\r\n", row.Select(x => $"\t\t\t<td>{x}</td>"))}\r\n\t\t</tr>") +
-                   "\r\n\t</tbody>\r\n</table>";
+                html = list.Aggregate(html,
+                           (current, row) =>
+                               current +
+                               $"\r\n\t\t<tr>\r\n{string.Join("\r\n", row.Select(x => $"\t\t\t<td>{x}</td>"))}\r\n\t\t</tr>") +
+                       "\r\n\t</tbody>\r\n</table>";
+            } else if (typeOfJsonConvert == "List")
+            {
+                string[] propertyNames = columns.Select(column =>
+                    excelWrapper.GetValueRows(ExcelWrapper.ConvertStringColumnToNumber(column))[0]).ToArray();
+
+                string[][] propertyValues = columns.Select(column =>
+                        excelWrapper.GetValueRows(ExcelWrapper.ConvertStringColumnToNumber(column)).ToArray())
+                    .ToArray();
+
+                int rowsCount = propertyValues.Select(propertyValue => propertyValue.Length).Max();
+
+                var list = new List<string>();
+
+                for (int i = 0; i < rowsCount; i++)
+                {
+                    string ul = "<ul>";
+
+                    for (int j = 0; j < propertyNames.Length; j++)
+                    {
+                        ul += $"\r\n\t<li>{propertyValues[j][i]}</li>";
+                    }
+
+                    list.Add(ul + "</ul>");
+                }
+
+                html = string.Join("\r\n", list);
+            }
 
             this.Output.OutputTextBox.Text = html;
             this.Output.FileName = excelWrapper.FileName.Split('.')[0] + ".html";
