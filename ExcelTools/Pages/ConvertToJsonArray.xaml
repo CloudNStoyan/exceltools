@@ -20,12 +20,12 @@
                 <controls:FileSelection x:Name="FileSelection" Selection="Single" Persistent="False" />
                 <controls:CustomLabel Header="Choose type of JSON conversion" HorizontalAlignment="Center" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,1,0,5"
-                            x:Name="TypeOfJsonConversionContainer">
-                    <RadioButton Content="Rows as JSON" GroupName="TypeOfJsonConversion" IsChecked="True" x:Name="RowsRadioButton"
+                            x:Name="TypeOfJsonArrayConversionContainer">
+                    <RadioButton Content="Rows as JSON" GroupName="TypeOfJsonArrayConversion" IsChecked="True" x:Name="RowsRadioButton"
                                  DataContext="Rows" Checked="RadioButtonChecked" />
-                    <RadioButton Content="Columns as JSON" GroupName="TypeOfJsonConversion" Margin="5,0,0,0" x:Name="ColumnsRadioButton"
+                    <RadioButton Content="Columns as JSON" GroupName="TypeOfJsonArrayConversion" Margin="5,0,0,0" x:Name="ColumnsRadioButton"
                                  DataContext="Columns" Checked="RadioButtonChecked" />
-                    <RadioButton Content="Excel as JSON" GroupName="TypeOfJsonConversion" Margin="5,0,0,0"
+                    <RadioButton Content="Excel as JSON" GroupName="TypeOfJsonArrayConversion" Margin="5,0,0,0"
                                  DataContext="Excel" Checked="RadioButtonChecked" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=RowsRadioButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">

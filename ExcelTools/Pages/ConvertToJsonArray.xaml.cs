@@ -49,7 +49,7 @@ namespace ExcelTools.Pages
         {
             var excelWrapper = new ExcelWrapper(filePath);
 
-            string typeOfJsonConvert = this.TypeOfJsonConversionContainer.Children.OfType<RadioButton>()
+            string typeOfJsonConvert = this.TypeOfJsonArrayConversionContainer.Children.OfType<RadioButton>()
                 .First(r => r.IsChecked == true).DataContext.ToString();
 
             object json = null;

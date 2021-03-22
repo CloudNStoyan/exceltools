@@ -17,7 +17,7 @@
                 <controls:CustomLabel Header="Choose type of HTML conversion" HorizontalAlignment="Center"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,1,0,5" x:Name="TypeOfHtmlConversionContainer">
                     <RadioButton Content="As Table" GroupName="TypeOfHtmlConversion" IsChecked="True" DataContext="Table"/>
-                    <RadioButton Content="As List" GroupName="TypeOfHtmlConversion" IsChecked="True" DataContext="List"/>
+                    <RadioButton Margin="5,0,0,0" Content="As List" GroupName="TypeOfHtmlConversion" DataContext="List"/>
                 </StackPanel>
                 <controls:Output x:Name="Output" DefaultExt=".html" DefaultFilter="HTML|*.html|TXT files (*.txt)|*.txt" TextboxHeight="200"/>
             </StackPanel>
