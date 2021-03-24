@@ -7,6 +7,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="400"
       Title="ConvertToHtml">
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Page.Resources>
     <Grid Background="#F1F1F1">
         <StackPanel>
             <TextBlock Text="Convert to HTML" Background="#217346" Height="25" TextAlignment="Center" FontSize="17"
@@ -18,6 +21,11 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,1,0,5" x:Name="TypeOfHtmlConversionContainer">
                     <RadioButton Content="As Table" GroupName="TypeOfHtmlConversion" IsChecked="True" DataContext="Table"/>
                     <RadioButton Margin="5,0,0,0" Content="As List" GroupName="TypeOfHtmlConversion" DataContext="List"/>
+                    <RadioButton Margin="5,0,0,0" Content="As Custom Element" GroupName="TypeOfHtmlConversion" DataContext="List" x:Name="CustomElementRadioButton"/>
+                </StackPanel>
+                <StackPanel Visibility="{Binding ElementName=CustomElementRadioButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <controls:CustomLabel Header="Custom Element"/>
+                    <TextBox Margin="5,0,0,5" Width="120" HorizontalAlignment="Left" x:Name="CustomInput" />
                 </StackPanel>
                 <controls:Output x:Name="Output" DefaultExt=".html" DefaultFilter="HTML|*.html|TXT files (*.txt)|*.txt" TextboxHeight="200"/>
             </StackPanel>
